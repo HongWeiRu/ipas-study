@@ -1,0 +1,50 @@
+# ============================================================
+# iPAS 學習教材專案 .gitignore
+# ============================================================
+
+# === iPAS 官方資料（版權歸 iPAS 智慧人才公司，絕對不上傳）===
+學習指引/
+考古題/
+_pdf_text/
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.Python
+.venv/
+venv/
+env/
+ENV/
+
+# === 編輯器 / IDE ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# === 作業系統 ===
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# === 備份 / 暫存 ===
+*.bak
+*.bak[0-9]
+*.backup
+*.tmp
+*.html.bak*
+*.orig
+
+# === Claude / AI 工作目錄（避免推上私人記憶）===
+.claude/
+.cursor/
+CLAUDE.md

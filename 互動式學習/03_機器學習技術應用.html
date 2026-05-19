@@ -1,0 +1,2334 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>科目三｜機器學習技術與應用 · iPAS AI 應用規劃師（中級）</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a1a;
+  --paper:#f5f1e8;
+  --paper-2:#ebe5d5;
+  --rule:#1a1a1a;
+  --accent:#7b3aa8;        /* 科目三 主色：紫 */
+  --accent-soft:#f3e7fa;
+  --accent-deep:#5c2880;
+  --gold:#e6a817;
+  --mute:#6b6357;
+  --sub:#3d3528;
+  --green:#0a8060;
+  --blue:#0a4d68;
+  --red:#c8102e;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--paper);color:var(--ink);line-height:1.75;font-size:16px}
+.topnav{background:var(--ink);color:var(--paper);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--gold);position:sticky;top:0;z-index:100}
+.topnav-brand{font-family:'Noto Serif TC',serif;font-weight:900;font-size:18px;letter-spacing:-0.5px}
+.topnav-brand .small{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--gold);display:block;font-weight:400}
+.topnav-links{display:flex;gap:0;font-size:13px}
+.topnav-links a{color:#d4cbb8;text-decoration:none;padding:8px 16px;letter-spacing:1px;transition:all .15s;border-left:1px solid #3a3528}
+.topnav-links a:hover{background:rgba(255,255,255,0.08);color:#fff}
+.topnav-links a.current{background:var(--accent);color:#fff}
+.topnav-links a:first-child{border-left:none}
+.container{max-width:1200px;margin:0 auto;padding:0 40px}
+.hero{padding:80px 0 60px;border-bottom:4px double var(--ink);position:relative}
+.hero::before{content:'';position:absolute;top:60px;left:0;width:80px;height:6px;background:var(--accent)}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--accent);margin-bottom:20px}
+.hero h1{font-family:'Noto Serif TC',serif;font-weight:900;font-size:72px;line-height:0.95;letter-spacing:-3px;margin-bottom:24px}
+.hero h1 .accent{color:var(--accent)}
+.hero .tagline{font-size:19px;color:var(--sub);max-width:760px;line-height:1.7}
+.hero-meta{display:flex;gap:48px;margin-top:40px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--mute)}
+.hero-meta strong{font-family:'Noto Serif TC',serif;font-size:32px;color:var(--ink);display:block;font-weight:900;line-height:1;margin-bottom:4px}
+section{padding:80px 0;border-bottom:1px solid var(--ink)}
+section:last-of-type{border-bottom:none}
+.sec-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--accent);margin-bottom:16px}
+.sec-eyebrow .chip{background:var(--accent);color:#fff;padding:3px 8px;margin-right:8px;letter-spacing:2px}
+.sec-title{font-family:'Noto Serif TC',serif;font-weight:900;font-size:44px;line-height:1.1;letter-spacing:-1.5px;margin-bottom:24px}
+.sec-intro{font-size:17px;color:var(--sub);max-width:820px;margin-bottom:48px;line-height:1.7}
+.sub-title{font-family:'Noto Serif TC',serif;font-weight:900;font-size:30px;margin:48px 0 16px;padding-bottom:12px;border-bottom:2px solid var(--ink);display:flex;align-items:baseline;gap:14px;scroll-margin-top:80px}
+.sub-title::before{content:attr(data-num);font-family:'JetBrains Mono',monospace;font-size:14px;background:var(--ink);color:#fff;padding:4px 10px;letter-spacing:2px}
+.h-3{font-family:'Noto Serif TC',serif;font-weight:700;font-size:22px;margin:36px 0 12px;color:var(--accent-deep);border-left:5px solid var(--accent);padding-left:12px}
+.h-4{font-family:'Noto Serif TC',serif;font-weight:700;font-size:17px;margin:24px 0 8px;color:var(--ink)}
+.h-4::before{content:'▸ ';color:var(--accent);font-weight:900}
+p.body, .body p{font-size:15.5px;color:var(--ink);margin-bottom:14px;max-width:820px;line-height:1.85}
+p.body b, .body p b{background:linear-gradient(transparent 62%,var(--gold) 62%);padding:0 2px}
+ul.body, .body ul{font-size:15px;color:var(--sub);margin:8px 0 16px 28px;line-height:1.85;max-width:820px}
+ul.body li, .body ul li{margin-bottom:6px}
+.chap-nav{background:#fff;border:2px solid var(--ink);padding:24px 28px;margin:32px 0 48px;max-width:900px}
+.chap-nav-title{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--accent);margin-bottom:14px}
+.chap-nav-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 18px}
+.chap-nav-grid a{color:var(--ink);text-decoration:none;font-size:13.5px;padding:5px 0;border-bottom:1px dashed #ccc;display:flex;justify-content:space-between;align-items:baseline}
+.chap-nav-grid a:hover{color:var(--accent);background:#fafafa}
+.chap-nav-grid a .num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);font-weight:700;margin-right:8px}
+.callout{background:#fffbe6;border-left:5px solid var(--gold);padding:18px 22px;margin:20px 0;font-size:14.5px;max-width:820px;line-height:1.75}
+.callout strong{font-family:'Noto Serif TC',serif;color:var(--accent);display:block;margin-bottom:6px;font-size:16px}
+.callout.key{background:var(--accent-soft);border-left-color:var(--accent)}
+.callout.warn{background:#ffeae0;border-left-color:var(--red)}
+.callout.warn strong{color:var(--red)}
+.callout.tip{background:#e0f4ed;border-left-color:var(--green)}
+.callout.tip strong{color:var(--green)}
+.callout.exam{background:#f3e7fa;border-left-color:var(--accent);position:relative}
+.callout.exam strong{color:var(--accent)}
+.callout.exam::after{content:'EXAM';position:absolute;top:8px;right:14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--accent);font-weight:700}
+.callout.note{background:#f4f4f0;border-left-color:var(--mute);border:1px solid #d6d2c5;position:relative}
+.callout.note strong{color:var(--mute)}
+.callout.note::after{content:'NOTE · 補充';position:absolute;top:8px;right:14px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--mute);font-weight:700;background:#fff;padding:2px 6px;border:1px solid #d6d2c5}
+table.matrix{width:100%;border-collapse:collapse;margin:24px 0;font-size:13.5px;background:#fff;border:2px solid var(--ink)}
+table.matrix th{background:var(--ink);color:var(--paper);font-family:'Noto Serif TC',serif;font-weight:700;padding:10px 12px;text-align:left;font-size:13px;letter-spacing:0.5px}
+table.matrix td{padding:10px 12px;border-bottom:1px solid #ddd;vertical-align:top}
+table.matrix tr:last-child td{border-bottom:none}
+table.matrix tr:nth-child(even){background:#faf7ee}
+table.matrix td:first-child{font-weight:700;color:var(--accent);font-family:'Noto Serif TC',serif;white-space:nowrap}
+table.matrix td .en{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mute);font-weight:400;letter-spacing:0.5px}
+.formula{background:#fff;border:1px dashed var(--accent);padding:14px 20px;margin:14px 0;font-family:'JetBrains Mono',monospace;font-size:15px;text-align:center;border-radius:2px;max-width:820px;color:var(--accent-deep);position:relative}
+.formula::before{content:'FORMULA';position:absolute;top:-9px;left:14px;background:var(--paper);font-size:9px;letter-spacing:2px;color:var(--accent);padding:0 6px}
+.pc-box{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0;max-width:820px}
+.pc-cell{padding:16px 20px;border:1px solid var(--ink);background:#fff;font-size:13.5px;line-height:1.7}
+.pc-cell.pros{border-left:4px solid var(--green)}
+.pc-cell.cons{border-left:4px solid var(--red)}
+.pc-cell .lbl{font-family:'Noto Serif TC',serif;font-weight:700;font-size:14px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.pc-cell.pros .lbl{color:var(--green)}
+.pc-cell.cons .lbl{color:var(--red)}
+.pc-cell ul{padding-left:18px;margin:0}
+.pc-cell li{margin-bottom:4px;color:var(--sub)}
+.def-card{background:#fff;border:2px solid var(--ink);margin:24px 0;max-width:840px}
+.def-card-head{background:var(--ink);color:var(--paper);padding:12px 20px;display:flex;align-items:baseline;justify-content:space-between}
+.def-card-head h4{font-family:'Noto Serif TC',serif;font-weight:700;font-size:18px;color:#fff}
+.def-card-head .en{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:1.5px}
+.def-card-body{padding:20px 24px;font-size:14px;line-height:1.8;color:var(--sub)}
+.def-card-body p{margin-bottom:8px;max-width:none}
+.def-card-body .formula{margin:12px 0}
+.tile-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:24px 0;max-width:1000px}
+.tile{background:#fff;border:2px solid var(--ink);padding:20px;position:relative}
+.tile-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--accent);font-weight:700;margin-bottom:6px}
+.tile-title{font-family:'Noto Serif TC',serif;font-weight:700;font-size:18px;margin-bottom:10px}
+.tile-body{font-size:13px;color:var(--sub);line-height:1.7}
+.diagram{background:#fff;border:2px solid var(--ink);padding:24px 30px;margin:24px 0;max-width:900px}
+.diagram-title{font-family:'Noto Serif TC',serif;font-weight:700;font-size:15px;text-align:center;margin-bottom:10px;color:var(--accent-deep)}
+.diagram-cap{font-size:12px;color:var(--mute);text-align:center;margin-top:8px;font-style:italic}
+.diagram svg{display:block;width:100%;height:auto;max-width:100%}
+.steps{margin:24px 0;max-width:840px}
+.step-row{display:grid;grid-template-columns:80px 1fr;gap:24px;padding:20px 0;border-bottom:1px dashed #aaa}
+.step-row:last-child{border-bottom:none}
+.step-num{font-family:'Noto Serif TC',serif;font-weight:900;font-size:48px;line-height:1;color:var(--accent)}
+.step-content h4{font-family:'Noto Serif TC',serif;font-weight:700;font-size:18px;margin-bottom:8px}
+.step-meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mute);letter-spacing:1px;margin-bottom:8px}
+.step-content p{font-size:14px;color:var(--sub);margin-bottom:6px;line-height:1.75}
+.stub{background:repeating-linear-gradient(45deg,#fff,#fff 10px,#faf7ee 10px,#faf7ee 20px);border:3px dashed var(--mute);padding:60px 40px;text-align:center;margin:24px 0;max-width:900px}
+.stub-title{font-family:'Noto Serif TC',serif;font-weight:900;font-size:24px;color:var(--mute);margin-bottom:8px}
+.stub-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mute);letter-spacing:2px}
+code.k{background:var(--paper);color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:11px;padding:1px 6px;border-radius:2px}
+footer{background:var(--ink);color:#a89e8e;padding:40px;border-top:6px solid var(--gold);font-size:12px;letter-spacing:0.5px}
+footer .fbrand{font-family:'Noto Serif TC',serif;font-weight:700;font-size:16px;color:var(--paper);margin-bottom:8px}
+.page-shell{display:grid;grid-template-columns:260px minmax(0,1fr);align-items:start;position:relative}
+aside.sidebar-nav{position:sticky;top:54px;align-self:start;max-height:calc(100vh - 54px);overflow-y:auto;background:var(--ink);color:var(--paper);padding:24px 18px 32px;border-right:3px solid var(--accent);font-size:13px;z-index:50}
+aside.sidebar-nav::-webkit-scrollbar{width:6px}
+aside.sidebar-nav::-webkit-scrollbar-thumb{background:#3a3528;border-radius:3px}
+.sb-brand{font-family:'Noto Serif TC',serif;font-weight:900;font-size:15px;color:var(--gold);margin-bottom:4px;letter-spacing:-0.3px}
+.sb-brand-sub{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:#a89e8e;padding-bottom:14px;margin-bottom:14px;border-bottom:1px dashed #3a3528}
+.sb-section{margin-bottom:22px}
+.sb-title{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--gold);margin-bottom:8px;font-weight:700}
+.sb-title .sb-chip{background:var(--accent);color:#fff;padding:2px 5px;margin-right:6px;border-radius:2px;font-size:9px}
+aside.sidebar-nav a{display:block;color:#d4cbb8;text-decoration:none;padding:5px 10px 5px 14px;border-left:2px solid transparent;margin-bottom:1px;font-size:12.5px;line-height:1.45;transition:all .15s;border-radius:0 2px 2px 0}
+aside.sidebar-nav a .sb-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);margin-right:6px;font-weight:700}
+aside.sidebar-nav a:hover{background:rgba(255,255,255,0.06);border-left-color:var(--gold);color:#fff}
+aside.sidebar-nav a.active{background:var(--accent);color:#fff;border-left-color:var(--gold)}
+aside.sidebar-nav a.active .sb-num{color:var(--gold)}
+.sb-back-top{display:block;margin-top:24px;padding:8px 12px;background:#3a3528;color:var(--gold) !important;text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-decoration:none;border:1px solid #4a4030}
+.sb-back-top:hover{background:var(--accent) !important;color:#fff !important}
+main.main-content{min-width:0;overflow-x:hidden}
+.sb-toggle{display:none;position:fixed;bottom:24px;left:24px;z-index:60;width:48px;height:48px;background:var(--ink);color:var(--gold);border:2px solid var(--gold);border-radius:50%;cursor:pointer;font-size:22px;font-family:inherit}
+@media(max-width:1024px){
+  .topnav{padding:12px 24px}
+  .topnav-links{font-size:11px}
+  .topnav-links a{padding:6px 10px;letter-spacing:0.5px}
+  .container{padding:0 24px}
+  .hero h1{font-size:44px}
+  .sec-title{font-size:30px}
+  .chap-nav-grid,.pc-box{grid-template-columns:1fr}
+  .hero-meta{flex-wrap:wrap;gap:24px}
+  .page-shell{grid-template-columns:1fr}
+  aside.sidebar-nav{position:fixed;top:54px;left:0;width:280px;max-height:calc(100vh - 54px);transform:translateX(-100%);transition:transform .25s ease;box-shadow:4px 0 16px rgba(0,0,0,0.4)}
+  aside.sidebar-nav.open{transform:translateX(0)}
+  .sb-toggle{display:flex;align-items:center;justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+<div class="topnav-brand"><span class="small">iPAS · LEVEL 2</span>AI 應用規劃師｜全面學習指引</div>
+<div class="topnav-links">
+<a href="00_引讀.html">引讀</a>
+<a href="01_AI技術應用與規劃.html">科目一</a>
+<a href="02_大數據處理分析.html">科目二</a>
+<a href="03_機器學習技術應用.html" class="current">科目三</a>
+<a href="99_速查與索引.html">速查</a>
+</div>
+</nav>
+
+<button class="sb-toggle" onclick="document.querySelector('aside.sidebar-nav').classList.toggle('open')" aria-label="切換章節導航">☰</button>
+
+<div class="page-shell">
+
+<aside class="sidebar-nav" id="sidebar">
+<div class="sb-brand">科目三</div>
+<div class="sb-brand-sub">機器學習技術與應用</div>
+
+<div class="sb-section">
+<div class="sb-title"><span class="sb-chip">CH 3</span>機器學習基礎數學</div>
+<a href="#s3-3-1"><span class="sb-num">3.1</span>機率 / 統計基礎應用</a>
+<a href="#s3-3-2"><span class="sb-num">3.2</span>線性代數基礎</a>
+<a href="#s3-3-3"><span class="sb-num">3.3</span>數值優化技術</a>
+</div>
+
+<div class="sb-section">
+<div class="sb-title"><span class="sb-chip">CH 4</span>機器學習與深度學習</div>
+<a href="#s3-4-1"><span class="sb-num">4.1</span>機器學習原理</a>
+<a href="#s3-4-2"><span class="sb-num">4.2</span>常見演算法</a>
+<a href="#s3-4-3"><span class="sb-num">4.3</span>深度學習原理與框架</a>
+</div>
+
+<div class="sb-section">
+<div class="sb-title"><span class="sb-chip">CH 5</span>機器學習應用流程</div>
+<a href="#s3-5-1"><span class="sb-num">5.1</span>數據準備與特徵工程</a>
+<a href="#s3-5-2"><span class="sb-num">5.2</span>模型選擇與架構設計</a>
+<a href="#s3-5-3"><span class="sb-num">5.3</span>訓練、評估與驗證</a>
+<a href="#s3-5-4"><span class="sb-num">5.4</span>模型調整與優化</a>
+</div>
+
+<div class="sb-section">
+<div class="sb-title"><span class="sb-chip">CH 6</span>機器學習治理</div>
+<a href="#s3-6-1"><span class="sb-num">6.1</span>數據隱私、安全與合規</a>
+<a href="#s3-6-2"><span class="sb-num">6.2</span>演算法偏見與公平性</a>
+</div>
+
+<a href="#top" class="sb-back-top">↑ 回到頂部</a>
+</aside>
+
+<main class="main-content">
+
+<div class="container" id="top">
+<div class="hero">
+<div class="hero-eyebrow">SUBJECT 03 · 機器學習技術與應用</div>
+<h1>從數學基礎<br>到<span class="accent">完整工程</span></h1>
+<p class="tagline">這一科是三科中<b>最技術性的部分</b>，也是科目一與科目二的支柱 — 從數學基礎（機率、線代、優化）出發，深入機器學習原理、深度學習架構，到完整建模流程與治理。掌握這科，AI 對你不再是黑盒子。</p>
+<div class="hero-meta">
+<span><strong>04</strong>章節 CHAPTERS</span>
+<span><strong>12</strong>節 TOPICS</span>
+<span><strong>223</strong>原書頁數 PAGES</span>
+<span><strong>L23</strong>能力代碼 SCOPE</span>
+</div>
+</div>
+</div>
+
+<div class="container">
+<div class="chap-nav">
+<div class="chap-nav-title">CHAPTER NAVIGATION · 章節快速跳轉</div>
+<div class="chap-nav-grid">
+<a href="#s3-3-1"><span><span class="num">3.1</span>機率 / 統計基礎</span><span style="color:var(--mute);font-size:11px">完整</span></a>
+<a href="#s3-3-2"><span><span class="num">3.2</span>線性代數基礎</span><span style="color:var(--mute);font-size:11px">完整</span></a>
+<a href="#s3-3-3"><span><span class="num">3.3</span>數值優化技術</span><span style="color:var(--mute);font-size:11px">完整</span></a>
+<a href="#s3-4-1"><span><span class="num">4.1</span>機器學習原理</span><span style="color:var(--mute);font-size:11px">完整</span></a>
+<a href="#s3-4-2"><span><span class="num">4.2</span>常見演算法</span><span style="color:var(--mute);font-size:11px">完整</span></a>
+<a href="#s3-4-3"><span><span class="num">4.3</span>深度學習原理</span><span style="color:var(--mute);font-size:11px">完整</span></a>
+<a href="#s3-5-1"><span><span class="num">5.1</span>特徵工程</span><span style="color:var(--mute);font-size:11px">完整</span></a>
+<a href="#s3-5-2"><span><span class="num">5.2</span>架構設計</span><span style="color:var(--mute);font-size:11px">完整</span></a>
+<a href="#s3-5-3"><span><span class="num">5.3</span>訓練與評估</span><span style="color:var(--mute);font-size:11px">完整</span></a>
+<a href="#s3-5-4"><span><span class="num">5.4</span>調整與優化</span><span style="color:var(--mute);font-size:11px">完整</span></a>
+<a href="#s3-6-1"><span><span class="num">6.1</span>隱私與合規</span><span style="color:var(--mute);font-size:11px">完整</span></a>
+<a href="#s3-6-2"><span><span class="num">6.2</span>偏見與公平性</span><span style="color:var(--mute);font-size:11px">完整</span></a>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ====== CHAPTER 3 機器學習基礎數學 =========================== -->
+<!-- ============================================================ -->
+<section>
+<div class="container">
+<div class="sec-eyebrow"><span class="chip">CHAPTER 03</span>L231 · 機器學習基礎數學</div>
+<h2 class="sec-title">機器學習基礎數學</h2>
+<p class="sec-intro">機器學習不是魔法 — 它建立在三大數學支柱上：<b>機率/統計（量化不確定性）、線性代數（表示與運算）、數值優化（找最佳解）</b>。掌握這三者，AI 對你不再是黑盒子。</p>
+
+<h3 class="sub-title" id="s3-3-1" data-num="3.1">機率 / 統計之機器學習基礎應用</h3>
+
+<p class="body">真實世界的資料受限於觀察條件、取樣變異、內在隨機性 — 預測結果並非絕對唯一。<b>機器學習的核心任務不是尋找絕對規則，而是處理「不確定性」並進行合理預測</b>。這正是機率與統計成為 ML 三大數學支柱之一的原因。</p>
+
+<h4 class="h-3">A · 條件機率分佈 — ML 的核心邏輯</h4>
+
+<p class="body">ML 模型的核心邏輯可表述為：<b>在特定觀察條件下，某結果發生的可能性有多大</b>。我們不是尋求唯一解，而是學習一種<b>條件機率分佈（Conditional Probability Distribution）</b>。</p>
+
+<div class="formula">P( Y | X )</div>
+
+<table class="matrix">
+<tr><th style="width:32%">意涵</th><th>說明</th></tr>
+<tr><td>預測導向</td><td>模型輸出為某結果的機率（如分類機率），<b>而非確定性分類結果</b></td></tr>
+<tr><td>不確定性評估</td><td>機率反映模型對預測的信心程度，有助於風險控制與決策制定</td></tr>
+</table>
+
+<h4 class="h-3">B · 離散 vs 連續分佈</h4>
+
+<table class="matrix">
+<tr><th style="width:18%">類型</th><th style="width:24%">變數性質</th><th style="width:24%">機率函數</th><th>常見分佈</th></tr>
+<tr><td>離散型</td><td>有限或可數值（擲骰、訂單數）</td><td>機率質量函數 PMF<br><code>P(X = xᵢ)</code></td><td>伯努利、二項、泊松</td></tr>
+<tr><td>連續型</td><td>無限且連續（身高、時間、溫度）</td><td>機率密度函數 PDF<br><code>P(a ≤ X ≤ b) = ∫f(x)dx</code></td><td>常態、均勻、指數、卡方</td></tr>
+</table>
+
+<h4 class="h-4">六種常見分佈在 ML 中的應用</h4>
+
+<table class="matrix">
+<tr><th style="width:18%">分佈</th><th>ML 中的應用</th></tr>
+<tr><td>伯努利<br>Bernoulli</td><td>二元事件（成功/失敗、點擊/未點擊）；<b>邏輯迴歸假設目標變數服從此分佈</b></td></tr>
+<tr><td>二項<br>Binomial</td><td>n 次獨立伯努利試驗的累計成功次數；多次點擊行為建模</td></tr>
+<tr><td>泊松<br>Poisson</td><td>固定時間或空間區間的稀有事件次數；客服來電量、伺服器請求次數</td></tr>
+<tr><td>常態<br>Normal</td><td>對稱鐘型；最廣泛使用：<b>誤差建模、線性迴歸假設、參數估計、特徵分數標準化、生成模型</b></td></tr>
+<tr><td>均勻<br>Uniform</td><td>固定區間內所有數值機率相同；用於<b>參數初始化或隨機抽樣</b></td></tr>
+<tr><td>指數 / 卡方</td><td>指數：事件間隔時間（無記憶性）；卡方：常態變數平方和，用於變異數分析、適合度檢定</td></tr>
+</table>
+
+<div class="callout key">
+<strong>選分佈 = 選擇模型的先驗假設</strong>
+<b>邏輯迴歸</b>假設目標變數服從伯努利分佈 → 用以處理二元分類問題。<b>線性迴歸</b>假設誤差項符合常態分佈 → 藉此推導參數估計與檢定。<b>VAE（變分自編碼器）</b>則進一步把潛在變數與觀察變數的分佈型態納入模型架構核心 — 機率分佈不只是輔助工具，而是模型運作本身的一部分。
+</div>
+
+<h4 class="h-3">C · 條件機率與貝氏定理</h4>
+
+<h4 class="h-4">① 條件機率</h4>
+
+<div class="formula">P(A | B) = P(A ∩ B) / P(B)</div>
+
+<p class="body">表示在事件 B 發生的前提下，事件 A 發生的機率。在 ML 中的應用：</p>
+
+<ul class="body">
+<li><b>分類任務中的條件預測：</b>學習 P(Y|X) — 邏輯迴歸、貝氏分類器</li>
+<li><b>生醫與金融風控：</b>已知檢驗結果或行為模式 → 預估未來事件機率（罹病風險、違約機率）</li>
+<li><b>生成模型中的變數關聯：</b>變分自編碼器（VAE）、隱馬可夫模型（HMM）建構潛在與觀察變數的依存</li>
+</ul>
+
+<h4 class="h-4">② 貝氏定理 — 結合「原有知識」與「新觀察」</h4>
+
+<div class="formula">P(A | B) = [ P(B | A) · P(A) ] / P(B)</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>四大構成元素</h4><span class="en">PRIOR · LIKELIHOOD · MARGINAL · POSTERIOR</span></div>
+<div class="def-card-body">
+<table class="matrix" style="margin:8px 0">
+<tr><th style="width:24%">元素</th><th>意義</th></tr>
+<tr><td>P(A) 先驗機率<br>Prior</td><td>在尚未觀察事件 B 之前，對 A 發生的初始信念</td></tr>
+<tr><td>P(B|A) 條件機率（似然）<br>Likelihood</td><td>在 A 發生前提下，B 發生的可能性</td></tr>
+<tr><td>P(B) 邊際機率<br>Marginal</td><td>事件 B 發生的總體機率（無論 A 是否發生）</td></tr>
+<tr><td>P(A|B) 後驗機率<br>Posterior</td><td>觀察到 B 之後，根據新資訊更新對 A 的重新估計 — <b>核心輸出</b></td></tr>
+</table>
+</div>
+</div>
+
+<div class="callout note">
+<strong>補充：貝氏推論在 ML 的關鍵價值</strong>
+貝氏定理的關鍵意涵 — 把「<b>原有知識（先驗）</b>」與「<b>新資料觀察（似然）</b>」整合，產生即時的後驗機率調整。這種<b>更新能力</b>讓 ML 模型在面對<b>不確定性與資料稀疏</b>問題時保有推論彈性與解釋力。應用：垃圾郵件過濾（樸素貝氏）、推薦系統（貝氏個人化排序）、A/B 測試（貝氏 A/B Testing）。
+</div>
+
+<h4 class="h-3">D · 統計推論與假設檢定</h4>
+
+<table class="matrix">
+<tr><th style="width:18%">面向</th><th style="width:41%">參數估計</th><th>假設檢定</th></tr>
+<tr><td>目的</td><td>推測母體參數的「值」或「區間」</td><td>驗證某主張是否成立</td></tr>
+<tr><td>核心問題</td><td>母體參數大約是多少？</td><td>是否有足夠證據拒絕一個假設？</td></tr>
+<tr><td>輸出</td><td>點估計值 + 信賴區間（如 95% CI）</td><td>p 值、檢定統計量 + 顯著水準決策</td></tr>
+<tr><td>例子</td><td>樣本平均體重 68kg，95% CI 為 [66, 70]</td><td>新運動課程降低體重，p = 0.03 &lt; α = 0.05，拒絕 H₀，認為有效</td></tr>
+</table>
+
+<h4 class="h-4">假設檢定五步驟流程</h4>
+
+<div class="steps">
+<div class="step-row">
+<div class="step-num">1</div>
+<div class="step-content">
+<div class="step-meta">STEP 01</div>
+<h4>設定虛無假設 H₀ 與對立假設 H₁</h4>
+<p>H₀ 為現狀（無差異、無效果）；H₁ 為研究者想驗證的新主張。</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">2</div>
+<div class="step-content">
+<div class="step-meta">STEP 02</div>
+<h4>選擇適當的檢定方法與檢定統計量</h4>
+<p>視資料型態與比較對象選擇（t 檢定、卡方、ANOVA、Z 檢定）。</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">3</div>
+<div class="step-content">
+<div class="step-meta">STEP 03</div>
+<h4>決定顯著水準 α</h4>
+<p>α = 0.05 是慣例；醫療等嚴謹領域用 0.01。</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">4</div>
+<div class="step-content">
+<div class="step-meta">STEP 04</div>
+<h4>計算檢定統計量與 p 值</h4>
+<p>p 值含義：在 H₀ 為真的前提下觀察到目前樣本（或更極端）的機率。p 越小，越支持拒絕 H₀。</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">5</div>
+<div class="step-content">
+<div class="step-meta">STEP 05</div>
+<h4>比較 p 值與 α 做決策</h4>
+<p>p &lt; α → 拒絕 H₀；p ≥ α → 無法拒絕（不等於接受）。</p>
+</div>
+</div>
+</div>
+
+<div class="callout warn">
+<strong>α vs p 值常被混淆</strong>
+<b>α 是事前設定</b>的判斷門檻；<b>p 值是事後計算</b>的觀察結果。在 ML 中，假設檢定常用於<b>特徵選擇</b>（卡方檢定篩選對目標變數顯著的類別特徵）、<b>模型比較</b>（兩模型表現差異是否統計顯著）、<b>A/B 測試</b>（新版本是否真的優於舊版本）。
+</div>
+
+<h4 class="h-3">E · 統計量在 ML 中的角色</h4>
+
+<table class="matrix">
+<tr><th style="width:22%">統計量</th><th>在 ML 中的用途</th></tr>
+<tr><td>期望值<br>Expected Value</td><td>反映變數平均趨勢；許多模型的預測基準與參數估計核心（線性迴歸截距項）</td></tr>
+<tr><td>變異數 / 標準差<br>Variance / SD</td><td>衡量資料離散程度；判斷特徵是否需<b>標準化</b>，避免尺度不一致對訓練造成偏誤</td></tr>
+<tr><td>偏度 Skewness</td><td>判斷分佈是否對稱；偏態過大常需<b>對數轉換或 Box-Cox 轉換</b>改善模型收斂</td></tr>
+<tr><td>峰度 Kurtosis</td><td>觀察尖峰或厚尾；偵測異常值密度與風險擴散</td></tr>
+</table>
+
+<div class="callout exam">
+<strong>常考點：機率分佈與 ML 模型對應</strong>
+題目情境問「邏輯迴歸假設目標變數服從什麼分佈？」 → 答<b>伯努利分佈</b>。問「線性迴歸的誤差項假設？」 → 答<b>常態分佈</b>。問「客服每小時來電次數模擬？」 → 答<b>泊松分佈</b>。記住：選分佈 = 選模型的先驗假設。
+</div>
+
+<h3 class="sub-title" id="s3-3-2" data-num="3.2">線性代數之機器學習基礎應用</h3>
+
+<p class="body">線性代數是 ML 模型運算與表示的<b>數學基礎</b>。絕大多數演算法都以<b>矩陣與向量</b>為運算單位，透過線性變換、特徵分解、最小平方估計實現模型訓練與預測。從資料表示、參數計算、梯度更新到特徵轉換 — 每個環節都離不開線性代數。</p>
+
+<h4 class="h-3">A · 向量與矩陣的角色</h4>
+
+<h4 class="h-4">① 向量 — 描述單一樣本的特徵組合</h4>
+
+<p class="body">向量是<b>具有方向與大小</b>的數學物件，常用於描述單一樣本：</p>
+
+<div class="formula">x = [x₁, x₂, x₃, x₄, x₅]ᵀ　　θ = [θ₁, θ₂, …, θ_d]　　ŷ = θᵀ x</div>
+
+<table class="matrix">
+<tr><th style="width:24%">運算</th><th>意義 / ML 應用</th></tr>
+<tr><td>點積<br>Dot Product</td><td>評估兩向量在同一方向的對應程度；物理意義是「投影」與「相似度」<br>線性模型預測核心：ŷ = θᵀx</td></tr>
+<tr><td>L2 範數<br>Norm</td><td>歐幾里得範數；計算向量「長度」<br>正規化與 L2 正則化基礎</td></tr>
+<tr><td>向量加減與線性組合</td><td>計算誤差向量、梯度向量等</td></tr>
+</table>
+
+<h4 class="h-4">② 矩陣 — 多筆樣本或權重的集合</h4>
+
+<table class="matrix">
+<tr><th style="width:32%">矩陣</th><th>意義</th></tr>
+<tr><td>特徵矩陣 X ∈ ℝⁿˣᵈ</td><td>n 筆樣本、每筆含 d 個特徵；每一列為一筆樣本向量</td></tr>
+<tr><td>權重矩陣 W ∈ ℝᵈˣᵏ</td><td>多類別分類中，把 d 維輸入特徵映射為 k 維輸出機率分數</td></tr>
+</table>
+
+<h4 class="h-4">三大核心矩陣運算</h4>
+
+<ul class="body">
+<li><b>矩陣乘法（Matrix Multiplication）：</b>模型運算核心；批次預測、權重更新、轉換特徵空間</li>
+<li><b>轉置（Transpose）：</b>列與行互換；維度對齊與內積計算</li>
+<li><b>矩陣求逆 / 偽逆（Inverse / Pseudo-Inverse）：</b>用於封閉解（最小平方解），或無法反矩陣時近似</li>
+</ul>
+
+<h4 class="h-4">在模型建構中的具體應用</h4>
+
+<table class="matrix">
+<tr><th style="width:32%">情境</th><th>線性代數表示</th></tr>
+<tr><td>線性迴歸的預測</td><td>ŷ = X θ — 用矩陣形式進行損失函數與導數運算</td></tr>
+<tr><td>神經網路前向傳播</td><td>z⁽ˡ⁾ = W⁽ˡ⁾ a⁽ˡ⁻¹⁾ + b⁽ˡ⁾ — 層與層之間本質是矩陣與向量乘法</td></tr>
+<tr><td>PCA 主成分分析</td><td>對特徵矩陣進行協方差計算與矩陣分解，尋找最具代表性的投影方向</td></tr>
+</table>
+
+<h4 class="h-3">B · 線性變換 — 幾何意義</h4>
+
+<p class="body">當向量 x 被矩陣 A 左乘 → 新向量 Ax 是對原向量的一次<b>線性變換</b>。可能在同維度中發生，也可能投射至另一維度的空間。</p>
+
+<div class="tile-grid">
+<div class="tile">
+<div class="tile-num">GEOM 01</div>
+<div class="tile-title">縮放 Scaling</div>
+<div class="tile-body">調整向量在各方向的長度，<b>改變尺度但不改變方向</b></div>
+</div>
+<div class="tile">
+<div class="tile-num">GEOM 02</div>
+<div class="tile-title">旋轉 Rotation</div>
+<div class="tile-body"><b>改變方向但不改變長度</b>；常見於正交變換或特徵對齊</div>
+</div>
+<div class="tile">
+<div class="tile-num">GEOM 03</div>
+<div class="tile-title">剪切 Shearing</div>
+<div class="tile-body">向量方向在空間中產生<b>傾斜變化</b>；非對角矩陣的變換</div>
+</div>
+<div class="tile">
+<div class="tile-num">GEOM 04</div>
+<div class="tile-title">投影 Projection</div>
+<div class="tile-body">將高維向量<b>投射到子空間</b>（主成分空間或分類超平面）；保留對任務最有意義的資訊</div>
+</div>
+</div>
+
+<h4 class="h-4">線性變換在 ML 模型中的出現形式</h4>
+
+<table class="matrix">
+<tr><th style="width:30%">模型 / 操作</th><th>線性變換的角色</th></tr>
+<tr><td>線性 / 邏輯迴歸</td><td>y = wᵀx + b — 將多維特徵<b>投射到一條直線</b>上預測</td></tr>
+<tr><td>神經網路前向傳播</td><td>每層的運算把上一層輸出<b>映射至下一層特徵空間</b>，再經非線性激活</td></tr>
+<tr><td>嵌入層 Embedding Layer</td><td>把<b>離散類別</b>轉為連續空間的向量表示；核心是矩陣線性查詢</td></tr>
+<tr><td>LDA / Autoencoder</td><td>把高維資料<b>重構為低維潛在向量空間</b></td></tr>
+</table>
+
+<h4 class="h-3">C · 矩陣分解 — 降維與特徵抽取</h4>
+
+<p class="body"><b>矩陣分解（Matrix Factorization）</b>把高維矩陣拆解為多個較小且具結構意義的子矩陣 — 實現降維、壓縮、轉換。</p>
+
+<div class="def-card">
+<div class="def-card-head"><h4>① 特徵值分解 Eigenvalue Decomposition</h4><span class="en">EVD</span></div>
+<div class="def-card-body">
+<p><b>原理：</b>適用於對稱方陣；將矩陣分解為特徵向量與特徵值的組合。</p>
+<div class="formula">A = Q Λ Qᵀ</div>
+<p>其中 Q 是正交矩陣（由 A 的特徵向量構成）、Λ 是對角矩陣（對角元素為特徵值）。</p>
+<p><b>幾何意義：</b>找出一組能穩定表示資料「拉伸方向」的基底，並量化每個方向的重要性。</p>
+<p><b>應用：</b>① <b>PCA 主成分分析</b>把資料投影到最大變異方向；② <b>LDA 線性判別分析</b>找最佳分類投影方向。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>② 奇異值分解 SVD</h4><span class="en">Singular Value Decomposition</span></div>
+<div class="def-card-body">
+<p><b>原理：</b>可應用於<b>任意實數矩陣</b>（不需為方陣），分解為三部分：</p>
+<div class="formula">X = U Σ Vᵀ</div>
+<ul style="font-size:13.5px;margin-left:24px;line-height:1.7">
+<li><b>U ∈ ℝᵐˣᵐ</b>：左奇異向量矩陣（對應樣本方向）</li>
+<li><b>Σ ∈ ℝᵐˣⁿ</b>：奇異值對角矩陣（對角線為非負實數，表示主方向重要性）</li>
+<li><b>V ∈ ℝⁿˣⁿ</b>：右奇異向量矩陣（對應特徵方向）</li>
+</ul>
+<p><b>應用：</b></p>
+<ul style="font-size:13.5px;margin-left:24px;line-height:1.7">
+<li><b>資料降維</b>：保留前 k 個奇異值與向量，近似原始資料（PCA 計算）</li>
+<li><b>推薦系統</b>：分解使用者-項目矩陣，找潛在偏好向量</li>
+<li><b>潛在語意分析 LSA</b>：抽取語料中詞與文件間的潛在語意</li>
+<li><b>影像壓縮</b>：只保留主成分影像資訊</li>
+</ul>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>③ 非負矩陣分解 NMF</h4><span class="en">Non-negative Matrix Factorization</span></div>
+<div class="def-card-body">
+<p><b>原理：</b>把<b>非負矩陣 X ≥ 0</b> 分解為兩個非負矩陣乘積：</p>
+<div class="formula">X ≈ W H　（W, H ≥ 0）</div>
+<p><b>幾何意義：</b>把資料視為幾個「可加疊的部件」 — 具備<b>語意解釋力</b>，並自然引入稀疏性。</p>
+<p><b>應用：</b>主題建模（Topic Modeling，將文件-詞矩陣分解為主題與詞彙分佈）、生物訊號分析（腦波分解）、影像分析（視覺元素拆解）、社群分析（互動關聯）。</p>
+</div>
+</div>
+
+<div class="callout note">
+<strong>補充：三種分解的差別記憶</strong>
+<b>EVD（特徵值分解）：</b>只能用於對稱方陣；給你「主要方向」<br>
+<b>SVD（奇異值分解）：</b>任意矩陣都能分解；給你「樣本方向 + 特徵方向 + 重要性」 — 最通用<br>
+<b>NMF（非負矩陣分解）：</b>限制非負；給你「可加疊的部件」 — 解釋性最強<br>
+<b>實務上 PCA 多用 SVD 實作</b>（數值穩定、不需先計算協方差矩陣）。
+</div>
+
+<h4 class="h-4">維度簡化對學習效率的影響</h4>
+
+<table class="matrix">
+<tr><th style="width:28%">效益</th><th>說明</th></tr>
+<tr><td>提升訓練效率</td><td>減少參數量與計算資源需求；加快訓練時間</td></tr>
+<tr><td>穩定模型表現</td><td>去除雜訊與共線性，降低過擬合風險</td></tr>
+<tr><td>強化資料解釋性</td><td>轉換後特徵常具明確幾何或語意意義，與業務需求連結</td></tr>
+<tr><td>利於視覺化與探索</td><td>降維後投影到 2D/3D 空間方便探索、群集判斷、異常偵測</td></tr>
+</table>
+
+<h4 class="h-3">D · 最小平方估計與線性迴歸</h4>
+
+<p class="body"><b>線性迴歸</b>是 ML 中最基礎且具代表性的監督式模型。核心目的：找出一條「最佳擬合線」描述輸入變數與目標變數的線性關係。</p>
+
+<div class="def-card">
+<div class="def-card-head"><h4>最小平方估計 OLS</h4><span class="en">Ordinary Least Squares</span></div>
+<div class="def-card-body">
+<p><b>核心概念：</b>以「<b>誤差最小化</b>」為目標的參數估計方法。比較模型預測值與實際觀測值的差異，找出一組參數讓<b>差異平方總和達到最小</b>。</p>
+<p><b>幾何觀點：</b>線性迴歸的本質是一種<b>投影</b> — 把輸入資料在特徵空間中投影到最接近實際結果的平面上。這個平面就是模型學到的線性關係。</p>
+<p><b>侷限：</b>資料若分佈過於分散或存在離群點，擬合平面可能會被嚴重扭曲。</p>
+</div>
+</div>
+
+<h4 class="h-4">線性迴歸的典型應用情境</h4>
+
+<table class="matrix">
+<tr><th style="width:24%">應用</th><th>說明</th></tr>
+<tr><td>銷售預測</td><td>根據廣告支出、市場活動，預測未來營收</td></tr>
+<tr><td>醫療風險評估</td><td>用年齡、血壓等指標預測患病機率或醫療成本</td></tr>
+<tr><td>房價估值</td><td>房屋大小、樓層、地點作為輸入，預測合理價格</td></tr>
+<tr><td>行為建模</td><td>描述某變數如何受多個條件共同影響</td></tr>
+</table>
+
+<div class="callout exam">
+<strong>常考點：線性代數的核心應用</strong>
+題目情境問「PCA 主成分分析的數學基礎？」 → 答<b>特徵值分解 / SVD</b>。問「推薦系統把使用者-商品矩陣分解？」 → 答<b>矩陣分解（SVD 或 NMF）</b>。問「神經網路的前向傳播本質？」 → 答<b>矩陣與向量的乘法 + 非線性激活</b>。
+</div>
+
+<h3 class="sub-title" id="s3-3-3" data-num="3.3">數值優化技術與方法</h3>
+
+<div class="callout key">
+<strong>訓練模型 = 解一個數值優化問題</strong>
+不論是調整線性模型的權重參數、深度神經網路的千萬個連接係數，或在強化式學習中尋找最適策略 — <b>核心邏輯都是：找出一組能讓目標函數（如損失函數）達到最小或最大值的參數組合</b>。
+</div>
+
+<h4 class="h-3">A · 最佳化問題的四大構成</h4>
+
+<table class="matrix">
+<tr><th style="width:22%">要素</th><th>說明</th></tr>
+<tr><td>① 目標函數<br>Objective Function</td><td>衡量模型輸出與實際答案的偏差程度（損失函數 / 成本函數）；透過最小化（或最大化）讓模型修正參數</td></tr>
+<tr><td>② 決策變數<br>Decision Variables</td><td>模型中可調整的數值參數（線性模型的權重、神經網路的連接權重、貝氏模型的條件機率表）— <b>學習過程要被優化的對象</b></td></tr>
+<tr><td>③ 可行域<br>Feasible Region</td><td>決策變數的合法範圍（非負約束、上下限、總和為 1、稀疏性限制）— 哪些解是允許的</td></tr>
+<tr><td>④ 函數性質</td><td>凸性（Convexity）與可導性（Differentiability）— 決定問題難易度與可用的求解方法</td></tr>
+</table>
+
+<h4 class="h-4">凸 vs 非凸問題</h4>
+
+<div class="pc-box">
+<div class="pc-cell pros">
+<div class="lbl">▲ 凸問題</div>
+<ul>
+<li>從任一初始點開始，持續往下降方向走，<b>必然找到全域最佳解</b></li>
+<li>可預期、穩定的求解特性</li>
+<li>例：線性迴歸、邏輯迴歸、SVM</li>
+</ul>
+</div>
+<div class="pc-cell cons">
+<div class="lbl">▼ 非凸問題</div>
+<ul>
+<li>存在<b>多個局部最小值與鞍點</b></li>
+<li>優化過程充滿不確定性</li>
+<li>例：深度神經網路</li>
+<li>需要適當<b>初始化、動量機制、調整策略</b></li>
+</ul>
+</div>
+</div>
+
+<h4 class="h-3">B · 損失函數設計</h4>
+
+<p class="body">損失函數不只是誤差量化工具，更體現<b>學習目標的策略偏好與風險容忍度</b>。設計決定模型如何看待不同型態的錯誤、哪些誤差應被放大懲罰、參數調整的方向與幅度。</p>
+
+<table class="matrix">
+<tr><th style="width:18%">任務類型</th><th style="width:24%">損失函數</th><th>特性</th></tr>
+<tr><td rowspan="3">迴歸<br>（連續數值）</td><td>MSE 均方誤差<br>Mean Squared Error</td><td>放大較大誤差的懲罰；適合誤差分佈穩定的情況</td></tr>
+<tr><td>MAE 平均絕對誤差</td><td>對極端值較不敏感；適用於含異常值的資料</td></tr>
+<tr><td>Huber Loss</td><td>結合 MSE + MAE 優點；在穩定性與抗雜訊間取得平衡</td></tr>
+<tr><td rowspan="3">分類<br>（類別標籤）</td><td>交叉熵損失<br>Cross-Entropy</td><td>衡量預測機率與實際標籤分佈的距離；<b>多數分類模型的標準選擇</b></td></tr>
+<tr><td>對比損失<br>Contrastive Loss</td><td>學習樣本對之間的相似度；人臉辨識、語意匹配</td></tr>
+<tr><td>Focal Loss</td><td>強化對<b>難分類樣本</b>的學習；特別適合資料不平衡</td></tr>
+<tr><td>排序 / 重建</td><td>Ranking Loss / Reconstruction Loss</td><td>關注相對順序或輸入輸出相似度；搜尋引擎、自編碼器</td></tr>
+</table>
+
+<div class="callout warn">
+<strong>選錯損失函數 → 訓練無效</strong>
+分類問題誤用迴歸損失（如 MSE）會導致模型訓練無效甚至無法收斂。<b>口訣：</b>連續數值 → MSE/MAE；類別預測 → 交叉熵；難樣本多 → Focal Loss；含異常值 → Huber 或 MAE。
+</div>
+
+<h4 class="h-3">C · 優化演算法 — 梯度下降系列</h4>
+
+<h4 class="h-4">基礎方法：梯度下降三大變形</h4>
+
+<table class="matrix">
+<tr><th style="width:24%">方法</th><th style="width:30%">原理</th><th>特性 / 適用</th></tr>
+<tr><td>GD 梯度下降<br>Gradient Descent</td><td>用<b>整個訓練集</b>計算損失梯度，沿梯度方向更新參數</td><td>✓ 更新穩定、準確反映全體平均<br>✗ 計算成本高、訓練慢<br><b>適用：</b>小型資料集</td></tr>
+<tr><td>SGD 隨機梯度下降<br>Stochastic GD</td><td>每次用<b>一筆樣本</b>估算梯度並更新</td><td>✓ 速度快、記憶體需求低<br>✗ 梯度波動大、收斂不穩<br><b>適用：</b>大型資料集、線上學習</td></tr>
+<tr><td>Mini-batch SGD</td><td>把資料分成<b>小批次</b>，每次用一批計算梯度</td><td>✓ 平衡穩定性與效率<br><b>深度學習中最常見的選擇</b>；與 GPU 加速高度結合</td></tr>
+</table>
+
+<h4 class="h-4">進階方法：學習率調整與收斂加速</h4>
+
+<p class="body">基本梯度下降會遇到三個實務挑戰：① <b>梯度方向不穩定</b>（震盪、鞍點）；② <b>參數更新速度不一致</b>；③ <b>固定學習率難應對不同訓練階段</b>。進階優化器解決這些問題。</p>
+
+<div class="def-card">
+<div class="def-card-head"><h4>Momentum 動量法</h4><span class="en">MOMENTUM</span></div>
+<div class="def-card-body">
+<p><b>原理：</b>模仿物理動量，把前幾次梯度方向累積，幫助模型克服局部震盪。</p>
+<p><b>優點：</b>加速收斂、穩定學習過程，特別適合高曲率或非平滑空間。</p>
+<p><b>應用：</b>深層神經網路訓練、收斂速度要求高的任務。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>Adagrad</h4><span class="en">ADAPTIVE GRADIENT</span></div>
+<div class="def-card-body">
+<p><b>原理：</b>根據每個參數的<b>歷史梯度大小</b>，自動調整學習率。</p>
+<p><b>優點：</b>適合處理稀疏特徵或不均衡參數更新；對變動少的參數保留高學習率、變動大的降低。</p>
+<p><b>限制：</b>學習率會隨時間過度衰減，可能導致收斂停止。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>RMSprop</h4><span class="en">ROOT MEAN SQUARE PROP</span></div>
+<div class="def-card-body">
+<p><b>原理：</b>引入<b>滑動平均</b>，修正 Adagrad 學習率過快下降的問題。</p>
+<p><b>優點：</b>能穩定訓練，特別適合處理<b>非穩定梯度</b>（RNN 訓練）。</p>
+<p><b>應用：</b>語音處理、序列建模、非凸問題。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>Adam — Adaptive Moment Estimation</h4><span class="en">當前最常用</span></div>
+<div class="def-card-body">
+<p><b>原理：</b>結合 <b>Momentum + RMSprop</b>，追蹤梯度的一階與二階動量，自動調整各參數的學習率。</p>
+<p><b>優點：</b>訓練快速、收斂穩定、可廣泛應用於大多數模型。</p>
+<p><b>應用：</b><b>目前最常用的深度學習優化器</b>，適用圖像、語言、強化式學習等各類任務。</p>
+</div>
+</div>
+
+<div class="callout note">
+<strong>補充：優化器選擇邏輯</strong>
+<b>實務上：</b>① 大多數情境用 <b>Adam</b>（預設值 lr=0.001 通常夠用）；② 對 RNN 用 <b>RMSprop</b>；③ 對極端稀疏特徵用 <b>Adagrad</b>；④ 想精細調控用 <b>SGD + Momentum + LR Schedule</b>（效果有時超過 Adam）。「Adam 是練手用的；要打論文得試 SGD + Momentum」是業界笑話。
+</div>
+
+<h4 class="h-3">D · 收斂判準與訓練穩定性</h4>
+
+<h4 class="h-4">四種收斂判準</h4>
+
+<div class="tile-grid">
+<div class="tile">
+<div class="tile-num">CRITERION 01</div>
+<div class="tile-title">損失函數變化趨緩</div>
+<div class="tile-body">連續多次迭代變化幅度極小（低於 ε） → 學習進入平緩，視為收斂</div>
+</div>
+<div class="tile">
+<div class="tile-num">CRITERION 02</div>
+<div class="tile-title">驗證集效能不再提升</div>
+<div class="tile-body">驗證集指標持平甚至下降 → 達到泛化能力上限；再訓練可能<b>過擬合</b></div>
+</div>
+<div class="tile">
+<div class="tile-num">CRITERION 03</div>
+<div class="tile-title">梯度趨近零</div>
+<div class="tile-body">參數梯度持續逼近零 → 損失函數位於平坦區域</div>
+</div>
+<div class="tile">
+<div class="tile-num">CRITERION 04</div>
+<div class="tile-title">步數或時間達上限</div>
+<div class="tile-body">運算資源有限或週期受控時，固定 epoch 或最大訓練時間；應搭配其他指標</div>
+</div>
+</div>
+
+<h4 class="h-4">四個常見不穩定因素</h4>
+
+<table class="matrix">
+<tr><th style="width:24%">原因</th><th>後果</th></tr>
+<tr><td>學習率過高</td><td>更新步伐過大 → 參數在最小值附近震盪或發散</td></tr>
+<tr><td>初始權重不當</td><td>陷入極端值、鞍點，學習無法啟動或卡在局部解</td></tr>
+<tr><td>損失或資料不連續</td><td>梯度訊號不穩定，影響收斂路徑</td></tr>
+<tr><td>批次大小過小</td><td>梯度估計變異大，更新方向不穩</td></tr>
+</table>
+
+<h4 class="h-4">四種穩定訓練策略</h4>
+
+<div class="def-card">
+<div class="def-card-head"><h4>① 學習率調整 Learning Rate Scheduling</h4><span class="en">LR SCHEDULE</span></div>
+<div class="def-card-body">
+<p>隨訓練進行自動調降學習率，避免後期更新過大導致震盪、提升精細收斂能力。</p>
+<p><b>常見策略：</b>Step Decay（階梯式）、Cosine Annealing（餘弦衰減）、ReduceLROnPlateau（停滯時減半）。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>② Early Stopping 提早停止</h4></div>
+<div class="def-card-body">
+<p>當驗證集效能在一段時間（連續 5~10 個 epoch）未改善 → 中止訓練，<b>防止過擬合</b>。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>③ Gradient Clipping 梯度裁剪</h4></div>
+<div class="def-card-body">
+<p>為防梯度值過大（特別在 RNN 或深層模型），<b>限制梯度的最大值</b>，避免發散或數值不穩。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>④ Batch Normalization 批次正規化</h4></div>
+<div class="def-card-body">
+<p>在每一層中<b>標準化中間輸出</b>，讓輸入分佈穩定，提升收斂速度與穩定性。</p>
+</div>
+</div>
+
+<!-- ====== 3 章末練習 ====== -->
+<h3 class="sub-title" data-num="3.X">本章重點與練習</h3>
+
+<div class="callout tip">
+<strong>本章重點速記</strong>
+① ML 核心 = 學 P(Y|X) 條件機率分佈；② 六種常見機率分佈與 ML 應用對應；③ 貝氏定理四元素（先驗 / 似然 / 邊際 / 後驗）；④ 線性代數三大運算（點積、矩陣乘法、轉置）+ 三種矩陣分解（EVD / SVD / NMF）；⑤ 線性變換四種幾何意義；⑥ 最佳化四構成（目標函數 / 決策變數 / 可行域 / 函數性質）；⑦ 損失函數依任務選擇；⑧ 梯度下降三變形 + 進階優化器（Momentum / Adagrad / RMSprop / Adam）；⑨ 四收斂判準 + 四穩定策略。
+</div>
+
+<table class="matrix">
+<tr><th style="width:8%">#</th><th>題目</th></tr>
+<tr><td>1</td><td>若欲描述隨機變數在連續範圍內取值的機率分佈，最適合使用下列哪一種函數？(A) PMF　(B) 條件機率　(C) PDF　(D) CDF</td></tr>
+<tr><td>2</td><td>若一個隨機變數服從伯努利分佈，則該變數可能取值為下列哪一組？(A) 任何實數　(B) 0 或 1　(C) 正整數　(D) 任意整數</td></tr>
+<tr><td>3</td><td>在主成分分析（PCA）中，常使用哪一種矩陣分解技術來找出資料的主軸方向？(A) 矩陣求逆　(B) 矩陣轉置　(C) 特徵值分解　(D) 條件機率分解</td></tr>
+<tr><td>4</td><td>若想將高維資料映射至較低維度空間，同時保留資料的主要變異，常用下列哪一種方法？(A) 邊際機率估計　(B) 矩陣轉置　(C) 主成分分析　(D) 累積機率計算</td></tr>
+<tr><td>5</td><td>在梯度下降中，「梯度」代表下列哪一項？(A) 資料點個數　(B) 模型精確度　(C) 損失函數對參數的偏微分　(D) 模型計算速度</td></tr>
+<tr><td>6</td><td>在進行假設檢定時，顯著水準（α）表示什麼？(A) 平均值的大小　(B) 模型運算速度　(C) 拒絕虛無假設時所容許的型一錯誤機率　(D) 資料筆數多少</td></tr>
+<tr><td>7</td><td>若資料集中存在極端值，以下哪一種集中趨勢指標較不受影響？(A) 平均數　(B) 變異數　(C) 標準差　(D) 中位數</td></tr>
+<tr><td>8</td><td>以下哪一種優化方法會累積每個參數的歷史梯度大小，以調整學習率？(A) Momentum　(B) Adagrad　(C) SGD　(D) Batch Normalization</td></tr>
+<tr><td>9</td><td>當深度學習模型在訓練時出現梯度爆炸現象，應優先採用哪種技術加以處理？(A) 增大學習率　(B) 梯度裁剪　(C) 減少資料量　(D) 刪除輸入特徵</td></tr>
+<tr><td>10</td><td>邏輯迴歸模型在處理二元分類問題時，通常假設目標變數服從哪種分佈？(A) 常態分佈　(B) 均勻分佈　(C) 伯努利分佈　(D) 泊松分佈</td></tr>
+</table>
+
+<details style="margin:24px 0;max-width:900px;border:2px solid var(--ink);background:#fff;padding:16px 22px;font-size:14px">
+<summary style="cursor:pointer;font-family:'Noto Serif TC',serif;font-weight:700;font-size:16px;color:var(--accent);padding:4px 0">▸ 點此展開答案與解析</summary>
+<table class="matrix" style="margin-top:16px">
+<tr><th style="width:8%">#</th><th style="width:12%">答案</th><th>解析</th></tr>
+<tr><td>1</td><td>(C)</td><td>PDF 描述連續型隨機變數於某取值範圍的機率密度。PMF 用於離散型；CDF 是累計機率。</td></tr>
+<tr><td>2</td><td>(B)</td><td>伯努利分佈是典型的二元分佈，僅有 0 與 1 兩種可能結果（成功/失敗、點擊/未點擊）。</td></tr>
+<tr><td>3</td><td>(C)</td><td>PCA 透過對協方差矩陣做特徵值分解找出最大變異方向，達到降維並保留重要資訊。</td></tr>
+<tr><td>4</td><td>(C)</td><td>PCA 是常用的維度簡化工具，透過線性變換找變異最大方向，投影到較少維度。</td></tr>
+<tr><td>5</td><td>(C)</td><td>梯度是損失函數相對於模型參數的偏微分（導數），指引參數調整方向。</td></tr>
+<tr><td>6</td><td>(C)</td><td>顯著水準 α 是事先設定的風險上限，代表當 H₀ 為真時錯誤拒絕的容忍機率（型一錯誤）。</td></tr>
+<tr><td>7</td><td>(D)</td><td>中位數對極端值不敏感；平均數會受極端值拉動而偏離中心。</td></tr>
+<tr><td>8</td><td>(B)</td><td>Adagrad 根據參數歷史梯度平方和調整學習率；對變動少的參數保留高學習率。</td></tr>
+<tr><td>9</td><td>(B)</td><td>梯度裁剪限制梯度最大值，防數值爆炸；特別適用於 RNN 與深層模型。</td></tr>
+<tr><td>10</td><td>(C)</td><td>邏輯迴歸假設目標為二元（0 或 1）→ 服從伯努利分佈；用 sigmoid 映射至 [0, 1] 區間。</td></tr>
+</table>
+</details>
+
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ====== CHAPTER 4 機器學習與深度學習 ========================= -->
+<!-- ============================================================ -->
+<section style="background:var(--paper-2)">
+<div class="container">
+<div class="sec-eyebrow"><span class="chip">CHAPTER 04</span>L232 · 機器學習與深度學習</div>
+<h2 class="sec-title">機器學習與深度學習</h2>
+<p class="sec-intro">從基礎原理開始 — <b>監督式、非監督式、強化式</b>三大學習範式；接著進入經典演算法（迴歸、決策樹、SVM、集成學習）；最後深入深度學習架構（CNN、RNN、Transformer）。</p>
+
+<h3 class="sub-title" id="s3-4-1" data-num="4.1">機器學習原理與技術</h3>
+
+<p class="body">機器學習（Machine Learning, ML）<b>不依賴人為定義的規則</b>，而是依據資料中的統計規律萃取模式與關聯，指導未來判斷。本節釐清 ML 的三大學習範式 — <b>監督式、非監督式、強化式</b> — 及其核心構成要素。</p>
+
+<h4 class="h-3">A · 機器學習的五大核心構成</h4>
+
+<table class="matrix">
+<tr><th style="width:24%">構成要素</th><th>說明</th></tr>
+<tr><td>① 輸入資料與特徵空間</td><td>結構化表格、文字、影像、語音、感測器資料 → 轉換為向量或矩陣。每個樣本是<b>特徵空間（Feature Space）</b>中的一個點</td></tr>
+<tr><td>② 任務目標與標籤型態</td><td>分類（離散標籤）、迴歸（連續數值）、聚類（無標籤分群）、降維、序列決策</td></tr>
+<tr><td>③ 模型與假設空間</td><td>把輸入映射為預測的數學函數；不同模型對資料分佈有不同的<b>隱含假設</b>（線性模型假設線性邊界、決策樹假設條件規則、NN 學非線性抽象）</td></tr>
+<tr><td>④ 學習目標與損失函數</td><td>透過損失函數量化預測與實際結果的誤差；設計反映任務偏好與風險取捨</td></tr>
+<tr><td>⑤ 資料分割與評估準則</td><td>訓練集 / 驗證集 / 測試集；分類用 Accuracy / Precision / Recall / F1，迴歸用 MAE / MSE / R²</td></tr>
+</table>
+
+<h4 class="h-3">B · 三大學習範式</h4>
+
+<div class="diagram">
+<div class="diagram-title">三種學習範式對照</div>
+<svg viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<style>
+.b1{fill:#fbe5e9;stroke:#c8102e;stroke-width:2}
+.b2{fill:#e8eef7;stroke:#0a4d68;stroke-width:2}
+.b3{fill:#e0f4ed;stroke:#0a8060;stroke-width:2}
+.t{font-family:'Noto Sans TC',sans-serif;font-size:12px;fill:#1a1a1a;text-anchor:middle}
+.tt{font-family:'Noto Serif TC',sans-serif;font-size:14px;font-weight:700;text-anchor:middle}
+.tm{font-family:'JetBrains Mono',monospace;font-size:10px;fill:#6b6357;text-anchor:middle}
+</style>
+</defs>
+<rect x="20" y="40" width="280" height="220" class="b1"/>
+<text x="160" y="68" class="tt" fill="#c8102e">監督式學習</text>
+<text x="160" y="86" class="tm">Supervised</text>
+<text x="160" y="118" class="t">資料 = (X, Y)</text>
+<text x="160" y="138" class="t">有標籤 Y</text>
+<text x="160" y="170" class="t">學習映射 X → Y</text>
+<text x="160" y="200" class="tm">最小化 ‖Ŷ − Y‖</text>
+<text x="160" y="225" class="t">分類 / 迴歸</text>
+<text x="160" y="245" class="tm">郵件分類、房價、流失</text>
+<rect x="310" y="40" width="280" height="220" class="b2"/>
+<text x="450" y="68" class="tt" fill="#0a4d68">非監督式學習</text>
+<text x="450" y="86" class="tm">Unsupervised</text>
+<text x="450" y="118" class="t">資料 = X 而已</text>
+<text x="450" y="138" class="t">無標籤</text>
+<text x="450" y="170" class="t">發現結構 / 模式</text>
+<text x="450" y="200" class="tm">分群、降維、潛在結構</text>
+<text x="450" y="225" class="t">聚類 / 降維 / 關聯</text>
+<text x="450" y="245" class="tm">客戶分群、主題建模</text>
+<rect x="600" y="40" width="280" height="220" class="b3"/>
+<text x="740" y="68" class="tt" fill="#0a8060">強化式學習</text>
+<text x="740" y="86" class="tm">Reinforcement</text>
+<text x="740" y="118" class="t">代理 ↔ 環境互動</text>
+<text x="740" y="138" class="t">獎勵 Reward</text>
+<text x="740" y="170" class="t">學習最佳策略</text>
+<text x="740" y="200" class="tm">最大化長期累積報酬</text>
+<text x="740" y="225" class="t">序列決策</text>
+<text x="740" y="245" class="tm">遊戲 AI、自駕、推薦</text>
+</svg>
+</div>
+
+<h4 class="h-4">① 監督式學習（Supervised Learning）</h4>
+
+<table class="matrix">
+<tr><th style="width:24%">構成</th><th>說明</th></tr>
+<tr><td>資料</td><td>每筆訓練資料由<b>輸入特徵 + 對應目標標籤</b>組成</td></tr>
+<tr><td>學習目標</td><td>最小化模型輸出與實際標籤之間的誤差，同時具備良好的泛化能力</td></tr>
+<tr><td>主要任務</td><td><b>分類</b>（離散類別：垃圾郵件、流失預測、圖像辨識）；<b>迴歸</b>（連續數值：房價、銷售量、評分）</td></tr>
+<tr><td>訓練流程</td><td>① 資料準備與標記 → ② 模型訓練 → ③ 驗證與調整 → ④ 測試與部署</td></tr>
+<tr><td>關鍵成敗因素</td><td>資料的<b>標註品質</b>與<b>特徵設計</b>的精準性</td></tr>
+</table>
+
+<h4 class="h-4">② 非監督式學習（Unsupervised Learning）</h4>
+
+<table class="matrix">
+<tr><th style="width:24%">構成</th><th>說明</th></tr>
+<tr><td>資料</td><td><b>無標註資料</b>；只有 X，沒有 Y</td></tr>
+<tr><td>學習目標</td><td>發現潛在結構、模式、分佈特性</td></tr>
+<tr><td>主要任務</td><td><b>聚類</b>（相似性分群）、<b>降維</b>（高維 → 低維）、<b>關聯規則學習</b>（共現規律）、<b>潛在表示學習</b>（語言模型、影像編碼）</td></tr>
+<tr><td>評估方式</td><td>內部指標（Silhouette score 輪廓係數、Davies-Bouldin、Reconstruction Error）；外部指標（Rand Index、AMI）；視覺化輔助</td></tr>
+<tr><td>應用領域</td><td>客戶分群、社群偵測、影像壓縮、主題模型、特徵工程前處理</td></tr>
+</table>
+
+<h4 class="h-4">③ 強化式學習（Reinforcement Learning）</h4>
+
+<div class="def-card">
+<div class="def-card-head"><h4>馬可夫決策過程 MDP 七大組件</h4><span class="en">Markov Decision Process</span></div>
+<div class="def-card-body">
+<table class="matrix" style="margin:8px 0">
+<tr><th style="width:24%">組件</th><th>說明</th></tr>
+<tr><td>代理人 Agent</td><td>執行動作並從經驗中學習的 AI</td></tr>
+<tr><td>環境 Environment</td><td>代理人互動的外部系統</td></tr>
+<tr><td>狀態 State</td><td>代理人於某時刻觀察到的環境資訊</td></tr>
+<tr><td>動作 Action</td><td>代理人在特定狀態下可採取的行為</td></tr>
+<tr><td>報酬 Reward</td><td>環境對代理人某行為的回饋，指引學習方向</td></tr>
+<tr><td>策略 Policy</td><td>代理人根據當前狀態選擇動作的規則</td></tr>
+<tr><td>價值函數 Value Function</td><td>衡量某一狀態或狀態-動作對的<b>長期獎勵期望值</b></td></tr>
+</table>
+</div>
+</div>
+
+<h4 class="h-4">強化式學習任務類型</h4>
+
+<table class="matrix">
+<tr><th style="width:30%">類型</th><th>核心方法</th></tr>
+<tr><td>策略學習<br>Policy-Based</td><td>直接學習最佳策略（Policy Gradient）</td></tr>
+<tr><td>價值學習<br>Value-Based</td><td>學習狀態或狀態-動作對的價值函數（Q-learning、DQN）</td></tr>
+<tr><td>模型式學習<br>Model-Based</td><td>學習環境轉移與回饋機制；提升策略更新效率</td></tr>
+<tr><td>模型無關學習<br>Model-Free</td><td>無需環境模型；依賴試誤與經驗回放</td></tr>
+</table>
+
+<div class="callout note">
+<strong>補充：依決策空間區分</strong>
+<b>離散動作空間：</b>適用於分類型選擇（遊戲動作、導航決策）。<br>
+<b>連續動作空間：</b>適用於控制類任務（機械臂運動、車輛轉向）。<br>
+強化式學習對<b>收斂控制與樣本效率要求特別高</b> — 因為動態回饋、延遲效應、探索策略都讓訓練過程比監督式學習複雜得多。
+</div>
+
+<h4 class="h-4">RL 評估方式（與監督/非監督不同）</h4>
+<ul class="body">
+<li><b>平均累積報酬</b>（Average Reward per Episode）</li>
+<li><b>成功率或任務達成率</b></li>
+<li><b>策略穩定性與收斂速度</b></li>
+</ul>
+
+<h4 class="h-3">C · 三大範式對比</h4>
+
+<table class="matrix">
+<tr><th style="width:16%">面向</th><th style="width:28%">監督式</th><th style="width:28%">非監督式</th><th>強化式</th></tr>
+<tr><td>資料</td><td>(X, Y) 有標籤</td><td>只有 X 無標籤</td><td>互動產生狀態+回饋</td></tr>
+<tr><td>目標</td><td>學習 X → Y 的映射</td><td>發現資料內在結構</td><td>學習最佳策略</td></tr>
+<tr><td>反饋形式</td><td>立即（誤差訊號）</td><td>無明確反饋</td><td>延遲、稀疏</td></tr>
+<tr><td>典型應用</td><td>分類、迴歸</td><td>分群、降維、異常偵測</td><td>遊戲、機器人、推薦</td></tr>
+<tr><td>關鍵挑戰</td><td>標註成本、過擬合</td><td>難客觀評估</td><td>樣本效率、訓練穩定性</td></tr>
+</table>
+
+<div class="callout exam">
+<strong>常考點：學習範式辨識</strong>
+題目情境問「下列哪種學習適合？」 —
+<ul style="margin:6px 0 0 24px;font-size:14px;line-height:1.7">
+<li><b>有標籤資料的預測</b>（房價、流失）→ <b>監督式</b></li>
+<li><b>無標籤資料找出顧客自然分群</b> → <b>非監督式</b>（K-means、DBSCAN）</li>
+<li><b>透過試誤學習最佳策略</b>（自駕、遊戲、機器人）→ <b>強化式</b></li>
+<li><b>半監督式</b>是少量標籤 + 大量無標籤；<b>自監督式</b>從資料本身產生標籤（BERT 預訓練）</li>
+</ul>
+</div>
+
+<h3 class="sub-title" id="s3-4-2" data-num="4.2">常見機器學習演算法</h3>
+
+<p class="body">本節介紹實務中最常用的<b>監督式（迴歸 + 分類）+ 非監督式（聚類、降維）</b>演算法。每個演算法都涵蓋：原理、公式、評估、假設、適用、限制。</p>
+
+<h4 class="h-3">A · 迴歸類演算法</h4>
+
+<div class="def-card">
+<div class="def-card-head"><h4>① 線性迴歸 Linear Regression</h4></div>
+<div class="def-card-body">
+<p><b>核心：</b>用直線或多維超平面描述<b>自變數與應變數的線性關係</b>。</p>
+<div class="formula">y = β₀ + β₁x₁ + β₂x₂ + … + βₙxₙ + ε</div>
+<p><b>五大假設：</b>① 線性關係 ② 誤差常態分佈 ③ 變異數齊一性（Homoscedasticity）④ 誤差獨立 ⑤ 無多重共線性。</p>
+<p><b>評估：</b>MSE / RMSE / MAE / R² / 調整後 R²。</p>
+<p><b>適用：</b>連續數值預測；變數關係接近線性；需要可解釋性（金融、醫療）。</p>
+<p><b>限制：</b>對<b>離群值極敏感</b>；無法捕捉非線性關係；多重共線性使係數估計不穩。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>② Lasso 迴歸 與 嶺迴歸 Ridge</h4><span class="en">L1 / L2 REGULARIZATION</span></div>
+<div class="def-card-body">
+<p>在損失函數加入<b>正則化項</b>抑制過擬合：</p>
+<div class="formula">Lasso（L1）：Σ(y − ŷ)² + λ Σ|βⱼ|　　Ridge（L2）：Σ(y − ŷ)² + λ Σβⱼ²</div>
+<p><b>關鍵差別：</b></p>
+<ul style="font-size:13.5px;margin-left:24px;line-height:1.7">
+<li><b>Lasso（L1）</b>：能將部分係數縮減為<b>零</b> → 達到<b>特徵選擇</b>效果</li>
+<li><b>Ridge（L2）</b>：限制係數大小但<b>不為零</b>；特別適合多重共線性嚴重的情況</li>
+</ul>
+<p><b>適用：</b>變數數量大於樣本數（高維資料）、多重共線性、需特徵篩選。</p>
+<p><b>限制：</b>Lasso 對高相關變數可能只保留其一；Ridge 無法自動特徵選擇；λ 需透過交叉驗證選擇。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>③ 支援向量迴歸 SVR</h4><span class="en">Support Vector Regression</span></div>
+<div class="def-card-body">
+<p><b>核心：</b>在多維空間中尋找最能描述資料趨勢的<b>超平面</b>，使預測誤差落在 <b>ε-tube</b> 內，超出範圍才懲罰。</p>
+<div class="formula">f(x) = w · x + b　（線性）　　f(x) = Σ αᵢ K(xᵢ, x) + b　（非線性）</div>
+<p><b>關鍵參數：</b>C（懲罰參數）、ε（誤差容忍範圍）、γ（核函數參數）。</p>
+<p><b>優勢：</b>對<b>離群值有抗性</b>（多數小誤差被忽略）；可用核函數處理非線性。</p>
+<p><b>限制：</b>計算複雜度高（樣本平方增長）；不易解釋；不適合極大規模資料。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>④ 決策樹迴歸 Decision Tree Regressor</h4></div>
+<div class="def-card-body">
+<p><b>核心：</b>依特徵分割資料成更小的子區塊，葉節點預測值為該區塊內樣本的<b>平均值</b>。</p>
+<p><b>優勢：</b>不需常態假設、不需標準化；可處理類別+數值混合特徵；捕捉非線性與高階交互作用；解釋性強。</p>
+<p><b>限制：</b>容易<b>過擬合</b>；預測為分段常數（不連續）；對資料微小變動敏感（結構易變）。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>⑤ 集成式迴歸 — 隨機森林 / 梯度提升 / XGBoost / LightGBM</h4><span class="en">ENSEMBLE</span></div>
+<div class="def-card-body">
+<p><b>群體智慧比單一模型更強大</b> — 多個模型不同角度學習，整合結果降低錯誤、減少過擬合、提升泛化能力。</p>
+
+<table class="matrix" style="margin:10px 0">
+<tr><th style="width:24%">方法</th><th>原理</th></tr>
+<tr><td>隨機森林<br>Random Forest</td><td><b>平行式</b>建多棵決策樹（不同 Bootstrap 樣本 + 隨機特徵子集）；最終取平均。抗過擬合強、可並行加速、計算特徵重要性</td></tr>
+<tr><td>梯度提升<br>Gradient Boosting</td><td><b>序列式</b>逐步修正誤差 — 訓練一棵樹 → 算殘差 → 下一棵樹學殘差。預測精度通常高於隨機森林，但訓練慢</td></tr>
+<tr><td>XGBoost</td><td>強調運算效率與正則化；用<b>二階導數（Hessian）</b>加速分裂點搜尋；<b>層級式生長（Level-wise）</b>；支援稀疏資料與缺失值</td></tr>
+<tr><td>LightGBM</td><td><b>葉子式生長（Leaf-wise）</b>策略 — 優先分裂最大增益的葉節點；用<b>直方圖算法</b>降低計算複雜度；對大資料/大特徵尤其高效</td></tr>
+</table>
+</div>
+</div>
+
+<div class="callout note">
+<strong>補充：XGBoost vs LightGBM 的選擇邏輯</strong>
+<b>XGBoost</b>：層級式生長 → 樹更均衡，<b>較不易過擬合</b>，適合中型資料。<br>
+<b>LightGBM</b>：葉子式生長 → 樹更深更不均衡，<b>速度更快、精度通常更高</b>，但需 max_depth 限制以防過擬合，特別適合<b>大資料、大特徵數</b>。<br>
+業界共識：先試 LightGBM（更快），若效果不穩或樣本少改用 XGBoost。<b>CatBoost</b> 是第三選擇 — 對類別特徵有特殊處理。
+</div>
+
+<h4 class="h-3">B · 分類類演算法</h4>
+
+<div class="def-card">
+<div class="def-card-head"><h4>① 邏輯迴歸 Logistic Regression</h4></div>
+<div class="def-card-body">
+<p><b>核心：</b>雖名為「迴歸」實為<b>分類</b>；用 sigmoid 函數把線性組合映射到 [0, 1] 機率區間。</p>
+<div class="formula">p = 1 / (1 + e<sup>−(β₀ + β₁x₁ + … + βₙxₙ)</sup>)</div>
+<p><b>假設：</b>① <b>對數勝率（Log-Odds）與特徵線性</b>；② 資料獨立；③ 無多重共線性。</p>
+<p><b>評估：</b>Accuracy、Precision、Recall、F1、ROC-AUC。</p>
+<p><b>適用：</b>二元分類（購買/不購買、患病/健康）；需要可解釋；金融/醫療場景。</p>
+<p><b>限制：</b>無法捕捉複雜非線性邊界；對離群值敏感；多類別需擴展（One-vs-Rest 或 Multinomial）。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>② 支援向量機 SVM</h4></div>
+<div class="def-card-body">
+<p><b>核心：</b>在特徵空間中尋找<b>能區分不同類別的最佳超平面</b>，最大化兩類之間的<b>間隔（Margin）</b>。</p>
+<div class="formula">w · x + b = 0　　決策依 w · x + b 的正負</div>
+<p><b>四大常用核函數：</b>線性核、多項式核、<b>RBF（Gaussian）核</b>、Sigmoid 核。</p>
+<p><b>關鍵：</b>核函數讓 SVM 可把原本不可線性分隔的資料<b>映射到更高維度</b>使其可分。</p>
+<p><b>適用：</b>資料規模中小、特徵維度高、邊界清晰、需精準分界。</p>
+<p><b>限制：</b>計算成本高（大資料訓練慢）；參數調整複雜（C、γ）；多類別需擴展。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>③ 決策樹分類器 Decision Tree</h4></div>
+<div class="def-card-body">
+<p><b>核心：</b>透過「如果…那麼…」判斷規則分割資料，葉節點給出類別預測。</p>
+<p><b>分裂依據（衡量純度）：</b></p>
+<ul style="font-size:13.5px;margin-left:24px;line-height:1.7">
+<li><b>基尼不純度（Gini Impurity）</b>：節點內混雜程度；越小越集中於單一類別</li>
+<li><b>資訊增益（Information Gain）</b>：依熵（Entropy）變化衡量分裂後不確定性降低多少</li>
+<li><b>分類誤差（Classification Error）</b>：節點內分錯的比例</li>
+</ul>
+<p><b>優勢：</b>非線性、無需標準化、處理混合型特徵、解釋性強。<b>限制：</b>容易過擬合；對資料變動敏感。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>④ 集成式分類 — Random Forest / Boosting</h4></div>
+<div class="def-card-body">
+<p>與迴歸版本原理相同 — 隨機森林取多數投票、梯度提升序列修正錯誤。<b>XGBoost / LightGBM 在分類任務上同樣是 Kaggle 競賽常勝軍</b>。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>⑤ K 最近鄰 KNN</h4><span class="en">K-Nearest Neighbors</span></div>
+<div class="def-card-body">
+<p><b>核心：</b>新樣本的類別 = 訓練集中<b>最接近的 k 個鄰居的多數類別</b>。</p>
+<p><b>關鍵：</b>不需訓練（懶惰學習）；對距離度量（歐幾里得、曼哈頓、餘弦）敏感；對 k 值與特徵尺度敏感。</p>
+<p><b>適用：</b>小型資料集、特徵空間分佈明顯的情境。<b>限制：</b>記憶體需求高（需存全部訓練資料）；對量與維度敏感（維度詛咒）。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>⑥ 樸素貝氏 Naive Bayes</h4></div>
+<div class="def-card-body">
+<p><b>核心：</b>基於貝氏定理 + <b>特徵獨立性的「樸素」假設</b>。</p>
+<div class="formula">P(類別 | 特徵) ∝ P(特徵 | 類別) · P(類別)</div>
+<p><b>變體：</b>Gaussian NB（連續特徵）、Multinomial NB（文字計數）、Bernoulli NB（二元特徵）。</p>
+<p><b>適用：</b>文字分類（垃圾郵件、情感分析）；訓練快、所需資料少。<b>限制：</b>「特徵獨立」假設在現實中常不成立。</p>
+</div>
+</div>
+
+<h4 class="h-3">C · 聚類類演算法（非監督式）</h4>
+
+<table class="matrix">
+<tr><th style="width:24%">演算法</th><th>核心</th><th>特性</th></tr>
+<tr><td>K-means</td><td>把資料分為 K 個群，最小化群內距離平方和</td><td>需事先給定 K；對初始中心敏感；只能找球形群</td></tr>
+<tr><td>DBSCAN</td><td>基於密度的分群；高密度區域聚為群、低密度為雜訊</td><td><b>不需指定群數</b>；可發現任意形狀群集；自動標識離群點</td></tr>
+<tr><td>階層式分群<br>Hierarchical Clustering</td><td>由下而上（凝聚）或由上而下（分裂）建樹狀結構（Dendrogram）</td><td>無需指定群數；可探索分群層級；計算量大</td></tr>
+<tr><td>Gaussian Mixture Model (GMM)</td><td>假設資料由多個高斯分佈混合而成；用 EM 演算法估計</td><td>軟分群（每點對每群有機率）；可處理橢圓形群</td></tr>
+</table>
+
+<h4 class="h-3">D · 降維類演算法（非監督式）</h4>
+
+<table class="matrix">
+<tr><th style="width:18%">方法</th><th style="width:30%">原理</th><th>特性</th></tr>
+<tr><td>PCA<br>主成分分析</td><td>找出資料中變異最大的方向（特徵值分解/SVD）</td><td>線性、可解釋；保留全域結構；常作為前處理</td></tr>
+<tr><td>LDA<br>線性判別分析</td><td>監督式降維；最大化類別間差異、最小化類別內變異</td><td>需要標籤；分類任務首選降維</td></tr>
+<tr><td>t-SNE</td><td>把高維資料投影到 2D/3D；保留<b>局部結構</b></td><td>適合視覺化；非線性；不保留全域距離</td></tr>
+<tr><td>UMAP</td><td>類似 t-SNE 但保留更多全域結構；速度快</td><td>新一代視覺化工具；可解釋性比 t-SNE 好</td></tr>
+<tr><td>Autoencoder</td><td>用神經網路把資料壓縮到瓶頸層再重建</td><td>非線性、彈性高；可學深度表示</td></tr>
+</table>
+
+<div class="callout exam">
+<strong>常考點：給情境選演算法</strong>
+<ul style="margin:6px 0 0 24px;font-size:14px;line-height:1.7">
+<li><b>需要可解釋的線性預測</b> → 線性迴歸 / 邏輯迴歸</li>
+<li><b>高維資料 + 想自動特徵選擇</b> → Lasso（L1）</li>
+<li><b>多重共線性</b> → Ridge（L2）</li>
+<li><b>表格資料 + 高精度</b> → XGBoost / LightGBM</li>
+<li><b>非線性邊界 + 中小資料</b> → SVM（用 RBF 核）</li>
+<li><b>文字分類</b> → 樸素貝氏（快）或 SVM</li>
+<li><b>找自然分群（不知道幾群）</b> → DBSCAN；<b>知道幾群</b> → K-means</li>
+<li><b>降維視覺化</b> → PCA 或 t-SNE</li>
+</ul>
+</div>
+
+<h3 class="sub-title" id="s3-4-3" data-num="4.3">深度學習原理與框架</h3>
+
+<p class="body">深度學習（Deep Learning）相較傳統 ML <b>不需手工特徵工程</b> — 透過多層神經網路自動學習數據中的高階抽象特徵，大幅提升影像、語音、NLP、生成式 AI 的表現。本節介紹基礎概念 → 五大代表架構（MLP、CNN、RNN、Transformer、生成模型）→ 主流框架。</p>
+
+<h4 class="h-3">A · 神經網路基礎</h4>
+
+<h4 class="h-4">① 人工神經元與感知器</h4>
+
+<div class="def-card">
+<div class="def-card-head"><h4>人工神經元 Artificial Neuron</h4></div>
+<div class="def-card-body">
+<p>受生物神經元啟發的數學模型。接收多個輸入訊號 → 加權求和 → 非線性激活 → 輸出。</p>
+<div class="formula">Z = w₁x₁ + w₂x₂ + … + wₙxₙ + b　　Output = A(Z)</div>
+<ul style="font-size:13.5px;margin-left:24px;line-height:1.7">
+<li><b>輸入 x</b>：來自其他神經元或外部資料</li>
+<li><b>權重 w</b>：每個輸入的重要性</li>
+<li><b>偏置 b（Bias）</b>：允許神經元在沒有輸入時也能被激活</li>
+<li><b>激活函數 A</b>：引入非線性 — ReLU、Sigmoid、Tanh</li>
+</ul>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>感知器 Perceptron</h4></div>
+<div class="def-card-body">
+<p>最早、最簡單的人工神經元模型（Frank Rosenblatt 提出）。是<b>二元分類器</b>，使用步階函數作為激活：</p>
+<div class="formula">f(x) = 1 if x ≥ 0；f(x) = 0 if x &lt; 0</div>
+<p><b>限制：</b>只能解決線性可分問題，<b>無法解決 XOR 問題</b> — 這個限制催生了多層神經網路的研究。</p>
+</div>
+</div>
+
+<h4 class="h-4">② 激活函數的核心角色</h4>
+
+<table class="matrix">
+<tr><th style="width:24%">激活函數</th><th>特性</th></tr>
+<tr><td>ReLU</td><td>輸入為正直接輸出，為負輸出 0；<b>稀疏激活</b>，計算快，深度學習主流</td></tr>
+<tr><td>Sigmoid</td><td>壓縮至 [0, 1]；可解釋為機率；早期常用，但深層網路易梯度消失</td></tr>
+<tr><td>Tanh</td><td>壓縮至 [-1, 1]；零中心化，RNN 中常用</td></tr>
+<tr><td>Softmax</td><td>把向量轉為機率分佈（總和為 1）；多類別分類的輸出層</td></tr>
+<tr><td>Leaky ReLU / GELU / Swish</td><td>ReLU 的改良；解決負區梯度為零的「Dying ReLU」問題</td></tr>
+</table>
+
+<div class="callout key">
+<strong>為什麼激活函數必須非線性？</strong>
+若沒有激活函數，<b>無論神經網路有多少層，最終輸出都只是輸入的線性組合</b> — 等同單層線性模型，只能解線性可分問題。引入非線性激活函數後，神經網路才能逼近任意複雜的非線性函數。
+</div>
+
+<h4 class="h-3">B · 前向傳播 vs 反向傳播 — 神經網路如何學習</h4>
+
+<div class="diagram">
+<div class="diagram-title">前向傳播（做預測）vs 反向傳播（修正錯誤）</div>
+<svg viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<style>
+.b1{fill:#fbe5e9;stroke:#c8102e;stroke-width:2}
+.b2{fill:#e0f4ed;stroke:#0a8060;stroke-width:2}
+.t{font-family:'Noto Sans TC',sans-serif;font-size:12px;fill:#1a1a1a;text-anchor:middle}
+.tt{font-family:'Noto Serif TC',sans-serif;font-size:14px;font-weight:700;text-anchor:middle}
+.tm{font-family:'JetBrains Mono',monospace;font-size:10px;fill:#6b6357;text-anchor:middle}
+</style>
+<marker id="dl-ar" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><polygon points="0,0 8,3 0,6" fill="#1a1a1a"/></marker>
+</defs>
+<rect x="30" y="60" width="840" height="50" fill="none" stroke="#c8102e" stroke-dasharray="4,2"/>
+<text x="450" y="50" class="tt" fill="#c8102e">前向傳播 Forward Propagation — 做預測</text>
+<rect x="50" y="70" width="120" height="30" fill="#fff" stroke="#1a1a1a"/>
+<text x="110" y="90" class="t">輸入 X</text>
+<line x1="172" y1="85" x2="208" y2="85" stroke="#1a1a1a" stroke-width="2" marker-end="url(#dl-ar)"/>
+<rect x="210" y="70" width="120" height="30" fill="#fff" stroke="#1a1a1a"/>
+<text x="270" y="90" class="t">層 1：加權+激活</text>
+<line x1="332" y1="85" x2="368" y2="85" stroke="#1a1a1a" stroke-width="2" marker-end="url(#dl-ar)"/>
+<rect x="370" y="70" width="120" height="30" fill="#fff" stroke="#1a1a1a"/>
+<text x="430" y="90" class="t">層 2：加權+激活</text>
+<line x1="492" y1="85" x2="528" y2="85" stroke="#1a1a1a" stroke-width="2" marker-end="url(#dl-ar)"/>
+<rect x="530" y="70" width="120" height="30" fill="#fff" stroke="#1a1a1a"/>
+<text x="590" y="90" class="t">…</text>
+<line x1="652" y1="85" x2="688" y2="85" stroke="#1a1a1a" stroke-width="2" marker-end="url(#dl-ar)"/>
+<rect x="690" y="70" width="120" height="30" fill="#fff" stroke="#1a1a1a"/>
+<text x="750" y="90" class="t">輸出 Ŷ</text>
+<rect x="690" y="140" width="120" height="40" class="b1"/>
+<text x="750" y="165" class="t">計算誤差 L</text>
+<text x="750" y="178" class="tm">Loss = (Ŷ − Y)²</text>
+<rect x="30" y="200" width="840" height="50" fill="none" stroke="#0a8060" stroke-dasharray="4,2"/>
+<text x="450" y="270" class="tt" fill="#0a8060">反向傳播 Backpropagation — 修正參數（沿梯度反向更新權重）</text>
+<line x1="688" y1="225" x2="652" y2="225" stroke="#0a8060" stroke-width="2" marker-end="url(#dl-ar)"/>
+<rect x="530" y="210" width="120" height="30" class="b2"/>
+<text x="590" y="230" class="t">∂L/∂w₃</text>
+<line x1="528" y1="225" x2="492" y2="225" stroke="#0a8060" stroke-width="2" marker-end="url(#dl-ar)"/>
+<rect x="370" y="210" width="120" height="30" class="b2"/>
+<text x="430" y="230" class="t">∂L/∂w₂</text>
+<line x1="368" y1="225" x2="332" y2="225" stroke="#0a8060" stroke-width="2" marker-end="url(#dl-ar)"/>
+<rect x="210" y="210" width="120" height="30" class="b2"/>
+<text x="270" y="230" class="t">∂L/∂w₁</text>
+<text x="750" y="180" class="tm"></text>
+</svg>
+<div class="diagram-cap">圖 4-DL-1 · 前向 = 做預測；反向 = 用鏈式法則計算梯度並更新權重</div>
+</div>
+
+<table class="matrix">
+<tr><th style="width:18%">階段</th><th>說明</th></tr>
+<tr><td>前向傳播<br>Forward</td><td>① 輸入資料進入第一層 → ② 每層加權求和 + 激活 → ③ 一層一層向前推進 → ④ 輸出層產生預測</td></tr>
+<tr><td>計算損失</td><td>把預測與真實標籤比較，用損失函數計算量化的誤差值</td></tr>
+<tr><td>反向傳播<br>Backpropagation</td><td>用<b>連鎖律（Chain Rule）</b>把誤差從輸出層反向傳遞，計算<b>損失函數對每個權重的梯度</b></td></tr>
+<tr><td>權重更新</td><td>優化器（SGD/Adam）根據梯度與學習率，沿梯度相反方向微調參數</td></tr>
+<tr><td>迭代學習</td><td>前向 + 反向重複數千至數百萬次，模型越來越精準</td></tr>
+</table>
+
+<h4 class="h-3">C · 過擬合與正則化技術</h4>
+
+<h4 class="h-4">① 過擬合 Overfitting</h4>
+
+<table class="matrix">
+<tr><th style="width:24%">情況</th><th>說明</th></tr>
+<tr><td>發生原因</td><td>① 模型過於複雜（參數多、層深）→ 開始記憶訓練資料的噪聲；② 訓練資料不足；③ 訓練時間過長</td></tr>
+<tr><td>表現特徵</td><td>訓練集損失低、準確率高；<b>驗證/測試集損失高、準確率低</b></td></tr>
+</table>
+
+<h4 class="h-4">② 五大正則化技術</h4>
+
+<table class="matrix">
+<tr><th style="width:24%">技術</th><th>原理</th></tr>
+<tr><td>L1 正則化（Lasso）</td><td>損失函數加入「權重絕對值總和」；促使部分權重為零，達特徵選擇</td></tr>
+<tr><td>L2 正則化（Ridge）</td><td>損失函數加入「權重平方和」；限制權重大小但不為零；平滑模型</td></tr>
+<tr><td>Elastic Net</td><td>結合 L1 + L2；兼具特徵選擇與權重平滑</td></tr>
+<tr><td>Dropout</td><td>訓練時<b>隨機屏蔽部分神經元</b>，避免神經元彼此過度依賴；測試時恢復全部</td></tr>
+<tr><td>Early Stopping</td><td>驗證集損失不再下降時提前停止訓練</td></tr>
+</table>
+
+<h4 class="h-3">D · 五大深度模型架構</h4>
+
+<div class="def-card">
+<div class="def-card-head"><h4>① 多層感知器 MLP — Multilayer Perceptron</h4></div>
+<div class="def-card-body">
+<p><b>結構：</b>輸入層 + 多個隱藏層 + 輸出層；每層之間<b>全連接（Fully Connected）</b>；資訊單向流動。</p>
+<p><b>優勢：</b>非線性建模能力強；廣泛適用結構化資料。</p>
+<p><b>限制：</b>① <b>會把空間/序列資訊「攤平」</b>（丟失像素相對位置或詞序）；② 參數量大、計算成本高；③ 易過擬合；④ 黑箱缺乏可解釋性。</p>
+<p><b>適用：</b>結構化資料分類與迴歸（客戶流失、信用評分、房價）；作為其他複雜模型的後置分類器。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>② CNN 卷積神經網路 — Convolution Neural Network</h4></div>
+<div class="def-card-body">
+<p><b>核心組件：</b></p>
+<ul style="font-size:13.5px;margin-left:24px;line-height:1.7">
+<li><b>卷積層（Convolutional Layer）</b>：用卷積核滑動提取局部特徵 → 特徵映射（Feature Map）；<b>權重共享</b>減少參數、實現位置不變性</li>
+<li><b>激活層</b>：通常用 ReLU 增加非線性</li>
+<li><b>池化層（Pooling Layer）</b>：最大池化或平均池化降維、增強泛化</li>
+<li><b>全連接層</b>：將提取的特徵整合進行最終分類</li>
+</ul>
+<p><b>優勢：</b>權重共享 + 局部連接（利用空間相關性）；對平移、輕微縮放旋轉具不變性。</p>
+<p><b>限制：</b>計算資源大；需大量標註資料；對較大旋轉/尺度變化仍受限。</p>
+
+<table class="matrix" style="margin:10px 0">
+<tr><th style="width:24%">代表模型</th><th>特點</th></tr>
+<tr><td>AlexNet (2012)</td><td>深度 CNN 奠基者；ReLU + Dropout + GPU 加速；ImageNet 突破</td></tr>
+<tr><td>VGG</td><td>極深架構；多個 3×3 小卷積核堆疊</td></tr>
+<tr><td>GoogLeNet (Inception)</td><td>Inception 模塊；同層平行不同大小卷積核</td></tr>
+<tr><td>ResNet (2015)</td><td><b>殘差連接（Skip Connection）</b>；解決深層網路梯度消失；可達 152 層</td></tr>
+<tr><td>DenseNet</td><td>每層與所有前層連接；特徵重用、緩解梯度消失</td></tr>
+<tr><td>MobileNet / EfficientNet</td><td>輕量級；深度可分離卷積；適合行動裝置與邊緣部署</td></tr>
+</table>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>③ RNN 遞迴神經網路 — Recurrent Neural Network</h4></div>
+<div class="def-card-body">
+<p><b>核心：</b>處理<b>可變長度序列資料</b>；神經元之間有<b>循環連接</b>，允許資訊在網路內部持續流動，賦予「記憶」能力。</p>
+<p><b>結構：</b>每時間步接收當前輸入 Xₜ + 前一時間步隱藏狀態 Hₜ₋₁，產生新隱藏狀態 Hₜ 與輸出 Oₜ。</p>
+<p><b>關鍵特性：</b>① <b>權重共享</b>（不同時間步用同一套參數）；② <b>「展開」視角</b>（在時間維度展開為前饋網路）；③ <b>BPTT（時間上反向傳播）</b>訓練。</p>
+<p><b>致命缺陷：</b></p>
+<ul style="font-size:13.5px;margin-left:24px;line-height:1.7">
+<li><b>梯度消失：</b>長序列下梯度指數衰減，難學遠距離依賴 — 記憶太短</li>
+<li><b>梯度爆炸：</b>梯度指數增長 → 訓練不穩；需梯度裁剪</li>
+<li><b>難並行：</b>序列性導致計算串行，訓練慢</li>
+</ul>
+
+<table class="matrix" style="margin:10px 0">
+<tr><th style="width:24%">RNN 變體</th><th>解決方案</th></tr>
+<tr><td>LSTM<br>Long Short-Term Memory</td><td><b>三個門控機制（輸入/遺忘/輸出門）+ 細胞狀態</b>；選擇性允許資訊流入、保留、移除，<b>解決梯度消失</b></td></tr>
+<tr><td>GRU<br>Gated Recurrent Unit</td><td>LSTM 簡化版；只有兩個門（更新/重置）；結構緊湊、效能相當</td></tr>
+<tr><td>Bi-RNN<br>雙向 RNN</td><td>同時從前向後 + 從後向前處理序列；捕捉雙向上下文</td></tr>
+<tr><td>Deep RNN</td><td>多層 RNN 堆疊；學更複雜的時序特徵</td></tr>
+</table>
+
+<p><b>應用：</b>機器翻譯、語音辨識、時間序列預測（股價、天氣）、文本生成、情感分析、NER、動作辨識。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>④ Transformer — Attention Is All You Need (Google, 2017)</h4></div>
+<div class="def-card-body">
+<p><b>革命性突破：</b><b>完全捨棄 RNN 循環結構</b>，純粹基於<b>注意力機制（Attention Mechanism）</b>。能並行處理序列、透過自注意力捕捉<b>任意位置的長距離依賴</b>。</p>
+
+<p><b>架構：</b>Encoder 堆疊 + Decoder 堆疊（每個堆疊由多層相同的編解碼器層組成）。</p>
+<ul style="font-size:13.5px;margin-left:24px;line-height:1.7">
+<li><b>Encoder（編碼器）</b>：分析原始輸入序列，每個元素轉為富含上下文資訊的高維表示</li>
+<li><b>Decoder（解碼器）</b>：基於 Encoder 的上下文表示與已生成的部分序列，逐步生成目標輸出</li>
+</ul>
+
+<h4 style="margin-top:14px;font-size:14px;font-weight:700">六大核心組件：</h4>
+
+<table class="matrix" style="margin:10px 0">
+<tr><th style="width:28%">組件</th><th>功能</th></tr>
+<tr><td>注意力機制<br>Attention</td><td>賦予模型動態「關注」序列中其他元素的能力；計算當前元素與所有其他元素的相似度</td></tr>
+<tr><td>自注意力<br>Self-Attention</td><td>同一序列內元素間的關係；用 Query/Key/Value 三個向量計算 — Q「我在找什麼」、K「我能提供什麼」、V「我的內容」</td></tr>
+<tr><td>多頭注意力<br>Multi-Head Attention</td><td>並行執行多個獨立的自注意力（多個「頭」）；每頭學習不同類型的關係；最後拼接</td></tr>
+<tr><td>位置編碼<br>Positional Encoding</td><td>因為沒有循環結構，模型本身不感知順序 → 用正弦/餘弦函數加到詞嵌入，提供位置資訊</td></tr>
+<tr><td>前饋網路 FFN</td><td>兩個線性層 + ReLU；對每個位置獨立應用，進一步轉換注意力輸出</td></tr>
+<tr><td>殘差連接 + 層歸一化</td><td>跳躍連接緩解梯度消失；層歸一化穩定訓練（不依賴批次大小，適合序列）</td></tr>
+</table>
+
+<p><b>應用：</b>NLP 革命性架構 — BERT（雙向理解）、GPT（自迴歸生成）、T5、BART；近年也擴展到 Vision Transformer（ViT）、多模態（CLIP、Flamingo）。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>⑤ 生成式模型 — GAN / VAE / Diffusion</h4></div>
+<div class="def-card-body">
+
+<table class="matrix" style="margin:10px 0">
+<tr><th style="width:18%">模型</th><th>原理</th><th>特性</th></tr>
+<tr><td>GAN</td><td>生成器 vs 判別器<b>對抗訓練</b>；G 產生偽樣本、D 判斷真偽</td><td>圖像合成（StyleGAN）；訓練不穩定、易模式崩潰</td></tr>
+<tr><td>VAE</td><td>變分自編碼器；學習資料的潛在分佈，從噪聲重建</td><td>潛在空間結構好；適合異常偵測、語音重建；生成相對模糊</td></tr>
+<tr><td>Diffusion</td><td>逐步加噪 → 學反向去噪過程</td><td>當前圖像生成主流（DALL·E 2、Stable Diffusion）；高品質但生成慢</td></tr>
+</table>
+</div>
+</div>
+
+<h4 class="h-3">E · 主流深度學習框架</h4>
+
+<table class="matrix">
+<tr><th style="width:18%">框架</th><th style="width:18%">開發者</th><th>特性</th></tr>
+<tr><td>TensorFlow</td><td>Google</td><td>產業界主流之一；TensorFlow Serving 部署成熟；TensorFlow Lite 邊緣裝置</td></tr>
+<tr><td>Keras</td><td>Google (高階 API)</td><td>建構於 TensorFlow；簡單易用；快速原型；初學者首選</td></tr>
+<tr><td>PyTorch</td><td>Meta</td><td>研究界主流；動態計算圖；除錯方便；學術論文常用</td></tr>
+<tr><td>JAX</td><td>Google</td><td>函式式 + 自動微分；極致並行；Google DeepMind 用於前沿研究</td></tr>
+<tr><td>Hugging Face Transformers</td><td>Hugging Face</td><td>預訓練模型 hub；NLP 與多模態的事實標準</td></tr>
+<tr><td>MXNet / PaddlePaddle</td><td>Amazon / Baidu</td><td>特定生態系內使用</td></tr>
+</table>
+
+<div class="callout note">
+<strong>補充：PyTorch vs TensorFlow 的選擇</strong>
+<b>PyTorch</b>：研究、論文、Hugging Face 生態系（NLP、Diffusion）；動態圖除錯直觀。<br>
+<b>TensorFlow</b>：產業部署成熟（TF Serving、TF Lite）；Google 雲端深度整合；行動裝置邊緣部署選首。<br>
+近年趨勢：<b>PyTorch 漸漸成為主流</b>（學術領先 + 業界跟進），TF 仍在部署與行動端有強項。新專案多直接選 PyTorch。
+</div>
+
+<div class="callout exam">
+<strong>常考點：深度模型架構辨識</strong>
+<ul style="margin:6px 0 0 24px;font-size:14px;line-height:1.7">
+<li><b>影像分類</b> → <b>CNN</b>（AlexNet → VGG → ResNet）；<b>影像分割</b> → U-Net；<b>物件偵測</b> → YOLO / Faster R-CNN</li>
+<li><b>時間序列 / 序列建模</b> → <b>RNN / LSTM / GRU</b>；長距離依賴用 LSTM</li>
+<li><b>NLP（理解任務）</b> → <b>BERT</b>；<b>NLP（生成任務）</b> → <b>GPT</b>（Transformer 系列）</li>
+<li><b>圖像生成</b> → <b>GAN</b>（StyleGAN）或 <b>Diffusion</b>（DALL·E、Stable Diffusion）</li>
+<li><b>解決梯度消失</b>：CNN 用<b>殘差連接（ResNet）</b>；RNN 用<b>LSTM 門控</b></li>
+<li><b>Transformer 核心 = 自注意力 + 多頭 + 位置編碼</b>；無循環結構，全並行</li>
+</ul>
+</div>
+
+<!-- ====== 4 章末練習 ====== -->
+<h3 class="sub-title" data-num="4.X">本章重點與練習</h3>
+
+<div class="callout tip">
+<strong>本章重點速記</strong>
+① 三大學習範式（監督 / 非監督 / 強化）；② ML 核心構成五要素；③ 迴歸五大演算法（線性、Lasso/Ridge、SVR、決策樹、集成）；④ 分類六大演算法（邏輯、SVM、決策樹、集成、KNN、樸素貝氏）；⑤ 聚類四種（K-means、DBSCAN、階層、GMM）；⑥ 降維五種（PCA、LDA、t-SNE、UMAP、Autoencoder）；⑦ 神經元 + 激活函數的角色；⑧ 前向 + 反向傳播；⑨ 五種正則化技術；⑩ 五大深度架構（MLP、CNN、RNN、Transformer、生成模型）；⑪ 主流框架（TF、Keras、PyTorch）。
+</div>
+
+<table class="matrix">
+<tr><th style="width:8%">#</th><th>題目</th></tr>
+<tr><td>1</td><td>機器學習中，若輸入資料沒有標註，欲探索潛在的群組或模式，應屬於哪種學習類型？(A) 監督式　(B) 半監督式　(C) 非監督式　(D) 強化式</td></tr>
+<tr><td>2</td><td>在監督式學習中，當模型要預測一個連續數值時，這種任務稱為什麼？(A) 分類　(B) 迴歸　(C) 聚類　(D) 降維</td></tr>
+<tr><td>3</td><td>在深度學習中，用於學習資料中局部特徵的網路架構通常是什麼？(A) RNN　(B) 決策樹　(C) CNN　(D) 隨機森林</td></tr>
+<tr><td>4</td><td>支援向量機（SVM）若用於迴歸問題，稱為什麼？(A) Logistic Regression　(B) Decision Tree Regression　(C) Random Forest　(D) Support Vector Regression</td></tr>
+<tr><td>5</td><td>機器學習模型若過度學習訓練資料中的雜訊，導致泛化能力下降，此現象稱為什麼？(A) 欠擬合　(B) 過擬合　(C) 特徵縮放　(D) 梯度爆炸</td></tr>
+<tr><td>6</td><td>在深度學習中，哪一個是為了引入非線性，使神經網路能學習複雜模式的元件？(A) 損失函數　(B) 激活函數　(C) 隱藏層　(D) 梯度下降</td></tr>
+<tr><td>7</td><td>若想在機器學習中降低模型過度擬合風險，可採用哪種方法？(A) 提高學習率　(B) 減少資料量　(C) 正則化　(D) 隨機刪除特徵</td></tr>
+<tr><td>8</td><td>在深度學習模型的訓練過程中，計算模型輸出與實際值差距的函數稱為什麼？(A) 激活函數　(B) 池化函數　(C) 損失函數　(D) 梯度函數</td></tr>
+<tr><td>9</td><td>Transformer 模型中用來捕捉輸入序列不同位置間依賴關係的核心機制是什麼？(A) 池化機制　(B) 注意力機制　(C) 決策樹分支　(D) 激活函數</td></tr>
+<tr><td>10</td><td>在決策樹模型中，用於判斷分裂效果好壞的指標，常見的是下列哪一種？(A) 機率密度函數　(B) 均方根誤差　(C) 基尼不純度　(D) 卷積核大小</td></tr>
+</table>
+
+<details style="margin:24px 0;max-width:900px;border:2px solid var(--ink);background:#fff;padding:16px 22px;font-size:14px">
+<summary style="cursor:pointer;font-family:'Noto Serif TC',serif;font-weight:700;font-size:16px;color:var(--accent);padding:4px 0">▸ 點此展開答案與解析</summary>
+<table class="matrix" style="margin-top:16px">
+<tr><th style="width:8%">#</th><th style="width:12%">答案</th><th>解析</th></tr>
+<tr><td>1</td><td>(C)</td><td>非監督式學習不依賴標註資料，目的是從資料中發現潛在結構、模式或分佈（分群、降維）。</td></tr>
+<tr><td>2</td><td>(B)</td><td>迴歸是預測連續數值的任務（房價、氣溫）；分類則預測離散類別。</td></tr>
+<tr><td>3</td><td>(C)</td><td>CNN 透過卷積層偵測局部特徵，擅長處理影像、語音等有空間/時間結構的資料。</td></tr>
+<tr><td>4</td><td>(D)</td><td>SVR（Support Vector Regression）是 SVM 在迴歸問題的延伸，尋找最佳超平面使資料落在 ε-tube 內。</td></tr>
+<tr><td>5</td><td>(B)</td><td>過擬合 = 在訓練資料表現極好但無法在新資料維持效能；通常因模型過複雜或資料不足。</td></tr>
+<tr><td>6</td><td>(B)</td><td>激活函數（ReLU、Sigmoid）為神經網路帶來非線性能力；沒有它多層網路仍只是線性變換。</td></tr>
+<tr><td>7</td><td>(C)</td><td>正則化（L1/L2）在損失函數加入懲罰項限制權重大小，減少過擬合、提升泛化能力。</td></tr>
+<tr><td>8</td><td>(C)</td><td>損失函數衡量模型預測值與實際值的差距，是指引優化器調整參數方向的重要依據（MSE、交叉熵）。</td></tr>
+<tr><td>9</td><td>(B)</td><td>Transformer 的核心是注意力機制（特別是 Self-Attention + Multi-Head），捕捉任意位置間的依賴。</td></tr>
+<tr><td>10</td><td>(C)</td><td>決策樹用基尼不純度（Gini Impurity）或資訊增益判斷分裂品質；越小代表節點越純。</td></tr>
+</table>
+</details>
+
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ====== CHAPTER 5 機器學習應用流程 =========================== -->
+<!-- ============================================================ -->
+<section>
+<div class="container">
+<div class="sec-eyebrow"><span class="chip">CHAPTER 05</span>L233 · 機器學習建模流程</div>
+<h2 class="sec-title">機器學習應用流程與技術</h2>
+<p class="sec-intro">建模的完整流程：<b>數據準備 → 特徵工程 → 模型選擇 → 訓練 → 評估 → 調整優化</b>。這是把演算法落地的關鍵工程實踐。</p>
+
+<h3 class="sub-title" id="s3-5-1" data-num="5.1">數據準備與特徵工程</h3>
+
+<div class="callout key">
+<strong>資料品質 &gt; 演算法</strong>
+ML 流程中「資料品質與特徵表達」往往<b>比演算法本身更決定模型表現</b>。即使最先進的演算法，若資料有錯誤或資訊不足，也無法產生良好結果。<b>數據準備與特徵工程是模型效能的基礎建設</b>。
+</div>
+
+<h4 class="h-3">A · 資料清理五大任務</h4>
+
+<table class="matrix">
+<tr><th style="width:24%">問題類型</th><th>處理策略</th></tr>
+<tr><td>缺失值 Missing Value</td><td><b>刪除法</b>（缺失低 + 樣本足）；<b>填補法</b>（均值/中位/眾數、KNN/Hot Deck 相似樣本、預測模型填補）；<b>缺失指標編碼</b>（樹模型常用）</td></tr>
+<tr><td>異常值 Outliers</td><td><b>偵測：</b>Z-score / IQR、視覺化（箱型、散佈）、ML 法（Isolation Forest、LOF）<br><b>處理：</b>移除 / 截尾轉換（Log、Box-Cox）/ 標記保留（如詐欺值本身有價值）</td></tr>
+<tr><td>重複樣本</td><td>主鍵比對；單位 / 格式標準化（公克 vs 公斤、"male" vs "男"）</td></tr>
+<tr><td>資料型別轉換</td><td>數值/類別正確標示；時間欄位解析為週期性變數</td></tr>
+<tr><td>資料一致性檢查</td><td>建立<b>資料處理紀錄與血緣（Data Lineage）</b>確保可重現與可治理</td></tr>
+</table>
+
+<div class="callout note">
+<strong>補充：不同模型對資料品質的敏感度</strong>
+<b>樹模型（XGBoost、Random Forest）：</b>對缺值與異常值有<b>較高容忍度</b>，可自動處理。<br>
+<b>線性模型、神經網路：</b>對輸入敏感，<b>需特別注意</b>缺值補全與特徵正規化，否則訓練不穩或結果偏誤。<br>
+實務上 ML 專案 80% 時間花在資料處理，這不是誇張 — 而是真實情況。
+</div>
+
+<h4 class="h-3">B · 特徵選擇與降維</h4>
+
+<table class="matrix">
+<tr><th style="width:18%">方法</th><th style="width:30%">原理</th><th>優劣</th></tr>
+<tr><td>Filter 過濾法</td><td>用統計量（Pearson、卡方、ANOVA）<b>獨立於模型</b>篩選</td><td>✓ 速度快、不依賴模型　✗ 不考慮特徵交互</td></tr>
+<tr><td>Wrapper 包裝法</td><td>用模型表現（準確率、F1）作標準；RFE 遞迴特徵消除</td><td>✓ 精確考量特徵互動　✗ 計算成本高、易過擬合</td></tr>
+<tr><td>Embedded 嵌入法</td><td>建模過程中內建選擇（決策樹重要性、Lasso L1）</td><td>✓ 建模同時完成　✗ 需特定模型支援</td></tr>
+</table>
+
+<h4 class="h-4">降維方法</h4>
+
+<ul class="body">
+<li><b>PCA</b>：線性降維，最大化變異；視覺化、雜訊過濾、建模加速</li>
+<li><b>LDA</b>：監督式降維，最大化類間差異；分類首選</li>
+<li><b>t-SNE / UMAP</b>：非線性降維，保留鄰近關係；視覺化用，<b>不適合直接建模</b></li>
+<li><b>SVD</b>：矩陣分解，文字分析（LSA）、推薦系統</li>
+</ul>
+
+<h4 class="h-3">C · 特徵轉換與標準化</h4>
+
+<h4 class="h-4">① 數值尺度調整</h4>
+
+<table class="matrix">
+<tr><th style="width:24%">方法</th><th>原理</th><th>限制</th></tr>
+<tr><td>Min-Max Normalization</td><td>線性縮放至 [0, 1]</td><td>對極端值敏感</td></tr>
+<tr><td>Z-score Standardization</td><td>μ=0, σ=1 標準化</td><td>偏態時結果偏移</td></tr>
+<tr><td>Robust Scaling</td><td>用中位數 + IQR；對極端值有抗性</td><td>不保證符合標準分佈</td></tr>
+</table>
+
+<h4 class="h-4">② 分佈轉換</h4>
+
+<table class="matrix">
+<tr><th style="width:30%">方法</th><th>用途</th></tr>
+<tr><td>對數轉換 Log Transform</td><td>處理右偏分佈（收入、銷售額）</td></tr>
+<tr><td>平方根 / 立方根</td><td>溫和壓縮中度偏態</td></tr>
+<tr><td>Box-Cox / Yeo-Johnson</td><td>自動尋找最適指數轉換，使資料近似常態</td></tr>
+</table>
+
+<h4 class="h-4">③ 類別資料編碼</h4>
+
+<table class="matrix">
+<tr><th style="width:24%">編碼</th><th>適用</th><th>風險</th></tr>
+<tr><td>Label Encoding<br>標籤編碼</td><td>有序類別（教育程度、會員等級）</td><td>用於無序類別會誤解為數值大小關係</td></tr>
+<tr><td>One-hot Encoding<br>獨熱編碼</td><td>無序類別（城市、產品類型）</td><td>高基數時維度爆炸、記憶體消耗</td></tr>
+<tr><td>Target Encoding<br>目標編碼</td><td>高基數類別且與目標高度關聯</td><td>有資料洩漏風險，需交叉驗證</td></tr>
+</table>
+
+<h4 class="h-4">④ 時間與週期性編碼</h4>
+<ul class="body">
+<li><b>結構化拆解：</b>把時間戳分解為「年、月、日、星期幾、時段」</li>
+<li><b>週期性編碼：</b>用 <b>sin / cos 三角函數轉換</b>保留週期結構（一週循環、月份循環）</li>
+</ul>
+
+<h4 class="h-3">D · 資料增強策略</h4>
+
+<table class="matrix">
+<tr><th style="width:18%">類型</th><th style="width:38%">方法</th><th>應用</th></tr>
+<tr><td>圖像</td><td>翻轉、旋轉、裁剪、縮放、色彩變換</td><td>人臉辨識、醫學影像</td></tr>
+<tr><td>文字</td><td>同義字替換、隨機插入/刪除/交換</td><td>情感分析、主題分類</td></tr>
+<tr><td>時序</td><td>添加噪聲、Scaling、Jittering、視窗裁切</td><td>設備故障、股市趨勢</td></tr>
+<tr><td>表格</td><td><b>SMOTE</b> 合成稀少類樣本</td><td>不平衡資料分類（詐欺、疾病診斷）</td></tr>
+</table>
+
+<h4 class="h-3">E · 特徵工程的策略思考</h4>
+
+<table class="matrix">
+<tr><th style="width:30%">思考脈絡</th><th>實務做法</th></tr>
+<tr><td>依任務類型設計</td><td>分類偏好離散指標、區間編碼；迴歸偏好連續趨勢相關特徵</td></tr>
+<tr><td>依模型性質調整</td><td>線性模型重共線性與尺度；樹模型對標籤編碼敏感；KNN 等距離模型需單位一致</td></tr>
+<tr><td>探索隱含結構</td><td>合成欄位（單價 × 數量 = 總價）；統計聚合（過去 7 天點擊次數）</td></tr>
+<tr><td>時間性與序列關聯</td><td>滯後值（lag）、移動平均（rolling mean）、時間間隔、事件次數</td></tr>
+</table>
+
+<div class="callout exam">
+<strong>常考點：缺失值與特徵編碼選擇</strong>
+題目情境問「處理缺失值的方法？」 → <b>插補法（Imputation）</b>。問「對無序類別變數（如城市）編碼？」 → <b>One-hot Encoding</b>（用 Label Encoding 模型會誤解為大小關係）。問「特徵標準化目的？」 → <b>把不同尺度特徵縮放至相近範圍，利於模型學習</b>。
+</div>
+
+<h3 class="sub-title" id="s3-5-2" data-num="5.2">模型選擇與架構設計</h3>
+
+<p class="body">模型選擇需兼顧<b>資料規模、特徵性質、任務類型、複雜度、運算資源、解釋性需求</b>。本節介紹五大考量原則。</p>
+
+<h4 class="h-3">A · 任務類型與模型配對</h4>
+
+<table class="matrix">
+<tr><th style="width:18%">任務</th><th style="width:30%">目標</th><th>建議模型</th></tr>
+<tr><td>分類 Classification</td><td>預測離散類別</td><td><b>決策樹/隨機森林</b>（解釋性 + 混合特徵）、<b>SVM</b>（邊界清晰 + 高維小樣本）、<b>神經網路</b>（非線性 + 影像/語音）</td></tr>
+<tr><td>迴歸 Regression</td><td>預測連續數值</td><td><b>線性迴歸</b>（線性 + 解釋）、<b>樹/隨機森林迴歸</b>（非線性 + 交互作用）、<b>神經網路</b>（高維 + 強非線性）</td></tr>
+<tr><td rowspan="2">非監督式 Unsupervised</td><td>聚類（自動分組）</td><td><b>K-means</b>（球狀 + 已知群數）、<b>DBSCAN</b>（有噪聲 + 群大小不均）</td></tr>
+<tr><td>降維（保留結構）</td><td><b>PCA</b>（最大變異 + 解釋性）、<b>Autoencoder</b>（非線性結構重建）</td></tr>
+<tr><td>序列 / 時間序列</td><td>根據序列預測或決策</td><td><b>RNN / LSTM / GRU</b>（長序列依賴）、<b>TCN</b>（時序卷積）、<b>ARIMA</b>（短期週期性 + 小資料）</td></tr>
+</table>
+
+<h4 class="h-3">B · 資料規模與模型選擇</h4>
+
+<div class="tile-grid">
+<div class="tile">
+<div class="tile-num">SIZE 01</div>
+<div class="tile-title">小型資料集</div>
+<div class="tile-body">數百至數千筆 — <b>結構簡單、參數少</b>的模型降低過擬合。線性 / 邏輯迴歸、決策樹、正則化模型（Lasso、Ridge）。<b>資料前處理與特徵工程更重要</b>。</div>
+</div>
+<div class="tile">
+<div class="tile-num">SIZE 02</div>
+<div class="tile-title">中型資料集</div>
+<div class="tile-body">數千至數十萬筆 — 隨機森林、梯度提升（XGBoost、LightGBM）、模型集成 + 超參數優化。<b>運算成本成為實務限制</b>。</div>
+</div>
+<div class="tile">
+<div class="tile-num">SIZE 03</div>
+<div class="tile-title">大型資料集</div>
+<div class="tile-body">百萬級以上 — <b>深度神經網路</b>發揮表現潛力（影像、語音、文字）。需 GPU、分散式架構、調校效率。</div>
+</div>
+</div>
+
+<h4 class="h-3">C · 模型解釋性需求</h4>
+
+<table class="matrix">
+<tr><th style="width:24%">需求</th><th>選擇</th></tr>
+<tr><td>高解釋性</td><td>線性 / 邏輯迴歸、淺層決策樹；結構簡單、邏輯可視；醫療、信貸、法規場景</td></tr>
+<tr><td>低解釋性 + 高預測能力</td><td>隨機森林、梯度提升、深度神經網路；高度非線性、大量參數<br><b>緩解：</b>用 <b>SHAP、LIME、PDP（偏依圖）</b>輔助解釋</td></tr>
+</table>
+
+<div class="callout note">
+<strong>補充：可解釋 AI（XAI）工具</strong>
+<b>SHAP（SHapley Additive exPlanations）：</b>基於博弈論的 Shapley value，計算每個特徵對預測的貢獻；全局與局部解釋兼具。<br>
+<b>LIME（Local Interpretable Model-agnostic Explanations）：</b>對單一預測在局部用簡單模型近似，產生可解釋說明。<br>
+<b>PDP（Partial Dependence Plot）偏依圖：</b>視覺化單一或兩個特徵對預測的影響，固定其他變數。<br>
+高風險決策場景（醫療、金融、招聘）<b>必備</b>，是負責任 AI 的核心工具。
+</div>
+
+<h4 class="h-3">D · 運算資源與部署限制</h4>
+
+<table class="matrix">
+<tr><th style="width:24%">情境</th><th>模型選擇與技術</th></tr>
+<tr><td>資源受限<br>（IoT、手機、邊緣）</td><td>簡單決策樹、邏輯迴歸、壓縮神經網路（MobileNet）；<b>模型剪枝、量化</b>瘦身</td></tr>
+<tr><td>資源充足<br>（雲端、資料中心）</td><td>高效能深度模型 + 模型集成；複雜前後處理</td></tr>
+<tr><td>即時推論<br>（金融交易、推薦）</td><td>優先考量<b>推論延遲與效能</b>；caching、<b>模型蒸餾（Knowledge Distillation）</b></td></tr>
+</table>
+
+<h4 class="h-3">E · 偏差-變異權衡（Bias-Variance Tradeoff）</h4>
+
+<div class="diagram">
+<div class="diagram-title">偏差 vs 變異的取捨</div>
+<svg viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<style>
+.bias{fill:none;stroke:#c8102e;stroke-width:2.5}
+.var{fill:none;stroke:#0a4d68;stroke-width:2.5}
+.total{fill:none;stroke:#1a1a1a;stroke-width:3}
+.opt{stroke:#0a8060;stroke-width:2;stroke-dasharray:4,2}
+.t{font-family:'Noto Sans TC',sans-serif;font-size:12px;fill:#1a1a1a}
+.tt{font-family:'Noto Serif TC',sans-serif;font-size:13px;font-weight:700}
+.tm{font-family:'JetBrains Mono',monospace;font-size:11px;fill:#6b6357}
+</style>
+</defs>
+<line x1="80" y1="240" x2="740" y2="240" stroke="#1a1a1a"/>
+<line x1="80" y1="40" x2="80" y2="240" stroke="#1a1a1a"/>
+<text x="400" y="265" text-anchor="middle" class="tm">模型複雜度 →</text>
+<text x="60" y="140" transform="rotate(-90 60,140)" text-anchor="middle" class="tm">誤差</text>
+<path class="bias" d="M 100,80 Q 250,140 700,220"/>
+<path class="var" d="M 100,225 Q 350,200 700,80"/>
+<path class="total" d="M 100,100 Q 380,135 700,120"/>
+<line x1="380" y1="40" x2="380" y2="240" class="opt"/>
+<text x="160" y="78" class="tt" fill="#c8102e">偏差（Bias）</text>
+<text x="160" y="92" class="tm">欠擬合：模型太簡單</text>
+<text x="640" y="80" class="tt" fill="#0a4d68">變異（Variance）</text>
+<text x="640" y="94" class="tm">過擬合：模型太複雜</text>
+<text x="400" y="60" class="tt">總誤差</text>
+<text x="380" y="30" text-anchor="middle" class="tt" fill="#0a8060">最佳點</text>
+<text x="380" y="46" text-anchor="middle" class="tm">Sweet Spot</text>
+<text x="160" y="220" class="tm">線性迴歸</text>
+<text x="640" y="220" class="tm">深度神經網路</text>
+</svg>
+<div class="diagram-cap">圖 5-1 · 偏差與變異 = 模型表現的「兩個對立力量」</div>
+</div>
+
+<table class="matrix">
+<tr><th style="width:18%">概念</th><th>說明</th></tr>
+<tr><td>偏差 Bias</td><td>模型對資料結構的擬合能力不足 → 無法捕捉主要趨勢 → <b>欠擬合（Underfitting）</b></td></tr>
+<tr><td>變異 Variance</td><td>模型對訓練資料的細微差異或雜訊過於敏感 → 不同資料集表現差異大 → <b>過擬合（Overfitting）</b></td></tr>
+<tr><td>取捨</td><td>低複雜度模型（線性）= 高偏差 + 低變異；高複雜度模型（深度 NN）= 低偏差 + 高變異</td></tr>
+</table>
+
+<div class="callout key">
+<strong>實務原則：找到 Sweet Spot</strong>
+模型選擇 = 在偏差與變異間取得平衡。一般做法：① 從簡單模型開始（線性、邏輯迴歸）建基線；② 如效能不夠，逐步增加複雜度（樹模型、集成、深度學習）；③ 用<b>交叉驗證</b>監控變異；④ 用<b>正則化</b>抑制過擬合。
+</div>
+
+<h3 class="sub-title" id="s3-5-3" data-num="5.3">模型訓練、評估與驗證</h3>
+
+<p class="body">即便選對模型，若訓練未能有效執行、評估不嚴謹，仍可能導致實際應用<b>表現不佳甚至錯誤決策</b>。本節聚焦訓練策略 + 評估指標 + 驗證流程。</p>
+
+<h4 class="h-3">A · 訓練流程五大環節</h4>
+
+<h4 class="h-4">① 資料分割</h4>
+
+<table class="matrix">
+<tr><th style="width:24%">資料集</th><th>用途</th></tr>
+<tr><td>訓練集 Training Set</td><td>模型參數學習</td></tr>
+<tr><td>驗證集 Validation Set</td><td>調整<b>超參數</b> + 監控訓練過程</td></tr>
+<tr><td>測試集 Test Set</td><td>訓練完成後<b>最終效能評估</b>，模擬實際部署</td></tr>
+</table>
+
+<h4 class="h-4">② 批次訓練設計</h4>
+
+<table class="matrix">
+<tr><th style="width:30%">策略</th><th>特性</th></tr>
+<tr><td>全量訓練 Batch GD</td><td>每輪用全部資料；穩定但記憶體需求高</td></tr>
+<tr><td>隨機梯度下降 SGD</td><td>每次一筆樣本；快但震盪</td></tr>
+<tr><td>小批次訓練 Mini-batch SGD</td><td><b>深度學習最常用</b>；平衡穩定性與效率</td></tr>
+</table>
+
+<h4 class="h-4">③ 學習率調整</h4>
+
+<ul class="body">
+<li><b>固定學習率（Constant Rate）</b>：簡單但無法兼顧不同訓練階段</li>
+<li><b>遞減學習率（Step Decay / Exponential Decay）</b>：定期降低，穩定後期收斂</li>
+<li><b>動態調整（ReduceLROnPlateau）</b>：驗證效能停滯時自動調降</li>
+<li><b>預熱策略（Warm-up）</b>：訓練初期低學習率逐漸升高 — <b>Transformer 必備</b></li>
+</ul>
+
+<h4 class="h-4">④ Early Stopping 早停策略</h4>
+
+<table class="matrix">
+<tr><th style="width:30%">參數</th><th>說明</th></tr>
+<tr><td>Patience 容忍次數</td><td>連續 N 次驗證指標未改善則終止</td></tr>
+<tr><td>Min Delta 最小改善幅度</td><td>提升小於閾值視為無效</td></tr>
+</table>
+
+<h4 class="h-4">⑤ 訓練監控與可追蹤性</h4>
+
+<ul class="body">
+<li><b>視覺化：</b>TensorBoard、WandB、MLflow 觀察損失曲線</li>
+<li><b>版本管理：</b>記錄超參數、模型結構、權重版本</li>
+<li><b>資源監控：</b>GPU / CPU / 記憶體使用率</li>
+</ul>
+
+<h4 class="h-3">B · 分類任務評估指標</h4>
+
+<h4 class="h-4">混淆矩陣（Confusion Matrix）</h4>
+
+<div class="diagram">
+<div class="diagram-title">二元分類混淆矩陣</div>
+<svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<style>
+.tp{fill:#e0f4ed;stroke:#0a8060;stroke-width:2}
+.tn{fill:#e0f4ed;stroke:#0a8060;stroke-width:2}
+.fp{fill:#ffeae0;stroke:#c8102e;stroke-width:2}
+.fn{fill:#ffeae0;stroke:#c8102e;stroke-width:2}
+.t{font-family:'Noto Sans TC',sans-serif;font-size:13px;text-anchor:middle}
+.tt{font-family:'Noto Serif TC',sans-serif;font-size:15px;font-weight:700;text-anchor:middle}
+.tm{font-family:'JetBrains Mono',monospace;font-size:11px;fill:#6b6357;text-anchor:middle}
+</style>
+</defs>
+<rect x="200" y="30" width="200" height="40" fill="#1a1a1a"/>
+<text x="300" y="55" class="tt" fill="#fff">實際：正類</text>
+<rect x="400" y="30" width="200" height="40" fill="#1a1a1a"/>
+<text x="500" y="55" class="tt" fill="#fff">實際：負類</text>
+<rect x="40" y="80" width="160" height="100" fill="#1a1a1a"/>
+<text x="120" y="130" class="tt" fill="#fff">預測：正類</text>
+<rect x="40" y="180" width="160" height="100" fill="#1a1a1a"/>
+<text x="120" y="230" class="tt" fill="#fff">預測：負類</text>
+<rect x="200" y="80" width="200" height="100" class="tp"/>
+<text x="300" y="120" class="tt" fill="#0a8060">TP 真正</text>
+<text x="300" y="140" class="tm">True Positive</text>
+<text x="300" y="160" class="t">正確抓到正類</text>
+<rect x="400" y="80" width="200" height="100" class="fp"/>
+<text x="500" y="120" class="tt" fill="#c8102e">FP 假正</text>
+<text x="500" y="140" class="tm">False Positive</text>
+<text x="500" y="160" class="t">把負類誤判為正 (誤報)</text>
+<rect x="200" y="180" width="200" height="100" class="fn"/>
+<text x="300" y="220" class="tt" fill="#c8102e">FN 假負</text>
+<text x="300" y="240" class="tm">False Negative</text>
+<text x="300" y="260" class="t">漏抓正類 (漏報)</text>
+<rect x="400" y="180" width="200" height="100" class="tn"/>
+<text x="500" y="220" class="tt" fill="#0a8060">TN 真負</text>
+<text x="500" y="240" class="tm">True Negative</text>
+<text x="500" y="260" class="t">正確識別負類</text>
+</svg>
+</div>
+
+<h4 class="h-4">五大核心指標</h4>
+
+<table class="matrix">
+<tr><th style="width:14%">指標</th><th style="width:28%">公式</th><th style="width:24%">解讀</th><th>適用情境</th></tr>
+<tr><td>Accuracy 準確率</td><td>(TP + TN) / 全部</td><td>整體預測正確比例</td><td>類別均衡；不平衡時誤導</td></tr>
+<tr><td>Precision 精確率</td><td>TP / (TP + FP)</td><td>預測為正中真正為正的比例</td><td><b>誤報代價高</b>：垃圾郵件、醫療誤診</td></tr>
+<tr><td>Recall 召回率</td><td>TP / (TP + FN)</td><td>真實正中被抓到的比例</td><td><b>漏報代價高</b>：癌症偵測、詐騙偵測</td></tr>
+<tr><td>F1-Score</td><td>2 · P · R / (P + R)</td><td>精確率與召回率的調和平均</td><td>需平衡 P 與 R、類別不平衡嚴重</td></tr>
+<tr><td>ROC-AUC</td><td>ROC 曲線下的面積</td><td>所有閾值下的整體區分能力；越接近 1 越好</td><td>需綜觀整體預測能力</td></tr>
+</table>
+
+<div class="callout warn">
+<strong>Accuracy 在類別不平衡時的陷阱</strong>
+若 95% 樣本為負類，<b>即使模型全預測為負，準確率仍 95%</b> — 但實際模型沒抓到任何正類！詐欺偵測、罕病診斷等場景<b>絕不能只看 Accuracy</b>，必須看 Precision、Recall、F1、AUC。
+</div>
+
+<h4 class="h-3">C · 迴歸任務評估指標</h4>
+
+<table class="matrix">
+<tr><th style="width:14%">指標</th><th style="width:28%">公式</th><th style="width:22%">特性</th><th>適用</th></tr>
+<tr><td>MSE 均方誤差</td><td>(1/n) Σ(yᵢ − ŷᵢ)²</td><td>對大誤差敏感（平方放大）</td><td>金融風險、製程品質 — 需強調大誤差懲罰</td></tr>
+<tr><td>MAE 平均絕對誤差</td><td>(1/n) Σ|yᵢ − ŷᵢ|</td><td>對異常值穩健</td><td>偏態分佈或含極端值</td></tr>
+<tr><td>RMSE 均方根誤差</td><td>√MSE</td><td>單位與預測變數相同</td><td>整體精度衡量、模型比較</td></tr>
+<tr><td>R² 決定係數</td><td>1 − RSS/TSS</td><td>模型解釋變異的比例</td><td>線性迴歸；R² = 1 完美，R² = 0 同常數模型，R² &lt; 0 比常數還差</td></tr>
+</table>
+
+<h4 class="h-3">D · 交叉驗證（Cross-Validation）</h4>
+
+<div class="def-card">
+<div class="def-card-head"><h4>K-fold Cross-Validation</h4></div>
+<div class="def-card-body">
+<p><b>原理：</b>把資料分為 K 個不重疊子集（folds），輪流以其中 1 折作為驗證集、其餘 K-1 折作訓練。重複 K 次取平均。</p>
+<p><b>特點：</b>減少資料切分偏差；常見 K=5 或 10；計算成本為 K 倍。</p>
+<p><b>適用：</b>中大型資料集；模型選擇與效能比較的標準方法。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>Stratified K-fold 分層交叉驗證</h4></div>
+<div class="def-card-body">
+<p><b>原理：</b>K-fold 的改良版 — 每一折中<b>各類別比例與整體資料集相符</b>（依類別分層抽樣）。</p>
+<p><b>適用：</b><b>類別分佈不均</b>的分類問題（詐欺、疾病、異常事件）；是分類任務的<b>預設驗證方式</b>。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>LOOCV — Leave-One-Out</h4></div>
+<div class="def-card-body">
+<p><b>原理：</b>K-fold 極端版本，K = 樣本數 n。每次留 1 筆驗證、其餘 n-1 訓練，總共 n 次。</p>
+<p><b>適用：</b>樣本極小但珍貴（臨床研究、稀有病）。<b>計算成本極高</b>。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>Repeated K-fold 重複交叉驗證</h4></div>
+<div class="def-card-body">
+<p><b>原理：</b>在 K-fold 基礎上多次隨機重劃（如 10-fold × 5 次），取多組結果計算平均與變異。</p>
+<p><b>適用：</b>學術研究需報告標準差與置信區間、產業建模需重現性高。</p>
+</div>
+</div>
+
+<h4 class="h-3">E · 類別不平衡處理</h4>
+
+<table class="matrix">
+<tr><th style="width:28%">策略</th><th>原理</th></tr>
+<tr><td>類別權重<br>Class Weighting</td><td>訓練時對少數類別賦予更高權重，強化學習能力（透過損失函數加權）</td></tr>
+<tr><td>過採樣 SMOTE</td><td>合成新樣本而非單純複製，保留原始空間結構，降低過擬合</td></tr>
+<tr><td>欠採樣</td><td>減少多數類別樣本；簡單但可能丟失資訊</td></tr>
+<tr><td>異常值建模</td><td>視為異常偵測（Isolation Forest、One-Class SVM）；極端不平衡場景</td></tr>
+</table>
+
+<div class="callout exam">
+<strong>常考點：評估指標選擇</strong>
+給情境問選什麼指標 —
+<ul style="margin:6px 0 0 24px;font-size:14px;line-height:1.7">
+<li><b>類別不平衡 + 漏報代價高（癌症、詐欺）</b> → <b>Recall</b> 為主、F1 輔助</li>
+<li><b>誤報代價高（垃圾郵件、醫療誤診正常人）</b> → <b>Precision</b> 為主</li>
+<li><b>需整體區分能力（無固定閾值）</b> → <b>ROC-AUC</b></li>
+<li><b>迴歸 + 強調大誤差</b> → <b>MSE / RMSE</b>；<b>迴歸 + 抗異常值</b> → <b>MAE</b></li>
+<li><b>分類任務的標準驗證</b> → <b>Stratified K-fold CV</b>（保持類別比例）</li>
+</ul>
+</div>
+
+<h3 class="sub-title" id="s3-5-4" data-num="5.4">模型調整與優化</h3>
+
+<p class="body">即使完成初步訓練，實務上仍常面臨<b>效能不穩、推論延遲、過擬合、資源消耗過高</b>等問題。本節聚焦模型建構後的優化行動：超參數調校、正則化、資料策略、模型壓縮。</p>
+
+<h4 class="h-3">A · 超參數調校</h4>
+
+<p class="body"><b>超參數（Hyperparameters）</b>是<b>需開發者手動指定</b>的參數，不由資料自動學習得出。對訓練穩定性、收斂速度、最終效能影響深遠。</p>
+
+<h4 class="h-4">六大關鍵超參數</h4>
+
+<div class="def-card">
+<div class="def-card-head"><h4>① 學習率 Learning Rate</h4></div>
+<div class="def-card-body">
+<p><b>角色：</b>控制每次反向傳播後參數更新的幅度。</p>
+<p><b>影響：</b>過高 → 跳過最小點、震盪甚至發散；過低 → 收斂慢、陷入局部極小。</p>
+<p><b>實務：</b>初期較大、後期較小（搭配 LR Scheduler 退火策略）。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>② 批次大小 Batch Size</h4></div>
+<div class="def-card-body">
+<p><b>影響梯度估計穩定性、模型更新頻率、資源使用。</b></p>
+<p><b>小批次：</b>梯度波動大、易跳脫局部最小；訓練不穩。</p>
+<p><b>大批次：</b>梯度穩定、加速收斂；但可能降低泛化、陷入局部最小。</p>
+<p><b>耦合：</b>Batch Size 與學習率高度相關，放大 Batch 通常需提高學習率。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>③ 網路深度與寬度</h4></div>
+<div class="def-card-body">
+<p><b>深度</b>（層數）：提升非線性表達能力。<b>寬度</b>（每層神經元數）：豐富特徵表示空間。</p>
+<p><b>過深</b>：易梯度消失（需殘差連接、BatchNorm 緩解）。<b>過寬</b>：模型容量過大易過擬合。</p>
+<p><b>過淺/過窄</b>：表達能力不足，欠擬合。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>④ 激活函數</h4></div>
+<div class="def-card-body">
+<table class="matrix" style="margin:8px 0">
+<tr><th style="width:18%">激活函數</th><th>適用</th></tr>
+<tr><td>Softmax</td><td>輸出層 — 多類別<b>單選</b>（類別互斥）；輸出機率分佈，總和為 1</td></tr>
+<tr><td>Sigmoid</td><td>輸出層 — <b>二元分類</b>；每個輸出獨立表示機率</td></tr>
+<tr><td>ReLU</td><td>隱藏層主力 — 解決梯度消失、計算快</td></tr>
+<tr><td>Tanh</td><td>隱藏層 — 中心對稱（-1 到 1）</td></tr>
+</table>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>⑤ 優化器 Optimizer</h4></div>
+<div class="def-card-body">
+<table class="matrix" style="margin:8px 0">
+<tr><th style="width:18%">優化器</th><th>特性 / 適用</th></tr>
+<tr><td>SGD</td><td>最基本；簡單、記憶體低；對學習率敏感</td></tr>
+<tr><td>Momentum</td><td>SGD + 動量；減少震盪、加速收斂</td></tr>
+<tr><td>Adagrad</td><td>自適應學習率；適合<b>稀疏特徵</b>（NLP）；但學習率持續衰減</td></tr>
+<tr><td>Adam</td><td>Momentum + RMSprop；收斂快穩；<b>萬用優化器</b>；幾乎所有深度學習</td></tr>
+</table>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>⑥ 正則化係數 λ</h4></div>
+<div class="def-card-body">
+<p><b>λ 大</b>：強化限制，權重壓縮更小，模型簡單但可能欠擬合。</p>
+<p><b>λ 小</b>：放鬆限制，權重可變大，模型靈活但易過擬合。</p>
+<p><b>調整：</b>需透過交叉驗證選擇。</p>
+</div>
+</div>
+
+<h4 class="h-3">B · 正則化技術詳述</h4>
+
+<table class="matrix">
+<tr><th style="width:24%">技術</th><th>原理</th><th>特性</th></tr>
+<tr><td>L1 正則化 Lasso</td><td>Loss + λ Σ|θᵢ|（絕對值總和）</td><td><b>促使部分權重為零</b> — 自動<b>特徵選擇</b>；高維資料適用</td></tr>
+<tr><td>L2 正則化 Ridge</td><td>Loss + λ Σθᵢ²（平方和）</td><td>限制權重大小但<b>不為零</b>；解決多重共線性；平滑模型</td></tr>
+<tr><td>Elastic Net</td><td>L1 + L2 結合</td><td>同時稀疏 + 穩定；多重共線性 + 特徵選擇</td></tr>
+<tr><td>Dropout</td><td>訓練時隨機關閉部分神經元（保留率 p 常為 0.5）</td><td>讓模型學多種子網路的特徵；測試時不丟棄但縮放權重</td></tr>
+<tr><td>Early Stopping</td><td>驗證集不再改善時提前停止</td><td>用 patience 參數控制；無需修改架構</td></tr>
+</table>
+
+<div class="callout note">
+<strong>補充：Lasso 與 Ridge 的命名典故</strong>
+<b>Lasso</b> = <b>L</b>east <b>A</b>bsolute <b>S</b>hrinkage and <b>S</b>election <b>O</b>perator — 絕對值（Absolute）+ 縮小（Shrinkage）+ 自動選擇（Selection）。<br>
+<b>Ridge</b>：統計中多重共線性下，普通最小平方（OLS）估計不穩；加 L2 後解會沿著「<b>脊線（Ridge）</b>」分佈，幾何上呈橢圓形範圍 — 故名 Ridge。
+</div>
+
+<h4 class="h-3">C · 資料增強與重取樣</h4>
+
+<table class="matrix">
+<tr><th style="width:28%">類型</th><th>方法</th></tr>
+<tr><td>圖像增強</td><td>旋轉、平移、翻轉、縮放、裁切、雜訊、亮度</td></tr>
+<tr><td>文字增強</td><td>同義字替換、隨機刪詞、順序調整</td></tr>
+<tr><td>音訊增強</td><td>速度、音量、背景噪音、隨機靜音</td></tr>
+<tr><td>過採樣 Oversampling</td><td>增加少數類樣本 — 複製或 SMOTE 合成</td></tr>
+<tr><td>欠採樣 Undersampling</td><td>減少多數類樣本 — 計算簡單但丟失資訊</td></tr>
+<tr><td>類別權重 Class Weighting</td><td>損失函數中對不同類別加權 — 不改動樣本</td></tr>
+</table>
+
+<h4 class="h-3">D · 模型壓縮與加速</h4>
+
+<div class="tile-grid">
+<div class="tile">
+<div class="tile-num">TECH 01</div>
+<div class="tile-title">知識蒸餾<br>Knowledge Distillation</div>
+<div class="tile-body">把大型「<b>教師模型</b>」的知識傳遞給較小的「<b>學生模型</b>」。學生體積小、推論快、效能接近教師。<br><b>應用：</b>邊緣裝置部署、降低延遲。</div>
+</div>
+<div class="tile">
+<div class="tile-num">TECH 02</div>
+<div class="tile-title">模型剪枝 Pruning</div>
+<div class="tile-body"><b>結構化</b>（移除整個神經元/層）：易硬體加速。<br><b>非結構化</b>（移除單一權重）：稀疏化但硬體支援差。<br>過度剪枝會降準確度。</div>
+</div>
+<div class="tile">
+<div class="tile-num">TECH 03</div>
+<div class="tile-title">量化 Quantization</div>
+<div class="tile-body">高精度（FP32）→ 低精度（INT8）。大幅降低儲存與運算負擔。<br><b>QAT 量化感知訓練</b>讓模型適應量化誤差。Edge TPU、NPU 已最佳化。</div>
+</div>
+<div class="tile">
+<div class="tile-num">TECH 04</div>
+<div class="tile-title">混合精度訓練<br>Mixed Precision</div>
+<div class="tile-body">FP16 + FP32 同時使用。<b>加速訓練、減少記憶體</b>，允許更大批次或更深模型。NVIDIA Tensor Cores 已最佳化。</div>
+</div>
+</div>
+
+<div class="callout exam">
+<strong>常考點：超參數與優化技術辨識</strong>
+<ul style="margin:6px 0 0 24px;font-size:14px;line-height:1.7">
+<li><b>超參數 vs 模型參數：</b>超參數<b>需手動設定</b>（學習率、Batch Size、層數）；模型參數由訓練自動學習（權重、偏差）</li>
+<li><b>L1（Lasso）→ 自動特徵選擇</b>；<b>L2（Ridge）→ 平滑權重不為零</b></li>
+<li><b>Dropout 是訓練時隨機關閉神經元</b>，測試時恢復</li>
+<li><b>知識蒸餾</b>把大模型壓成小模型；<b>量化</b>用低精度數值；<b>剪枝</b>移除不重要權重</li>
+<li><b>不平衡資料</b>用 <b>SMOTE</b> 合成或<b>類別加權</b></li>
+</ul>
+</div>
+
+<!-- ====== 5 章末練習 ====== -->
+<h3 class="sub-title" data-num="5.X">本章重點與練習</h3>
+
+<div class="callout tip">
+<strong>本章重點速記</strong>
+① 資料清理 5 任務（缺失 / 異常 / 重複 / 型別 / 一致性）；② 特徵選擇 3 法（Filter / Wrapper / Embedded）+ 降維 5 種；③ 特徵轉換（尺度、分佈、編碼、時間）；④ 模型選擇 5 大考量（任務 / 資料規模 / 解釋性 / 資源 / 偏差變異）；⑤ 訓練 5 環節（分割 / 批次 / 學習率 / 早停 / 監控）；⑥ 分類 5 大指標（Acc / P / R / F1 / AUC）+ 迴歸 4 大（MSE / MAE / RMSE / R²）；⑦ 4 種交叉驗證（K-fold / Stratified / LOOCV / Repeated）；⑧ 6 大超參數；⑨ 5 種正則化；⑩ 4 種模型壓縮（蒸餾 / 剪枝 / 量化 / 混合精度）。
+</div>
+
+<table class="matrix">
+<tr><th style="width:8%">#</th><th>題目</th></tr>
+<tr><td>1</td><td>針對缺失值的處理，下列哪種方法屬於利用模型進行補值的方式？(A) 刪除法　(B) 均值填補　(C) 預測模型填補　(D) 缺失指標編碼</td></tr>
+<tr><td>2</td><td>在進行異常值偵測時，哪種方法是利用統計特徵分佈來判斷離群點？(A) KNN 補值　(B) 四分位距法（IQR）　(C) Isolation Forest　(D) One-hot Encoding</td></tr>
+<tr><td>3</td><td>下列哪一種特徵選擇方法會直接在模型訓練過程中進行特徵挑選？(A) Filter 方法　(B) Wrapper 方法　(C) Embedded 方法　(D) One-hot Encoding</td></tr>
+<tr><td>4</td><td>在進行特徵轉換時，若資料存在極端偏高的右偏分佈，常用哪種轉換以降低偏態？(A) 平方根轉換　(B) 對數轉換　(C) Label Encoding　(D) 缺失指標編碼</td></tr>
+<tr><td>5</td><td>在模型訓練過程中，若模型在訓練集表現良好，但測試集效能不佳，可能是發生了什麼問題？(A) 欠擬合　(B) 特徵縮放失敗　(C) 過擬合　(D) 批次大小過小</td></tr>
+<tr><td>6</td><td>交叉驗證中，哪一種方法在每次驗證中只留下一筆樣本作為驗證集，其餘皆用於訓練？(A) K-fold　(B) Stratified K-fold　(C) LOOCV　(D) Repeated K-fold</td></tr>
+<tr><td>7</td><td>在訓練深度學習模型時，隨機將部分神經元暫時關閉以減少過擬合的技術是什麼？(A) Early Stopping　(B) Dropout　(C) Batch Normalization　(D) Quantization</td></tr>
+<tr><td>8</td><td>在模型壓縮技術中，知識蒸餾（Knowledge Distillation）的主要目的是什麼？(A) 減少資料維度　(B) 降低參數數量使模型更小　(C) 將大型模型的知識轉移至小型模型　(D) 增強資料平衡</td></tr>
+<tr><td>9</td><td>在優化器中，哪一個方法會自動調整每個參數的學習率，特別適用於稀疏資料？(A) Momentum　(B) Adagrad　(C) Adam　(D) SGD</td></tr>
+<tr><td>10</td><td>One-hot Encoding 在什麼情況下可能造成模型的運算負擔加重？(A) 缺失值多　(B) 類別種類 10 種　(C) 類別變數具有高基數（High Cardinality）　(D) 無重複樣本</td></tr>
+</table>
+
+<details style="margin:24px 0;max-width:900px;border:2px solid var(--ink);background:#fff;padding:16px 22px;font-size:14px">
+<summary style="cursor:pointer;font-family:'Noto Serif TC',serif;font-weight:700;font-size:16px;color:var(--accent);padding:4px 0">▸ 點此展開答案與解析</summary>
+<table class="matrix" style="margin-top:16px">
+<tr><th style="width:8%">#</th><th style="width:12%">答案</th><th>解析</th></tr>
+<tr><td>1</td><td>(C)</td><td>預測模型填補用其他特徵訓練模型（迴歸/分類器）預測缺失值，能捕捉資料內在關聯，降低資訊流失。</td></tr>
+<tr><td>2</td><td>(B)</td><td>IQR 法透過 Q1、Q3 計算四分位距，超過 1.5×IQR 標記為異常；直觀且適用於數值型資料初步檢查。</td></tr>
+<tr><td>3</td><td>(C)</td><td>Embedded 方法在訓練過程中同步選擇特徵 — 決策樹的特徵重要性、Lasso/Ridge 的正則化權重控制。</td></tr>
+<tr><td>4</td><td>(B)</td><td>對數轉換可有效降低右偏分佈的極端值影響，使分佈更接近常態；常用於收入、銷售額。</td></tr>
+<tr><td>5</td><td>(C)</td><td>過擬合發生在模型學習太多訓練集細節與雜訊，導致測試集表現不佳；用正則化、降低複雜度、早停緩解。</td></tr>
+<tr><td>6</td><td>(C)</td><td>LOOCV（Leave-One-Out）是 K-fold 極端形式，每次只留 1 筆驗證，最大化資料利用但計算成本極高。</td></tr>
+<tr><td>7</td><td>(B)</td><td>Dropout 透過隨機將神經元暫時設為零，迫使模型以不同子網路學習，降低對特定神經元的過度依賴。</td></tr>
+<tr><td>8</td><td>(C)</td><td>知識蒸餾是讓大型「教師模型」傳遞知識給較小「學生模型」，學生在參數更少下接近教師預測能力。</td></tr>
+<tr><td>9</td><td>(B)</td><td>Adagrad 累積梯度平方和後自動減小常更新參數的步伐，適合稀疏資料（如文字分析）。</td></tr>
+<tr><td>10</td><td>(C)</td><td>One-hot Encoding 為每個類別產生獨立欄位，類別過多（高基數）時導致特徵維度爆炸與記憶體消耗。</td></tr>
+</table>
+</details>
+
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ====== CHAPTER 6 機器學習治理 =============================== -->
+<!-- ============================================================ -->
+<section style="background:var(--paper-2)">
+<div class="container">
+<div class="sec-eyebrow"><span class="chip">CHAPTER 06</span>L234 · 機器學習治理</div>
+<h2 class="sec-title">機器學習治理</h2>
+<p class="sec-intro">技術之外，<b>機器學習如何可信、可問責、可治理</b>是 AI 應用規劃師的最後一哩。涵蓋隱私、安全、合規，以及演算法偏見與公平性。</p>
+
+<h3 class="sub-title" id="s3-6-1" data-num="6.1">數據隱私、安全與合規</h3>
+
+<p class="body">AI 模型效能高度依賴<b>大量且高品質的訓練資料</b>，這些資料往往涉及個人資訊與敏感內容。若處理不當，將導致隱私洩漏、法規違反、信譽損害與法律責任。</p>
+
+<h4 class="h-3">A · 三大數據隱私風險類型</h4>
+
+<table class="matrix">
+<tr><th style="width:24%">類型</th><th>定義</th><th>例子</th></tr>
+<tr><td>直接識別風險</td><td>含有「直接」辨識個人的欄位 — 高度敏感的 PII</td><td>姓名、身分證號、Email、電話、金融帳號</td></tr>
+<tr><td>間接識別風險<br>（準識別資訊）</td><td>單一欄位無法辨識，但<b>多項交叉比對可推導</b></td><td>性別 + 出生年月 + 郵遞區號 + 職業 + 消費習慣</td></tr>
+<tr><td>再識別風險</td><td>即使匿名化後，<b>結合外部資料</b>仍可能還原身分</td><td>開放資料集 + 公開社群比對</td></tr>
+</table>
+
+<div class="callout warn">
+<strong>1996 年經典研究：87% 美國人可從三欄資料識別</strong>
+僅靠「<b>郵遞區號 + 性別 + 出生日期</b>」 — 這三個看似平凡的欄位 — 在大數據時代下可識別 87% 美國人口。間接識別風險被嚴重低估，特別是台灣人口密度較低或特定族群、職業少的地區，<b>再識別風險更顯著</b>。
+</div>
+
+<h4 class="h-3">B · 隱私風險評估流程</h4>
+
+<h4 class="h-4">① 資料盤點與分類（Data Map）</h4>
+
+<p class="body">建立完整的資料清冊，記錄每類資料的：來源、處理流程、欄位型態、接觸單位、流通路徑、儲存位置、保留期限。</p>
+
+<table class="matrix">
+<tr><th style="width:22%">層級</th><th>分類</th></tr>
+<tr><td>開放層級</td><td>公開資料（政府統計、年報）vs 非公開（內部使用）</td></tr>
+<tr><td rowspan="4">敏感度層級<br>（針對非公開）</td><td><b>一般資料：</b>不涉個資或機敏；外洩風險低</td></tr>
+<tr><td><b>機密資料：</b>商業機密、內部策略、合約</td></tr>
+<tr><td><b>個人資料：</b>可直接或間接識別個人；依個資法嚴格管理</td></tr>
+<tr><td><b>高度敏感個資：</b>健康、財務、族群、宗教、政治傾向；法律特別規範</td></tr>
+</table>
+
+<h4 class="h-4">② 隱私影響評估（PIA, Privacy Impact Assessment）</h4>
+
+<div class="steps">
+<div class="step-row"><div class="step-num">1</div><div class="step-content"><div class="step-meta">STEP 01</div><h4>資料流程盤點</h4><p>從收集、處理、儲存、使用到刪除的完整流程。</p></div></div>
+<div class="step-row"><div class="step-num">2</div><div class="step-content"><div class="step-meta">STEP 02</div><h4>風險辨識</h4><p>分析各流程可能對個人隱私造成的風險環節。</p></div></div>
+<div class="step-row"><div class="step-num">3</div><div class="step-content"><div class="step-meta">STEP 03</div><h4>影響程度分析</h4><p>評估風險發生時對個人或組織的法律、營運、信譽衝擊。</p></div></div>
+<div class="step-row"><div class="step-num">4</div><div class="step-content"><div class="step-meta">STEP 04</div><h4>策略擬定</h4><p>技術性或管理性防範措施，降低風險機率或衝擊。</p></div></div>
+<div class="step-row"><div class="step-num">5</div><div class="step-content"><div class="step-meta">STEP 05</div><h4>治理責任分工</h4><p>界定內部各部門、角色在隱私保護的責任與權限。</p></div></div>
+</div>
+
+<h4 class="h-4">③ 再識別模擬與滲透測試</h4>
+
+<p class="body">對於計畫開放、共享或用於 AI 模型平台的資料集，執行測試驗證匿名化效果：</p>
+<ul class="body">
+<li><b>交叉比對測試：</b>嘗試結合公開社群、開放資料、商業數據比對還原</li>
+<li><b>欄位組合分析：</b>評估多欄位組合是否能推導個人身分</li>
+</ul>
+
+<h4 class="h-3">C · 隱私強化技術（PETs）</h4>
+
+<h4 class="h-4">基礎匿名化技術（五種）</h4>
+
+<table class="matrix">
+<tr><th style="width:18%">技術</th><th style="width:32%">作法</th><th>限制</th></tr>
+<tr><td>遮蔽 Masking</td><td>用符號或虛構數據替換敏感欄位（王○○、A12******89）</td><td>僅隱藏部分資訊，易結合其他資料還原</td></tr>
+<tr><td>雜湊 Hashing</td><td>單向雜湊（SHA-256）生成不可逆字串</td><td>原始範圍小時易受彩虹表攻擊；無法數值分析</td></tr>
+<tr><td>泛化 Generalization</td><td>降低精度（1987-03-12 → 1980 年代；信義區 → 台北市）</td><td>精度損失影響分析準確度</td></tr>
+<tr><td>分桶 Bucketing</td><td>連續數值轉區間（58,000 → 50K-60K；32 歲 → 30-39 歲）</td><td>分桶設計過細仍可能暴露個體</td></tr>
+<tr><td>隨機擾動 Noise Injection</td><td>數值加隨機噪聲（50,000 → 50,123）</td><td>噪聲幅度需平衡；過大失準、過小不夠</td></tr>
+</table>
+
+<h4 class="h-4">進階隱私強化技術（PETs）</h4>
+
+<div class="def-card">
+<div class="def-card-head"><h4>K-Anonymity / L-Diversity / T-Closeness</h4></div>
+<div class="def-card-body">
+<p><b>K-匿名：</b>確保每筆紀錄至少與 K-1 筆其他紀錄在準識別欄位相同 — 個體「藏在」群中。</p>
+<p><b>L-多樣性：</b>在 K-匿名基礎上要求每個分組內敏感欄位（如疾病）有至少 L 種不同值 — 防止<b>同質性攻擊</b>。</p>
+<p><b>T-接近性：</b>進一步要求<b>群組內敏感欄位的分佈與全體資料集相近</b> — 防止分佈偏差推測。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>聯邦學習 Federated Learning</h4></div>
+<div class="def-card-body">
+<p>模型在各客戶端（裝置或機構）<b>本地訓練</b>，只傳模型參數更新（梯度），原始資料不外流。</p>
+<p><b>應用：</b>醫療聯盟跨院建模、行動裝置鍵盤預測（Gboard）。</p>
+<p><b>限制：</b>通訊成本高、參數逆向推導風險。</p>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>同態加密 Homomorphic Encryption</h4></div>
+<div class="def-card-body">
+<p><b>在加密資料上直接運算</b>（加、乘），解密後結果與明文運算一致。</p>
+<p><b>優勢：</b>資料全程加密、密碼學強保證。<b>限制：</b>計算效能低，特別是 FHE 全同態加密需高效能硬體。</p>
+</div>
+</div>
+
+<h4 class="h-3">D · 合規資料處理五原則</h4>
+
+<table class="matrix">
+<tr><th style="width:24%">原則</th><th>實務要求</th></tr>
+<tr><td>合法來源與告知同意</td><td>同意需<b>自由、明確、可撤回</b>；不可使用籠統條款</td></tr>
+<tr><td>資料最小化與目的限制</td><td>僅收集達成功能所需的<b>最少資料</b>；不得用於未告知的其他目的</td></tr>
+<tr><td>去識別化或匿名化</td><td>對外共享、模型發布前優先處理；結合再識別風險測試</td></tr>
+<tr><td>透明度與紀錄保存</td><td>記錄來源、法律基礎、處理過程、共享情況；提供隱私聲明</td></tr>
+<tr><td>跨境傳輸規範</td><td>確認接收國保護水準（GDPR 對歐盟外傳輸有嚴格規定）；制定標準合約條款</td></tr>
+</table>
+
+<div class="callout exam">
+<strong>常考點：隱私風險與技術對應</strong>
+<ul style="margin:6px 0 0 24px;font-size:14px;line-height:1.7">
+<li><b>直接識別 PII</b> = 姓名、Email、身分證字號（單獨即可識別）</li>
+<li><b>間接識別 = 準識別資訊</b> = 性別 + 出生年月 + 郵遞區號等組合</li>
+<li><b>遮蔽、雜湊、泛化、分桶、隨機擾動</b> = 5 大基礎匿名化技術</li>
+<li><b>K-匿名 → L-多樣性 → T-接近性</b> = 進階匿名化遞進關係</li>
+<li><b>聯邦學習：</b>資料不出本地，只傳參數；<b>同態加密：</b>密文上直接運算</li>
+</ul>
+</div>
+
+<h3 class="sub-title" id="s3-6-2" data-num="6.2">演算法偏見與公平性</h3>
+
+<p class="body">AI 系統並非中立 — 高度依賴輸入資料與演算法設計，若缺乏謹慎規劃，極易在無意間放大既有社會偏見。<b>AI 偏見不是單純的技術瑕疵</b>，而是涉及公平、合規、倫理責任與企業聲譽的多面向議題。</p>
+
+<h4 class="h-3">A · 偏見來源（資料 + 模型）</h4>
+
+<h4 class="h-4">① 資料層面：來源、內容、製程偏誤</h4>
+
+<table class="matrix">
+<tr><th style="width:22%">偏誤類型</th><th>定義</th><th>例子</th></tr>
+<tr><td>來源偏誤<br>Source Bias</td><td>蒐集階段，資料無法均衡涵蓋所有群體或情境</td><td>醫療模型缺乏特定年齡或性別資料；語料僅來自北美</td></tr>
+<tr><td>內容偏誤<br>Content Bias</td><td>資料本身含<b>刻板印象或歷史不平等</b></td><td>將「醫師」預設男性、「護士」預設女性；信用審核含種族歧視</td></tr>
+<tr><td>製程偏誤<br>Process Bias</td><td>標註過程中標註者主觀或文化差異</td><td>不同標註者對情感分析判斷不一；個人觀念產生刻板印象標註</td></tr>
+</table>
+
+<h4 class="h-4">② 模型層面：演算法、目標函數、正規化、對抗訓練不足</h4>
+
+<ul class="body">
+<li><b>演算法偏見：</b>追求整體效能時忽略少數群體（推薦系統依多數偏好，邊緣化少數）</li>
+<li><b>目標函數偏誤：</b>以整體平均精度作為優化目標，犧牲特定群體準確度</li>
+<li><b>正規化與簡化偏誤：</b>為避免過擬合而簡化變數關聯，降低對少數群體的敏感度</li>
+<li><b>對抗式訓練不足：</b>對抗式公平學習設計不完善仍保留偏見</li>
+</ul>
+
+<h4 class="h-4">③ 偏見的三大潛在影響</h4>
+
+<table class="matrix">
+<tr><th style="width:24%">影響面向</th><th>具體後果</th></tr>
+<tr><td>弱勢群體受歧視</td><td>就業、金融、醫療等領域差別待遇；加劇社會不平等</td></tr>
+<tr><td>企業品牌與信譽受損</td><td>社會輿論反彈、用戶抵制、媒體關注；嚴重影響市場競爭力</td></tr>
+<tr><td>法律與監管風險</td><td>違反反歧視法、個資法、消保法；面臨罰款、訴訟、監管調查</td></tr>
+</table>
+
+<h4 class="h-3">B · 四大公平性指標</h4>
+
+<table class="matrix">
+<tr><th style="width:24%">指標</th><th>定義</th><th>適用情境</th></tr>
+<tr><td>Demographic Parity<br>群體平等率</td><td>不同群體獲得正向預測的<b>比例應大致相同</b>（不論實際資格）</td><td>對結果平等高要求 — 招聘、入學機會</td></tr>
+<tr><td>Equal Opportunity<br>機會平等</td><td>實際應獲正向預測的個案中，<b>不同群體被正確預測的機率相同</b></td><td>真正該被服務者不能漏掉 — 醫療診斷、社會福利</td></tr>
+<tr><td>Equalized Odds<br>均衡機率</td><td>不同群體的 <b>TPR 與 FPR 都應一致</b></td><td>同時考量正確率與誤判率 — 司法判決、信用評估</td></tr>
+<tr><td>Disparate Impact<br>不利影響比</td><td>某群體正向結果比例 &lt; 另一群體的 <b>80%</b> 即構成歧視（80% Rule）</td><td>法律合規審查 — 招聘、公平貸款</td></tr>
+</table>
+
+<div class="callout note">
+<strong>補充：公平性評估工具</strong>
+<b>IBM AI Fairness 360（AIF360）：</b>開源 Python 工具，70+ 公平性指標、多種去偏技術、視覺化報告。<br>
+<b>Microsoft Fairlearn：</b>專注衡量與降低公平性問題；與 scikit-learn 高度相容，易整合進現有 ML 流程。<br>
+兩者對 AI 應用規劃師都是重要工具 — 「<b>公平不能只靠自覺，需要工具量化</b>」。
+</div>
+
+<h4 class="h-3">C · 三階段偏見緩解技術</h4>
+
+<div class="def-card">
+<div class="def-card-head"><h4>① Pre-processing 資料前處理</h4></div>
+<div class="def-card-body">
+<table class="matrix" style="margin:8px 0">
+<tr><th style="width:30%">方法</th><th>原理</th></tr>
+<tr><td>資料重新抽樣</td><td>增加或減少特定群體資料使分佈均衡（招聘前調整不同性別履歷數量）</td></tr>
+<tr><td>特徵去偏 Feature Neutralization</td><td>移除或調整可能引發偏見的敏感特徵（性別、族群）</td></tr>
+<tr><td>資料匿名化與泛化</td><td>降低敏感特徵精確性（年齡轉區間）</td></tr>
+</table>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>② In-processing 模型內部處理</h4></div>
+<div class="def-card-body">
+<table class="matrix" style="margin:8px 0">
+<tr><th style="width:30%">方法</th><th>原理</th></tr>
+<tr><td>公平性約束訓練</td><td>把公平性指標（Demographic Parity、Equal Opportunity）作為<b>訓練約束條件</b></td></tr>
+<tr><td>對抗式去偏模型<br>Adversarial Fairness</td><td>訓練「對抗式網路」預測敏感特徵，<b>迫使主模型學到不受敏感特徵影響的特徵</b></td></tr>
+<tr><td>公平性正規化</td><td>在目標函數中加入<b>公平性損失項</b>，平衡準確度與公平性</td></tr>
+</table>
+</div>
+</div>
+
+<div class="def-card">
+<div class="def-card-head"><h4>③ Post-processing 結果後處理</h4></div>
+<div class="def-card-body">
+<table class="matrix" style="margin:8px 0">
+<tr><th style="width:30%">方法</th><th>原理</th></tr>
+<tr><td>結果門檻調整<br>Threshold Adjustment</td><td>對不同群體調整決策門檻，平衡不同群體間的公平性</td></tr>
+<tr><td>結果校準 Calibration</td><td>對不同群體的預測分數重新校準，使同一分數在不同群體間代表相同意義</td></tr>
+</table>
+</div>
+</div>
+
+<h4 class="h-3">D · 企業 AI 公平性治理機制</h4>
+
+<div class="tile-grid">
+<div class="tile">
+<div class="tile-num">PILLAR 01</div>
+<div class="tile-title">建立公平性政策與標準</div>
+<div class="tile-body">制定明確 AI 公平性原則；訂定衡量指標與可接受範圍作為各專案標準</div>
+</div>
+<div class="tile">
+<div class="tile-num">PILLAR 02</div>
+<div class="tile-title">跨部門公平性審查委員會</div>
+<div class="tile-body">集合法務、技術、產品、倫理、風險管理部門；於專案早期參與，預防潛在偏見</div>
+</div>
+<div class="tile">
+<div class="tile-num">PILLAR 03</div>
+<div class="tile-title">明確責任與問責機制</div>
+<div class="tile-body">納入高階主管 KPI 或 ESG 報告；建立可追溯與透明的審查紀錄</div>
+</div>
+<div class="tile">
+<div class="tile-num">PILLAR 04</div>
+<div class="tile-title">多元化團隊與教育訓練</div>
+<div class="tile-body">招募多元性別、族群、背景人才；定期 AI 公平性與倫理培訓</div>
+</div>
+<div class="tile">
+<div class="tile-num">PILLAR 05</div>
+<div class="tile-title">公平性評估與稽核</div>
+<div class="tile-body">定期 Fairness Audits + 即時警示機制；新上線或重大更新需公平性審查</div>
+</div>
+<div class="tile">
+<div class="tile-num">PILLAR 06</div>
+<div class="tile-title">資訊揭露與溝通</div>
+<div class="tile-body">主動公開 AI 公平性報告；引入第三方獨立驗證；與利益關係人保持溝通</div>
+</div>
+</div>
+
+<!-- ====== 6 章末練習 ====== -->
+<h3 class="sub-title" data-num="6.X">本章重點與練習</h3>
+
+<div class="callout tip">
+<strong>本章重點速記</strong>
+① 三大隱私風險（直接 / 間接 / 再識別）；② PIA 五步驟；③ 五種基礎匿名化（遮蔽 / 雜湊 / 泛化 / 分桶 / 擾動）；④ 進階 PETs（K-匿名 → L-多樣性 → T-接近性、聯邦學習、同態加密）；⑤ 合規五原則；⑥ 偏見三大資料來源 + 四大模型來源；⑦ 四大公平性指標（Demographic Parity / Equal Opportunity / Equalized Odds / Disparate Impact）；⑧ 三階段緩解（前處理 / 模型內 / 後處理）；⑨ 六大企業治理支柱。
+</div>
+
+<table class="matrix">
+<tr><th style="width:8%">#</th><th>題目</th></tr>
+<tr><td>1</td><td>在個資保護法規框架下，下列哪一組資訊單獨使用時，最明確地被歸類為「直接識別個人身份資訊（PII）」？(A) 出生日期、郵遞區號、職業　(B) Cookie ID、IP 位址、地理定位　(C) 姓名、Email、身分證字號　(D) 網路行為模式、匿名化統計、雜湊密碼</td></tr>
+<tr><td>2</td><td>以下哪一種資料處理方式屬於「隨機擾動（Noise Injection）」？(A) 把姓名改成代號　(B) 將薪資加入隨機誤差　(C) 將地址改成縣市級別　(D) 以星號遮蔽身分證號</td></tr>
+<tr><td>3</td><td>在 AI 偏見治理中，對不同群體調整模型預測閾值，屬於哪一種偏見修正方法？(A) 資料泛化　(B) 結果門檻調整　(C) 模型剪枝　(D) 資料增強</td></tr>
+<tr><td>4</td><td>若企業想確保 AI 模型在不同群體間「真正該被選擇者」皆有同等機會被正確預測，應採用哪一個公平性指標？(A) Equal Opportunity　(B) Demographic Parity　(C) K-Anonymity　(D) T-Closeness</td></tr>
+<tr><td>5</td><td>若企業欲在 AI 專案中降低敏感特徵（如性別）的影響，可以採取哪種模型內部處理方式？(A) 對抗式去偏模型　(B) 模型蒸餾　(C) 雜湊處理　(D) 結果門檻調整</td></tr>
+<tr><td>6</td><td>若資料集存在群體樣本不均，造成模型偏向多數群體，適合採用哪種技術？(A) 權重初始化　(B) 權重衰減　(C) 類別重加權　(D) 全量訓練</td></tr>
+<tr><td>7</td><td>T-接近性（T-Closeness）技術主要是為了降低什麼風險？(A) 機率分佈差異造成的識別風險　(B) 資料重複風險　(C) 訓練時間過長　(D) 演算法震盪</td></tr>
+<tr><td>8</td><td>在 AI 公平性治理中，企業應建立什麼跨部門組織，確保公平性納入日常決策流程？(A) 模型剪枝委員會　(B) AI 蒸餾中心　(C) 公平性審查委員會　(D) 隨機抽樣團隊</td></tr>
+<tr><td>9</td><td>若企業欲降低 AI 模型因少數群體樣本過少而造成的過擬合風險，可以採用哪種資料增強方法？(A) SMOTE　(B) Softmax　(C) Momentum　(D) Dropout</td></tr>
+<tr><td>10</td><td>下列哪一項不是常見的隱私保護基礎技術？(A) 遮蔽 Masking　(B) 泛化 Generalization　(C) 知識蒸餾 Knowledge Distillation　(D) 分桶 Bucketing</td></tr>
+</table>
+
+<details style="margin:24px 0;max-width:900px;border:2px solid var(--ink);background:#fff;padding:16px 22px;font-size:14px">
+<summary style="cursor:pointer;font-family:'Noto Serif TC',serif;font-weight:700;font-size:16px;color:var(--accent);padding:4px 0">▸ 點此展開答案與解析</summary>
+<table class="matrix" style="margin-top:16px">
+<tr><th style="width:8%">#</th><th style="width:12%">答案</th><th>解析</th></tr>
+<tr><td>1</td><td>(C)</td><td>姓名、Email、身分證字號是典型的直接識別資訊，單獨即可指向特定個人。(A) 是準識別資訊；(B) 是間接識別；(D) 已不可逆處理。</td></tr>
+<tr><td>2</td><td>(B)</td><td>隨機擾動 = 加入隨機噪聲到數值資料；保留統計特性但個體難精準推算。其他選項分別是雜湊、泛化、遮蔽。</td></tr>
+<tr><td>3</td><td>(B)</td><td>結果門檻調整屬於後處理（Post-processing）方式，透過改變不同群體決策門檻平衡公平性。</td></tr>
+<tr><td>4</td><td>(A)</td><td>Equal Opportunity 著重「實際應獲正向結果者」在不同群體間應有相同被正確預測機率，適用醫療、社福。</td></tr>
+<tr><td>5</td><td>(A)</td><td>對抗式去偏模型透過訓練對抗網路，迫使主模型無法預測敏感屬性，降低模型對敏感特徵的依賴。</td></tr>
+<tr><td>6</td><td>(C)</td><td>類別重加權在訓練時賦予少數類別更高權重，提升模型對少數群體的辨識能力。</td></tr>
+<tr><td>7</td><td>(A)</td><td>T-Closeness 要求群組內敏感屬性分佈與全體資料集相近，防止透過分佈偏差推測個人特徵。</td></tr>
+<tr><td>8</td><td>(C)</td><td>公平性審查委員會匯集法務、技術、產品、倫理部門評估 AI 偏見風險，是企業治理 AI 公平性的重要機制。</td></tr>
+<tr><td>9</td><td>(A)</td><td>SMOTE（Synthetic Minority Over-sampling Technique）透過合成新樣本擴增少數類別，平衡分佈、降低過擬合與偏誤。</td></tr>
+<tr><td>10</td><td>(C)</td><td>知識蒸餾是用於模型壓縮與加速的技術，並非隱私保護。基礎隱私技術 = 遮蔽、雜湊、泛化、分桶、隨機擾動。</td></tr>
+</table>
+</details>
+
+</div>
+</section>
+
+</main>
+</div><!-- /.page-shell -->
+
+<footer>
+<div class="container">
+<div class="fbrand">iPAS AI 應用規劃師（中級）｜全面學習指引 · 科目三</div>
+本教材根據 iPAS 經濟部產業人才能力鑑定推動小組之三科學習指引整理而成，內容為知識點的結構化重整，非官方教材，僅供學習參考。<br>
+正式評鑑請依官方公告之考試簡章與評鑑主題為準。如有問題請聯繫 <code class="k">iPAS@itri.org.tw</code>
+</div>
+</footer>
+
+<script>
+(function(){
+  const links = Array.from(document.querySelectorAll('aside.sidebar-nav a[href^="#s3-"]'));
+  if(!links.length) return;
+  const targets = links.map(a => { const id = a.getAttribute('href').slice(1); return {a, el: document.getElementById(id)}; }).filter(t => t.el);
+  const onScroll = () => {
+    const y = window.scrollY + 120;
+    let current = targets[0];
+    for(const t of targets){ if(t.el.offsetTop <= y) current = t; else break; }
+    links.forEach(a => a.classList.remove('active'));
+    if(current) current.a.classList.add('active');
+  };
+  let raf;
+  window.addEventListener('scroll', () => { if(raf) return; raf = requestAnimationFrame(() => { onScroll(); raf = null; }); }, {passive:true});
+  onScroll();
+  links.forEach(a => a.addEventListener('click', () => { if(window.innerWidth <= 1024){ document.querySelector('aside.sidebar-nav').classList.remove('open'); } }));
+})();
+</script>
+
+</body>
+</html>
