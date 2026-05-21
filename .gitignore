@@ -44,6 +44,9 @@ ehthumbs.db
 *.html.bak*
 *.orig
 
+# === 本機臨時腳本 ===
+extract_exam.py
+
 # === Claude / AI 工作目錄（避免推上私人記憶）===
 .claude/
 .cursor/

@@ -6,7 +6,7 @@
 
 ## 線上瀏覽
 
-🌐 啟用 GitHub Pages 後在此填上實際網址（路徑：`/互動式學習/00_引讀.html`）
+🌐 [https://你的帳號.github.io/ipas-study/](https://你的帳號.github.io/ipas-study/) — 啟用 GitHub Pages 後填上實際網址
 
 ---
 
