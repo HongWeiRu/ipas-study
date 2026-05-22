@@ -227,45 +227,6 @@ ul.body li, .body ul li{
   margin-bottom:6px;
 }
 
-/* ===== Chapter nav (table of contents at top) ===== */
-.chap-nav{
-  background:#fff;
-  border:2px solid var(--ink);
-  padding:24px 28px;
-  margin:32px 0 48px;
-  max-width:900px;
-}
-.chap-nav-title{
-  font-family:'JetBrains Mono',monospace;
-  font-size:11px;
-  letter-spacing:3px;
-  color:var(--accent);
-  margin-bottom:14px;
-}
-.chap-nav-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:6px 18px;
-}
-.chap-nav-grid a{
-  color:var(--ink);
-  text-decoration:none;
-  font-size:13.5px;
-  padding:5px 0;
-  border-bottom:1px dashed #ccc;
-  display:flex;
-  justify-content:space-between;
-  align-items:baseline;
-}
-.chap-nav-grid a:hover{color:var(--accent);background:#fafafa}
-.chap-nav-grid a .num{
-  font-family:'JetBrains Mono',monospace;
-  font-size:11px;
-  color:var(--accent);
-  font-weight:700;
-  margin-right:8px;
-}
-
 /* ===== Callout ===== */
 .callout{
   background:#fffbe6;
@@ -733,7 +694,7 @@ main.main-content{
   .container{padding:0 24px}
   .hero h1{font-size:44px}
   .sec-title{font-size:30px}
-  .chap-nav-grid,.pc-box{grid-template-columns:1fr}
+  .pc-box{grid-template-columns:1fr}
   .hero-meta{flex-wrap:wrap;gap:24px}
   /* sidebar on mobile becomes drawer */
   .page-shell{grid-template-columns:1fr}
@@ -823,6 +784,11 @@ details.chap-fold[open] > summary > .h-3{color:var(--accent)}
 <a href="#s2-6-4"><span class="sb-num">6.4</span>隱私保護與合規</a>
 </div>
 
+<div class="sb-section">
+<div class="sb-title"><span class="sb-chip">附</span>ABBREVIATIONS</div>
+<a href="#s2-abbr"><span class="sb-num">📖</span>英文縮寫對照表</a>
+</div>
+
 <a href="#top" class="sb-back-top">↑ 回到頂部</a>
 </aside>
 
@@ -844,26 +810,171 @@ details.chap-fold[open] > summary > .h-3{color:var(--accent)}
 </div>
 </div>
 
-<!-- ===== CHAPTER NAVIGATION ===== -->
+<!-- ===== KNOWLEDGE MAP · 科目二知識架構地圖 ===== -->
 <div class="container">
-<div class="chap-nav">
-<div class="chap-nav-title">CHAPTER NAVIGATION · 章節快速跳轉</div>
-<div class="chap-nav-grid">
-<a href="#s2-3-1"><span><span class="num">3.1</span>敘述性統計與資料摘要技術</span><span style="color:var(--mute);font-size:11px">完整</span></a>
-<a href="#s2-3-2"><span><span class="num">3.2</span>機率分佈與資料分佈模型</span><span style="color:var(--mute);font-size:11px">完整</span></a>
-<a href="#s2-3-3"><span><span class="num">3.3</span>假設檢定與統計推論</span><span style="color:var(--mute);font-size:11px">完整</span></a>
-<a href="#s2-3-4"><span><span class="num">3.4</span>偏態/厚尾推論工具</span><span style="color:#7b3aa8;font-size:11px">★延伸</span></a>
-<a href="#s2-4-1"><span><span class="num">4.1</span>數據收集與清理</span><span style="color:var(--mute);font-size:11px">完整</span></a>
-<a href="#s2-4-2"><span><span class="num">4.2</span>數據儲存與管理</span><span style="color:var(--mute);font-size:11px">完整</span></a>
-<a href="#s2-4-3"><span><span class="num">4.3</span>數據處理技術與工具</span><span style="color:var(--mute);font-size:11px">完整</span></a>
-<a href="#s2-5-1"><span><span class="num">5.1</span>統計學在大數據中的應用</span><span style="color:var(--mute);font-size:11px">完整</span></a>
-<a href="#s2-5-2"><span><span class="num">5.2</span>常見的大數據分析方法</span><span style="color:var(--mute);font-size:11px">完整</span></a>
-<a href="#s2-5-3"><span><span class="num">5.3</span>數據可視化工具</span><span style="color:var(--mute);font-size:11px">完整</span></a>
-<a href="#s2-6-1"><span><span class="num">6.1</span>大數據與機器學習</span><span style="color:var(--mute);font-size:11px">完整</span></a>
-<a href="#s2-6-2"><span><span class="num">6.2</span>鑑別式 AI 應用</span><span style="color:var(--mute);font-size:11px">完整</span></a>
-<a href="#s2-6-3"><span><span class="num">6.3</span>生成式 AI 應用</span><span style="color:var(--mute);font-size:11px">完整</span></a>
-<a href="#s2-6-4"><span><span class="num">6.4</span>隱私保護與合規</span><span style="color:var(--mute);font-size:11px">完整</span></a>
+<div class="diagram" style="margin:24px 0">
+<div class="diagram-title">科目二 · 知識架構地圖 · KNOWLEDGE MAP</div>
+<svg viewBox="0 0 940 900" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto">
+<defs>
+<style>
+  .k2-row-3{fill:#eef3f9;stroke:#1a4d8f;stroke-width:1.5}
+  .k2-row-spine{fill:#e3eef3;stroke:#0a4d68;stroke-width:1.5}
+  .k2-row-6{fill:#f3e7fa;stroke:#7b3aa8;stroke-width:1.5}
+  .k2-bx-3{fill:#fff;stroke:#1a4d8f;stroke-width:2}
+  .k2-bx-spine{fill:#0a4d68;stroke:#062d3f;stroke-width:2.5}
+  .k2-bx-6{fill:#fff;stroke:#7b3aa8;stroke-width:2}
+  .k2-chip-3{fill:#1a4d8f}
+  .k2-chip-spine{fill:#0a4d68}
+  .k2-chip-6{fill:#7b3aa8}
+  .k2-title{font-family:'Noto Serif TC',serif;font-weight:700;font-size:20px;text-anchor:middle;fill:#1a1a1a}
+  .k2-chip-text{font-family:'Noto Serif TC',serif;font-weight:700;font-size:14px;fill:#fff;text-anchor:start;letter-spacing:1px}
+  .k2-row-sub{font-family:'Noto Sans TC',sans-serif;font-size:12.5px;fill:#666;font-style:italic;text-anchor:start}
+  .k2-h{font-family:'Noto Serif TC',serif;font-weight:700;font-size:14.5px;text-anchor:middle;fill:#1a1a1a}
+  .k2-h-spine{font-family:'Noto Serif TC',serif;font-weight:900;font-size:14.5px;text-anchor:middle;fill:#fff}
+  .k2-sm{font-family:'Noto Sans TC',sans-serif;font-size:11.5px;text-anchor:middle;fill:#1a1a1a}
+  .k2-sm-spine{font-family:'Noto Sans TC',sans-serif;font-size:11.5px;text-anchor:middle;fill:#fff;opacity:0.95}
+  .k2-en{font-family:'JetBrains Mono',monospace;font-size:10px;text-anchor:middle;fill:#888;letter-spacing:1px}
+  .k2-en-spine{font-family:'JetBrains Mono',monospace;font-size:10px;text-anchor:middle;fill:#cfe1eb;letter-spacing:1px}
+  .k2-arr{stroke:#1a1a1a;stroke-width:2;fill:none}
+  .k2-arr-spine{stroke:#0a4d68;stroke-width:2.4;fill:none}
+  .k2-trans{font-family:'JetBrains Mono',monospace;font-size:11px;fill:#0a4d68;font-weight:700;text-anchor:start;letter-spacing:1.2px}
+  .k2-star{font-family:'JetBrains Mono',monospace;font-size:9.5px;fill:#7b3aa8;text-anchor:middle;font-weight:700;letter-spacing:1px}
+</style>
+<marker id="k2-ar" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><polygon points="0,0 8,3 0,6" fill="#1a1a1a"/></marker>
+<marker id="k2-ar-spine" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><polygon points="0,0 8,3 0,6" fill="#0a4d68"/></marker>
+</defs>
+
+<text x="470" y="30" class="k2-title">科目二 · 知識架構地圖</text>
+
+<!-- ============ ROW 1 · CH 3 機率統計基礎（藍系） ============ -->
+<rect x="15" y="55" width="910" height="190" class="k2-row-3" rx="4"/>
+<rect x="15" y="55" width="240" height="32" class="k2-chip-3" rx="4"/>
+<rect x="15" y="73" width="240" height="14" class="k2-chip-3"/>
+<text x="32" y="76" class="k2-chip-text">CH 3 · 機率統計基礎</text>
+<text x="270" y="76" class="k2-row-sub">理論支柱 · 描述 → 建模 → 推論 三接力</text>
+
+<rect x="35" y="110" width="210" height="125" class="k2-bx-3" rx="4"/>
+<text x="140" y="143" class="k2-h">3.1 敘述性統計</text>
+<text x="140" y="170" class="k2-sm">資料摘要 · 五數摘要</text>
+<text x="140" y="195" class="k2-sm" style="font-size:10.5px">平均 / 中位 / IQR / σ</text>
+<text x="140" y="222" class="k2-en">DESCRIPTIVE STATS</text>
+
+<rect x="260" y="110" width="210" height="125" class="k2-bx-3" rx="4"/>
+<text x="365" y="143" class="k2-h">3.2 機率分佈</text>
+<text x="365" y="170" class="k2-sm">量化不確定性</text>
+<text x="365" y="195" class="k2-sm" style="font-size:10.5px">常態 / 二項 / Poisson</text>
+<text x="365" y="222" class="k2-en">PROBABILITY DIST</text>
+
+<rect x="485" y="110" width="210" height="125" class="k2-bx-3" rx="4"/>
+<text x="590" y="143" class="k2-h">3.3 假設檢定</text>
+<text x="590" y="170" class="k2-sm">統計推論 · p 值</text>
+<text x="590" y="195" class="k2-sm" style="font-size:10.5px">t / Z / χ² / ANOVA</text>
+<text x="590" y="222" class="k2-en">HYPOTHESIS TEST</text>
+
+<rect x="710" y="110" width="200" height="125" class="k2-bx-3" rx="4"/>
+<text x="810" y="143" class="k2-h">3.4 偏態 / 厚尾</text>
+<text x="810" y="170" class="k2-star">★ PDF 外延伸</text>
+<text x="810" y="195" class="k2-sm" style="font-size:10.5px">Bootstrap · MAD · 重尾</text>
+<text x="810" y="222" class="k2-en">ROBUST METHODS</text>
+
+<!-- 過渡箭頭 1→2 -->
+<path d="M 470 245 L 470 290" class="k2-arr-spine" marker-end="url(#k2-ar-spine)"/>
+<text x="485" y="273" class="k2-trans">理論 → 處理</text>
+
+<!-- ============ ROW 2 · CH 4 大數據處理技術（主軸海藍 · 上半） ============ -->
+<rect x="15" y="305" width="910" height="160" class="k2-row-spine" rx="4"/>
+<rect x="15" y="305" width="260" height="32" class="k2-chip-spine" rx="4"/>
+<rect x="15" y="323" width="260" height="14" class="k2-chip-spine"/>
+<text x="32" y="326" class="k2-chip-text">CH 4 · 大數據處理技術</text>
+<text x="290" y="326" class="k2-row-sub">★ 科目主軸 · 收集 → 儲存 → 處理</text>
+
+<rect x="55" y="358" width="265" height="95" class="k2-bx-spine" rx="4"/>
+<text x="187" y="388" class="k2-h-spine">4.1 收集 / 清理</text>
+<text x="187" y="412" class="k2-sm-spine">ETL · 缺失值 · 異常值</text>
+<text x="187" y="437" class="k2-en-spine">COLLECT · CLEAN</text>
+
+<rect x="338" y="358" width="265" height="95" class="k2-bx-spine" rx="4"/>
+<text x="470" y="388" class="k2-h-spine">4.2 儲存 / 管理</text>
+<text x="470" y="412" class="k2-sm-spine">SQL · NoSQL · HDFS · S3</text>
+<text x="470" y="437" class="k2-en-spine">STORAGE · DATABASE</text>
+
+<rect x="621" y="358" width="265" height="95" class="k2-bx-spine" rx="4"/>
+<text x="753" y="388" class="k2-h-spine">4.3 處理 / 工具</text>
+<text x="753" y="412" class="k2-sm-spine">MapReduce · Spark · Kafka</text>
+<text x="753" y="437" class="k2-en-spine">PROCESS · TOOLS</text>
+
+<!-- 4.x 內部接力箭頭 -->
+<path d="M 320 405 L 336 405" class="k2-arr" marker-end="url(#k2-ar)"/>
+<path d="M 603 405 L 619 405" class="k2-arr" marker-end="url(#k2-ar)"/>
+
+<!-- 過渡箭頭 2→3 -->
+<path d="M 470 465 L 470 510" class="k2-arr-spine" marker-end="url(#k2-ar-spine)"/>
+<text x="485" y="493" class="k2-trans">處理 → 分析</text>
+
+<!-- ============ ROW 3 · CH 5 大數據分析方法與工具（主軸海藍 · 下半） ============ -->
+<rect x="15" y="525" width="910" height="160" class="k2-row-spine" rx="4"/>
+<rect x="15" y="525" width="320" height="32" class="k2-chip-spine" rx="4"/>
+<rect x="15" y="543" width="320" height="14" class="k2-chip-spine"/>
+<text x="32" y="546" class="k2-chip-text">CH 5 · 大數據分析方法與工具</text>
+<text x="350" y="546" class="k2-row-sub">★ 科目主軸 · 統計應用 → 分析方法 → 視覺化</text>
+
+<rect x="55" y="578" width="265" height="95" class="k2-bx-spine" rx="4"/>
+<text x="187" y="608" class="k2-h-spine">5.1 統計學應用</text>
+<text x="187" y="632" class="k2-sm-spine">中央極限 · 相關 · 回歸</text>
+<text x="187" y="657" class="k2-en-spine">BIG STATISTICS</text>
+
+<rect x="338" y="578" width="265" height="95" class="k2-bx-spine" rx="4"/>
+<text x="470" y="608" class="k2-h-spine">5.2 分析方法</text>
+<text x="470" y="632" class="k2-sm-spine">描述 / 診斷 / 預測 / 處方</text>
+<text x="470" y="657" class="k2-en-spine">ANALYTICS METHODS</text>
+
+<rect x="621" y="578" width="265" height="95" class="k2-bx-spine" rx="4"/>
+<text x="753" y="608" class="k2-h-spine">5.3 可視化工具</text>
+<text x="753" y="632" class="k2-sm-spine">Tableau · Power BI · D3</text>
+<text x="753" y="657" class="k2-en-spine">VISUALIZATION</text>
+
+<!-- 5.x 內部接力箭頭 -->
+<path d="M 320 625 L 336 625" class="k2-arr" marker-end="url(#k2-ar)"/>
+<path d="M 603 625 L 619 625" class="k2-arr" marker-end="url(#k2-ar)"/>
+
+<!-- 過渡箭頭 3→4 -->
+<path d="M 470 685 L 470 730" class="k2-arr-spine" marker-end="url(#k2-ar-spine)"/>
+<text x="485" y="713" class="k2-trans">分析 → 應用</text>
+
+<!-- ============ ROW 4 · CH 6 大數據在 AI 之應用（紫系） ============ -->
+<rect x="15" y="745" width="910" height="145" class="k2-row-6" rx="4"/>
+<rect x="15" y="745" width="290" height="32" class="k2-chip-6" rx="4"/>
+<rect x="15" y="763" width="290" height="14" class="k2-chip-6"/>
+<text x="32" y="766" class="k2-chip-text">CH 6 · 大數據在 AI 之應用</text>
+<text x="320" y="766" class="k2-row-sub">應用延伸 · ML / 鑑別式 / 生成式 / 治理</text>
+
+<rect x="35" y="795" width="210" height="80" class="k2-bx-6" rx="4"/>
+<text x="140" y="822" class="k2-h">6.1 ML 全景</text>
+<text x="140" y="845" class="k2-sm">CRISP-DM · 機器學習流程</text>
+<text x="140" y="867" class="k2-en">BIG DATA × ML</text>
+
+<rect x="260" y="795" width="210" height="80" class="k2-bx-6" rx="4"/>
+<text x="365" y="822" class="k2-h">6.2 鑑別式 AI</text>
+<text x="365" y="845" class="k2-sm">推薦 / 預測 / 信用評分</text>
+<text x="365" y="867" class="k2-en">DISCRIMINATIVE</text>
+
+<rect x="485" y="795" width="210" height="80" class="k2-bx-6" rx="4"/>
+<text x="590" y="822" class="k2-h">6.3 生成式 AI</text>
+<text x="590" y="845" class="k2-sm">GAN · Diffusion · LLM</text>
+<text x="590" y="867" class="k2-en">GENERATIVE</text>
+
+<rect x="710" y="795" width="200" height="80" class="k2-bx-6" rx="4"/>
+<text x="810" y="822" class="k2-h">6.4 隱私 / 合規</text>
+<text x="810" y="845" class="k2-sm">GDPR · 個資法 · DP</text>
+<text x="810" y="867" class="k2-en">PRIVACY · COMPLIANCE</text>
+
+</svg>
+<div class="diagram-cap">四層分色：<b style="color:#1a4d8f">藍 = 機率統計基礎（CH 3）</b> → <b style="color:#0a4d68">海藍 = 大數據處理（CH 4）</b> → <b style="color:#0a4d68">海藍 = 大數據分析（CH 5）</b> → <b style="color:#7b3aa8">紫 = AI 應用（CH 6）</b>。<b>海藍 CH 4 + CH 5 是科目主軸</b>（直接呼應科目名「<b>大數據處理分析</b>」）— 統計基礎是理論支撐、AI 應用是最終延伸。</div>
 </div>
+
+<div class="callout key" style="margin-top:8px">
+<strong>核心邏輯 · 從統計理論到 AI 落地的完整資料鏈</strong>
+從「<b>敘述性統計 → 機率分佈 → 假設檢定（CH 3）</b> → <b>數據收集 → 儲存 → 處理（CH 4）</b> → <b>統計應用 → 分析方法 → 可視化（CH 5）</b> → <b>ML / 鑑別式 / 生成式 / 隱私（CH 6）</b>」是科目二的完整學習路徑。<b>科目主軸是 CH 4 + CH 5</b>（占考古題大宗）— 但這兩章不會單獨考、會跟「統計理論（CH 3）」與「AI 應用（CH 6）」交叉考。掌握地圖再讀細節，學習效率倍增。
 </div>
 </div>
 
@@ -11555,6 +11666,100 @@ PETs 在 2025–2026 從學術轉向實戰：<br>
 <tr><td>10</td><td>(C)</td><td>大數據與高計算需求下，分散式訓練（Horovod、PyTorch Distributed）+ GPU/TPU 加速是主流。</td></tr>
 </table>
 </details>
+
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ====== APPENDIX · 英文縮寫對照表 ============================== -->
+<!-- ============================================================ -->
+<section>
+<div class="container">
+<div class="sec-eyebrow"><span class="chip">APPENDIX</span>附錄 · ENGLISH ABBREVIATIONS</div>
+<h2 class="sec-title" id="s2-abbr">英文縮寫對照表</h2>
+<p class="sec-intro">本科 §3-6 主文出現的英文縮寫，按主題分組整理。考試或閱讀時可隨時對照、強化中英對應記憶。</p>
+
+<h3 class="sub-title" data-num="附A">通用 AI / ML / 資料</h3>
+<table class="matrix">
+<tr><th style="width:16%">縮寫</th><th style="width:42%">英文全稱</th><th>中文</th></tr>
+<tr><td><b>AI</b></td><td>Artificial Intelligence</td><td>人工智慧</td></tr>
+<tr><td><b>ML</b></td><td>Machine Learning</td><td>機器學習</td></tr>
+<tr><td><b>DL</b></td><td>Deep Learning</td><td>深度學習</td></tr>
+<tr><td><b>Big Data</b></td><td>—</td><td>大數據（5V 特性）</td></tr>
+<tr><td><b>5V</b></td><td>Volume, Velocity, Variety, Veracity, Value</td><td>大數據五大特性</td></tr>
+<tr><td><b>API</b></td><td>Application Programming Interface</td><td>應用程式介面</td></tr>
+<tr><td><b>IoT</b></td><td>Internet of Things</td><td>物聯網</td></tr>
+</table>
+
+<h3 class="sub-title" data-num="附B">機率統計（§3）</h3>
+<table class="matrix">
+<tr><th style="width:16%">縮寫</th><th style="width:42%">英文全稱</th><th>中文 / 簡述</th></tr>
+<tr><td><b>PMF</b></td><td>Probability Mass Function</td><td>機率質量函數（離散）</td></tr>
+<tr><td><b>PDF</b></td><td>Probability Density Function</td><td>機率密度函數（連續）</td></tr>
+<tr><td><b>CDF</b></td><td>Cumulative Distribution Function</td><td>累積分佈函數</td></tr>
+<tr><td><b>IQR</b></td><td>Interquartile Range</td><td>四分位距（Q3 − Q1）</td></tr>
+<tr><td><b>MAD</b></td><td>Median Absolute Deviation</td><td>中位數絕對偏差</td></tr>
+<tr><td><b>SD / σ</b></td><td>Standard Deviation</td><td>標準差</td></tr>
+<tr><td><b>SE</b></td><td>Standard Error</td><td>標準誤差</td></tr>
+<tr><td><b>CV</b></td><td>Coefficient of Variation</td><td>變異係數</td></tr>
+<tr><td><b>CLT</b></td><td>Central Limit Theorem</td><td>中央極限定理</td></tr>
+<tr><td><b>LLN</b></td><td>Law of Large Numbers</td><td>大數法則</td></tr>
+<tr><td><b>MLE</b></td><td>Maximum Likelihood Estimation</td><td>最大似然估計</td></tr>
+<tr><td><b>CI</b></td><td>Confidence Interval</td><td>信賴區間</td></tr>
+<tr><td><b>ANOVA</b></td><td>Analysis of Variance</td><td>變異數分析</td></tr>
+<tr><td><b>H₀ / H₁</b></td><td>Null / Alternative Hypothesis</td><td>虛無假設 / 對立假設</td></tr>
+<tr><td><b>α / β</b></td><td>Significance Level / Type II Error Rate</td><td>顯著水準 / 型 II 錯誤率</td></tr>
+</table>
+
+<h3 class="sub-title" data-num="附C">數據處理（§4）</h3>
+<table class="matrix">
+<tr><th style="width:16%">縮寫</th><th style="width:42%">英文全稱</th><th>中文 / 簡述</th></tr>
+<tr><td><b>ETL</b></td><td>Extract, Transform, Load</td><td>萃取、轉換、載入</td></tr>
+<tr><td><b>ELT</b></td><td>Extract, Load, Transform</td><td>萃取、載入、轉換（大數據時代主流）</td></tr>
+<tr><td><b>SQL</b></td><td>Structured Query Language</td><td>結構化查詢語言</td></tr>
+<tr><td><b>NoSQL</b></td><td>Not Only SQL</td><td>非關聯式資料庫</td></tr>
+<tr><td><b>HDFS</b></td><td>Hadoop Distributed File System</td><td>Hadoop 分散式檔案系統</td></tr>
+<tr><td><b>S3</b></td><td>Simple Storage Service</td><td>AWS 物件儲存服務</td></tr>
+<tr><td><b>ACID</b></td><td>Atomicity, Consistency, Isolation, Durability</td><td>原子性、一致性、隔離性、持久性（RDBMS 特性）</td></tr>
+<tr><td><b>BASE</b></td><td>Basically Available, Soft state, Eventual consistency</td><td>NoSQL 一致性模型</td></tr>
+<tr><td><b>JSON</b></td><td>JavaScript Object Notation</td><td>JS 物件表示法（半結構化）</td></tr>
+<tr><td><b>XML</b></td><td>Extensible Markup Language</td><td>可擴展標記語言</td></tr>
+<tr><td><b>CSV</b></td><td>Comma-Separated Values</td><td>逗號分隔值</td></tr>
+<tr><td><b>YARN</b></td><td>Yet Another Resource Negotiator</td><td>Hadoop 資源管理器</td></tr>
+<tr><td><b>RDD</b></td><td>Resilient Distributed Dataset</td><td>彈性分散式資料集（Spark）</td></tr>
+<tr><td><b>SMOTE</b></td><td>Synthetic Minority Over-sampling Technique</td><td>合成少數類別過採樣技術</td></tr>
+</table>
+
+<h3 class="sub-title" data-num="附D">分析與視覺化（§5）</h3>
+<table class="matrix">
+<tr><th style="width:16%">縮寫</th><th style="width:42%">英文全稱</th><th>中文 / 簡述</th></tr>
+<tr><td><b>BI</b></td><td>Business Intelligence</td><td>商業智慧</td></tr>
+<tr><td><b>EDA</b></td><td>Exploratory Data Analysis</td><td>探索性資料分析</td></tr>
+<tr><td><b>OLAP</b></td><td>Online Analytical Processing</td><td>線上分析處理</td></tr>
+<tr><td><b>OLTP</b></td><td>Online Transaction Processing</td><td>線上交易處理</td></tr>
+<tr><td><b>KPI</b></td><td>Key Performance Indicator</td><td>關鍵績效指標</td></tr>
+<tr><td><b>D3.js</b></td><td>Data-Driven Documents</td><td>資料驅動文件（視覺化函式庫）</td></tr>
+<tr><td><b>R² </b></td><td>Coefficient of Determination</td><td>決定係數（迴歸評估）</td></tr>
+</table>
+
+<h3 class="sub-title" data-num="附E">AI 應用 / 隱私保護（§6）</h3>
+<table class="matrix">
+<tr><th style="width:16%">縮寫</th><th style="width:42%">英文全稱</th><th>中文 / 簡述</th></tr>
+<tr><td><b>CRISP-DM</b></td><td>Cross-Industry Standard Process for Data Mining</td><td>跨產業資料探勘標準流程</td></tr>
+<tr><td><b>LLM</b></td><td>Large Language Model</td><td>大型語言模型</td></tr>
+<tr><td><b>RAG</b></td><td>Retrieval-Augmented Generation</td><td>檢索增強生成</td></tr>
+<tr><td><b>GAN</b></td><td>Generative Adversarial Network</td><td>生成對抗網路</td></tr>
+<tr><td><b>VAE</b></td><td>Variational Autoencoder</td><td>變分自編碼器</td></tr>
+<tr><td><b>GDPR</b></td><td>General Data Protection Regulation</td><td>歐盟一般資料保護規則</td></tr>
+<tr><td><b>HIPAA</b></td><td>Health Insurance Portability and Accountability Act</td><td>美國健保資料保護法</td></tr>
+<tr><td><b>PII</b></td><td>Personally Identifiable Information</td><td>個人識別資料</td></tr>
+<tr><td><b>DP</b></td><td>Differential Privacy</td><td>差分隱私</td></tr>
+<tr><td><b>HE</b></td><td>Homomorphic Encryption</td><td>同態加密</td></tr>
+<tr><td><b>FHE</b></td><td>Fully Homomorphic Encryption</td><td>全同態加密</td></tr>
+<tr><td><b>FL</b></td><td>Federated Learning</td><td>聯邦學習</td></tr>
+<tr><td><b>PETs</b></td><td>Privacy Enhancing Technologies</td><td>隱私強化技術</td></tr>
+<tr><td><b>MPC</b></td><td>Multi-Party Computation</td><td>多方安全計算</td></tr>
+</table>
 
 </div>
 </section>

@@ -240,6 +240,11 @@ details.chap-fold[open] > summary > .h-3{color:var(--accent)}
 <a href="#s3-7-8"><span class="sb-num">7.8</span>pandas / seaborn 速查</a>
 </div>
 
+<div class="sb-section">
+<div class="sb-title"><span class="sb-chip">附</span>ABBREVIATIONS</div>
+<a href="#s3-abbr"><span class="sb-num">📖</span>英文縮寫對照表</a>
+</div>
+
 <a href="#top" class="sb-back-top">↑ 回到頂部</a>
 </aside>
 
@@ -462,6 +467,28 @@ details.chap-fold[open] > summary > .h-3{color:var(--accent)}
 <h2 class="sec-title">機器學習基礎數學</h2>
 <p class="sec-intro">機器學習不是魔法 — 它建立在三大數學支柱上：<b>機率/統計（量化不確定性）、線性代數（表示與運算）、數值優化（找最佳解）</b>。掌握這三者，AI 對你不再是黑盒子。</p>
 
+<div class="callout key">
+<strong>📌 三大支柱角色分工 · 不是「每個演算法都同時用三者」、而是「整個 ML 學科必須懂三者」</strong>
+
+<table class="matrix" style="margin:14px 0">
+<tr><th style="width:22%">數學工具</th><th style="width:22%">處理什麼問題</th><th>核心應用演算法</th></tr>
+<tr><td><b>機率 / 統計</b></td><td>不確定性 + 推論</td><td>樸素貝氏 Naive Bayes（純機率）、決策樹 Decision Tree（熵 / 吉尼）、邏輯迴歸（殘差分布）、所有評估指標（AUC, Area Under the Curve、信心區間 Confidence Interval）</td></tr>
+<tr><td><b>線性代數</b></td><td>向量 / 矩陣運算</td><td>線性 / 邏輯迴歸（wx + b）、神經網路 NN / 深度學習 DL（每層矩陣乘法）、SVM, Support Vector Machine、PCA, Principal Component Analysis、K-NN、K-means</td></tr>
+<tr><td><b>數值最佳化</b></td><td>找最佳解（min loss）</td><td>所有需訓練的模型（最小平方法 Least Squares、梯度下降 Gradient Descent, GD、反向傳播 Backpropagation, BP）</td></tr>
+</table>
+
+<b>關鍵理解：</b>不同演算法仰賴的工具不同。<b>樹型演算法</b>（決策樹、Random Forest、XGBoost）內部主要用<b>機率 / 資訊論（Information Theory）</b>，<b>幾乎不用線性代數</b>；<b>樸素貝氏</b>純粹用機率乘法。但因為<b>現代主流（神經網路、Transformer、大型語言模型 LLM）大量依賴矩陣運算</b>（GPU / TPU 硬體就是為通用矩陣乘法 GEMM, General Matrix Multiply 設計），<b>線性代數仍是 2026 最關鍵的支柱</b> — 這也是本章 §3.2 佔最多篇幅的原因。
+</div>
+
+<div class="callout note">
+<strong>📖 三節閱讀順序建議</strong><br>
+本章三節（§3.1 機率 / §3.2 線性代數 / §3.3 數值優化）並非平行 — <b>有先後因果關係</b>：<br>
+① <b>§3.1 機率 / 統計</b>：建立「ML 是處理不確定性」的世界觀 — 為什麼模型輸出機率而不是絕對答案<br>
+② <b>§3.2 線性代數</b>：學會「資料 = 向量、運算 = 矩陣」這個語言 — 是 §4 各演算法的計算基礎<br>
+③ <b>§3.3 數值優化</b>：理解「模型如何從資料學出參數（w、b）」 — 是 §5 訓練流程的核心引擎<br>
+<b>三節學完後，§4 機器學習與深度學習的所有演算法都會變得可解構、可驗證</b>。
+</div>
+
 <h3 class="sub-title" id="s3-3-1" data-num="3.1">機率 / 統計之機器學習基礎應用</h3>
 
 <p class="body">真實世界的資料受限於觀察條件、取樣變異、內在隨機性 — 預測結果並非絕對唯一。<b>機器學習的核心任務不是尋找絕對規則，而是處理「不確定性」並進行合理預測</b>。這正是機率與統計成為 ML 三大數學支柱之一的原因。</p>
@@ -523,9 +550,15 @@ details.chap-fold[open] > summary > .h-3{color:var(--accent)}
 
 <h4 class="h-3">A · 條件機率分佈 — ML 的核心邏輯</h4>
 
-<p class="body">想像一位內科醫生看完你的檢驗報告。他不會直接斷言「你<b>絕對</b>有糖尿病」或「你<b>絕對</b>沒有糖尿病」 — 他會說「<b>以你目前空腹血糖 130 mg/dL、HbA1c 6.8% 來看，你大約有 75% 機率屬於糖尿病前期</b>」。同樣的資料，不同醫生會給出略有差異的機率，因為個體差異、量測誤差、隱藏因素都讓「絕對答案」並不存在。</p>
+<p class="body">機器學習的核心邏輯：「<b>在特定觀察條件下，某結果發生的可能性有多大</b>」。模型並非尋求唯一解，而是學習一種<b>條件機率分佈（Conditional Probability Distribution）</b>。</p>
 
-<p class="body">這就是<b>機率式思考</b> — 也是 ML 與傳統「規則式 AI」分道揚鑣的關鍵。1970–1980 年代風行的「<b>專家系統</b>」（如 MYCIN 醫療診斷系統）試圖把人類專家的知識寫成 IF-THEN 規則，但很快遇到瓶頸：真實世界的決策從來不是「IF 發燒 THEN 感冒」這種乾淨邏輯，而是「<b>有了 A 條件 + B 條件，C 結果的機率大約是 73%</b>」。當統計學派在 1990 年代崛起，整個 AI 領域的數學模型徹底改寫，<b>條件機率分佈 P(Y|X) 成為現代 ML 的母語</b>。</p>
+<div class="formula">P( Y | X )　　X = 輸入特徵（Feature）　Y = 目標變數（Label）　「|」讀作「在...條件下」</div>
+
+<p class="body">公式翻譯成中文：「<b>在已知 X 的前提下，Y 各種可能取值的機率分別有多大</b>」。<b>X 是觀察值</b>（影像像素、病歷數字、用戶歷史行為）、<b>Y 是要預測的目標</b>（圖片類別、是否會點擊、下一個字）。模型輸出的不是單一答案，而是<b>整個 Y 的機率分佈</b> — 每個可能值都有對應機率，加總為 1。</p>
+
+<p class="body"><b>垃圾郵件分類例</b>：X = 郵件文字內容，Y ∈ {垃圾, 正常}。模型輸出 P(Y=垃圾 | X="這封郵件") = 0.92，表示在這封郵件文字條件下，判為垃圾的機率為 92%。</p>
+
+<p class="body"><b>與傳統規則式 AI 的差異</b>：1980 年代的專家系統（如 MYCIN）採 IF-THEN 邏輯，給「是/否」二元答案；1990 年代後的機率式 ML 給<b>完整機率分佈</b> — 同一個病人，規則式回答「糖尿病」，機率式回答「正常 18% / 前期 25% / 糖尿病 52% / 其他 5%」，保留所有不確定性供下游決策（追蹤、加驗、轉診）。</p>
 
 <div class="diagram">
 <div class="diagram-title">傳統 IF-THEN vs 機率式 ML · 同一個診斷問題的兩種答案</div>
@@ -581,12 +614,6 @@ details.chap-fold[open] > summary > .h-3{color:var(--accent)}
 </svg>
 <div class="diagram-cap">同樣的病人 — 規則式給「YES/NO」（資訊量極小）；機率式給<b>整個分佈</b>（保留所有不確定性 → 醫生可決定再加驗、轉診、追蹤）</div>
 </div>
-
-<p class="body">用一個公式表達 ML 的核心目標 — 學會這個條件機率分佈：</p>
-
-<div class="formula">P( Y | X )　　＝　給定輸入 X，輸出 Y 的機率分佈</div>
-
-<p class="body">把這條公式拆開來讀：<b>X 是觀察值</b>（影像像素、病歷數字、用戶歷史行為）、<b>Y 是要預測的目標</b>（圖片類別、是否會點擊、下一個字）。直線「|」讀作「在...條件下」。整條公式翻譯成中文是：「<b>在已知 X 的前提下，Y 各種可能取值的機率分別有多大</b>」。注意：模型輸出的不是一個答案，而是<b>整個 Y 的機率分佈</b> — 每一種可能 Y 都有對應的機率，加總為 1。</p>
 
 <table class="matrix">
 <tr><th style="width:32%">意涵</th><th>說明</th></tr>
@@ -6044,6 +6071,7 @@ H2O AutoML、AutoGluon、FLAML、Auto-sklearn 等框架自動完成「資料前�
 .lm-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.2px;font-weight:700}
 .lm-desc{font-family:'Noto Sans TC',sans-serif;font-size:11px;fill:#3d3528}
 .lm-sub{font-family:'JetBrains Mono',monospace;font-size:9.5px;fill:#6b6357;text-anchor:middle}
+.lm-sub-l{font-family:'JetBrains Mono',monospace;font-size:9.5px;text-anchor:start}
 .lm-axis-txt{font-family:'JetBrains Mono',monospace;font-size:11px;fill:#1a1a1a;font-weight:700}
 </style>
 <line x1="60" y1="380" x2="1140" y2="380" class="lm-axis"/>
@@ -6099,10 +6127,10 @@ H2O AutoML、AutoGluon、FLAML、Auto-sklearn 等框架自動完成「資料前�
 <line x1="600" y1="208" x2="600" y2="222" stroke="#0a8060" stroke-width="1.5"/>
 <rect x="540" y="222" width="120" height="22" fill="#0a8060" rx="2"/>
 <text x="600" y="237" class="lm-sub" fill="#fff" font-weight="700">LLM 生成答案</text>
-<text x="60" y="268" class="lm-desc" font-size="10.5"><tspan font-weight="700" fill="#0a4d3a">關鍵組件：</tspan></text>
-<text x="60" y="284" class="lm-desc" font-size="10.5">　• Embedding：OpenAI / BGE / Cohere</text>
-<text x="60" y="298" class="lm-desc" font-size="10.5">　• Vector DB：Pinecone / Weaviate / pgvector / Qdrant</text>
-<text x="60" y="312" class="lm-desc" font-size="10.5">　• 框架：LangChain / LlamaIndex / Haystack</text>
+<text x="440" y="268" class="lm-desc" font-size="10.5"><tspan font-weight="700" fill="#0a4d3a">關鍵組件：</tspan></text>
+<text x="440" y="284" class="lm-desc" font-size="10.5">　• Embedding：OpenAI / BGE / Cohere</text>
+<text x="440" y="298" class="lm-desc" font-size="10.5">　• Vector DB：Pinecone / Weaviate / pgvector / Qdrant</text>
+<text x="440" y="312" class="lm-desc" font-size="10.5">　• 框架：LangChain / LlamaIndex / Haystack</text>
 <text x="600" y="334" class="lm-sub" fill="#0a8060">✓ 私域知識 + 防幻覺</text>
 <text x="600" y="350" class="lm-sub" fill="#c8102e">✗ 需建知識庫 + 中等成本</text>
 <rect x="820" y="40" width="340" height="320" class="lm-ft" rx="6"/>
@@ -6113,16 +6141,16 @@ H2O AutoML、AutoGluon、FLAML、Auto-sklearn 等框架自動完成「資料前�
 <text x="990" y="136" class="lm-tag" text-anchor="middle" fill="#7b3aa8">三層級對比</text>
 <rect x="840" y="148" width="300" height="56" fill="#fff" stroke="#7b3aa8" rx="3"/>
 <text x="850" y="166" class="lm-desc"><tspan font-weight="700" fill="#5c2880">Full Fine-tuning</tspan></text>
-<text x="850" y="180" class="lm-sub" text-anchor="start" fill="#5c2880">訓全部參數 · 100% 記憶體 · 最強</text>
-<text x="850" y="196" class="lm-sub" text-anchor="start" fill="#c8102e">7B 模型需 ~80GB VRAM (A100)</text>
+<text x="850" y="180" class="lm-sub-l" fill="#5c2880">訓全部參數 · 100% 記憶體 · 最強</text>
+<text x="850" y="196" class="lm-sub-l" fill="#c8102e">7B 模型需 ~80GB VRAM (A100)</text>
 <rect x="840" y="210" width="300" height="56" fill="#fff" stroke="#7b3aa8" rx="3"/>
 <text x="850" y="228" class="lm-desc"><tspan font-weight="700" fill="#5c2880">LoRA</tspan>（Low-Rank Adaptation）</text>
-<text x="850" y="242" class="lm-sub" text-anchor="start" fill="#5c2880">只訓「低秩矩陣」 · &lt; 1% 參數 · 16GB</text>
-<text x="850" y="258" class="lm-sub" text-anchor="start" fill="#0a8060">✓ 7B 模型在 RTX 4090 可訓</text>
+<text x="850" y="242" class="lm-sub-l" fill="#5c2880">只訓「低秩矩陣」 · &lt; 1% 參數 · 16GB</text>
+<text x="850" y="258" class="lm-sub-l" fill="#0a8060">✓ 7B 模型在 RTX 4090 可訓</text>
 <rect x="840" y="272" width="300" height="56" fill="#fff" stroke="#7b3aa8" rx="3"/>
 <text x="850" y="290" class="lm-desc"><tspan font-weight="700" fill="#5c2880">QLoRA</tspan>（4-bit 量化 + LoRA）</text>
-<text x="850" y="304" class="lm-sub" text-anchor="start" fill="#5c2880">記憶體再減 75% · 8GB · 主流選擇</text>
-<text x="850" y="320" class="lm-sub" text-anchor="start" fill="#0a8060">✓ 消費級 GPU 也能微調 LLM</text>
+<text x="850" y="304" class="lm-sub-l" fill="#5c2880">記憶體再減 75% · 8GB · 主流選擇</text>
+<text x="850" y="320" class="lm-sub-l" fill="#0a8060">✓ 消費級 GPU 也能微調 LLM</text>
 <text x="990" y="344" class="lm-sub" fill="#5c2880">✓ 深度客製、改變語氣 / 領域能力</text>
 <text x="990" y="358" class="lm-sub" fill="#c8102e">✗ 需訓練資料 + GPU + ML 知識</text>
 <rect x="20" y="466" width="380" height="124" fill="#fffbe6" stroke="#e6a817" stroke-width="1.5" rx="3"/>
@@ -7155,7 +7183,7 @@ ML 流程中「資料品質與特徵表達」往往<b>比演算法本身更決�
 
 <div class="diagram" style="max-width:1240px">
 <div class="diagram-title">模型選型決策樹 · 5 大因素整合：從「任務 × 資料量 × 解釋性 × 資源」到推薦模型</div>
-<svg viewBox="0 0 1200 720" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 1200 890" xmlns="http://www.w3.org/2000/svg">
 <style>
 .ms-root{fill:#7b3aa8;stroke:#5c2880;stroke-width:2}
 .ms-q{fill:#fffbe6;stroke:#e6a817;stroke-width:1.8}
@@ -7165,166 +7193,150 @@ ML 流程中「資料品質與特徵表達」往往<b>比演算法本身更決�
 .ms-leaf-nn{fill:#fbe5e9;stroke:#c8102e;stroke-width:2}
 .ms-leaf-uns{fill:#d6f5e3;stroke:#0a8060;stroke-width:2}
 .ms-line{stroke:#1a1a1a;stroke-width:1.5;fill:none}
-.ms-root-txt{font-family:'Noto Serif TC',serif;font-weight:900;font-size:14px;fill:#fff;text-anchor:middle}
-.ms-task-txt{font-family:'Noto Serif TC',serif;font-weight:700;font-size:12px;fill:#5c2880;text-anchor:middle}
-.ms-q-txt{font-family:'Noto Serif TC',serif;font-weight:700;font-size:11px;fill:#9c6f00;text-anchor:middle}
-.ms-leaf-name{font-family:'Noto Serif TC',serif;font-weight:900;font-size:13px;text-anchor:middle}
-.ms-leaf-sub{font-family:'JetBrains Mono',monospace;font-size:9.5px;text-anchor:middle}
-.ms-sub{font-family:'JetBrains Mono',monospace;font-size:9.5px;fill:#6b6357;text-anchor:middle}
+.ms-root-txt{font-family:'Noto Serif TC',serif;font-weight:900;font-size:15px;fill:#fff;text-anchor:middle}
+.ms-task-txt{font-family:'Noto Serif TC',serif;font-weight:700;font-size:13px;fill:#5c2880;text-anchor:middle}
+.ms-q-txt{font-family:'Noto Serif TC',serif;font-weight:700;font-size:12px;fill:#9c6f00;text-anchor:middle}
+.ms-leaf-name{font-family:'Noto Serif TC',serif;font-weight:900;font-size:13px;text-anchor:start}
+.ms-leaf-sub{font-family:'Noto Sans TC',sans-serif;font-size:10.5px;text-anchor:start}
+.ms-leaf-sub-c{font-family:'Noto Sans TC',sans-serif;font-size:10.5px;text-anchor:start;fill:#7a1024}
+.ms-sub{font-family:'JetBrains Mono',monospace;font-size:10px;fill:#6b6357;text-anchor:middle}
 .ms-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.2px;font-weight:700}
 .ms-desc{font-family:'Noto Sans TC',sans-serif;font-size:11px;fill:#3d3528}
 </style>
 <defs>
 <marker id="ms-ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><polygon points="0 0, 8 4, 0 8" fill="#1a1a1a"/></marker>
 </defs>
-<rect x="475" y="20" width="250" height="46" class="ms-root" rx="6"/>
-<text x="600" y="42" class="ms-root-txt">什麼任務？什麼資料？</text>
-<text x="600" y="60" class="ms-root-txt" style="font-size:11px;opacity:.9">先選任務類型分流</text>
-<line x1="600" y1="66" x2="600" y2="84" class="ms-line"/>
-<line x1="180" y1="84" x2="1020" y2="84" class="ms-line"/>
-<line x1="180" y1="84" x2="180" y2="100" class="ms-line"/>
-<line x1="450" y1="84" x2="450" y2="100" class="ms-line"/>
-<line x1="750" y1="84" x2="750" y2="100" class="ms-line"/>
-<line x1="1020" y1="84" x2="1020" y2="100" class="ms-line"/>
-<rect x="80" y="100" width="200" height="50" class="ms-task" rx="5"/>
-<text x="180" y="120" class="ms-task-txt">分類 Classification</text>
-<text x="180" y="138" class="ms-sub" fill="#5c2880">預測離散類別</text>
-<rect x="350" y="100" width="200" height="50" class="ms-task" rx="5"/>
-<text x="450" y="120" class="ms-task-txt">迴歸 Regression</text>
-<text x="450" y="138" class="ms-sub" fill="#5c2880">預測連續數值</text>
-<rect x="650" y="100" width="200" height="50" class="ms-task" rx="5"/>
-<text x="750" y="120" class="ms-task-txt">非監督 Unsupervised</text>
-<text x="750" y="138" class="ms-sub" fill="#5c2880">無標籤資料</text>
-<rect x="920" y="100" width="200" height="50" class="ms-task" rx="5"/>
-<text x="1020" y="120" class="ms-task-txt">序列 / 時間序列</text>
-<text x="1020" y="138" class="ms-sub" fill="#5c2880">時序依賴</text>
-<line x1="180" y1="150" x2="180" y2="170" class="ms-line"/>
-<line x1="450" y1="150" x2="450" y2="170" class="ms-line"/>
-<line x1="750" y1="150" x2="750" y2="170" class="ms-line"/>
-<line x1="1020" y1="150" x2="1020" y2="170" class="ms-line"/>
-<rect x="80" y="172" width="200" height="50" class="ms-q" rx="5"/>
-<text x="180" y="192" class="ms-q-txt">資料量？解釋性？</text>
-<text x="180" y="208" class="ms-sub" fill="#9c6f00">高解釋 vs 高預測力</text>
-<rect x="350" y="172" width="200" height="50" class="ms-q" rx="5"/>
-<text x="450" y="192" class="ms-q-txt">線性 vs 非線性？</text>
-<text x="450" y="208" class="ms-sub" fill="#9c6f00">資料規模？</text>
-<rect x="650" y="172" width="200" height="50" class="ms-q" rx="5"/>
-<text x="750" y="192" class="ms-q-txt">目標是分群還是降維？</text>
-<text x="750" y="208" class="ms-sub" fill="#9c6f00">有無噪聲？</text>
-<rect x="920" y="172" width="200" height="50" class="ms-q" rx="5"/>
-<text x="1020" y="192" class="ms-q-txt">序列長短？</text>
-<text x="1020" y="208" class="ms-sub" fill="#9c6f00">資料量 + 並行需求</text>
-<line x1="180" y1="222" x2="180" y2="240" class="ms-line"/>
-<line x1="100" y1="240" x2="260" y2="240" class="ms-line"/>
-<line x1="100" y1="240" x2="100" y2="260" class="ms-line"/>
-<line x1="180" y1="240" x2="180" y2="260" class="ms-line"/>
-<line x1="260" y1="240" x2="260" y2="260" class="ms-line"/>
-<rect x="20" y="262" width="160" height="160" class="ms-leaf-lin" rx="5"/>
-<text x="100" y="284" class="ms-leaf-name" fill="#9c6f00">線性 / 邏輯迴歸</text>
-<text x="100" y="302" class="ms-leaf-sub" fill="#9c6f00">Linear / Logistic</text>
-<line x1="35" y1="312" x2="165" y2="312" stroke="#e6a817" stroke-dasharray="2,2"/>
-<text x="100" y="328" class="ms-leaf-sub" fill="#9c6f00">★ 高解釋性</text>
-<text x="100" y="344" class="ms-leaf-sub" fill="#9c6f00">小資料 + 法規場景</text>
-<text x="100" y="360" class="ms-leaf-sub" fill="#9c6f00">醫療 / 信貸 / 招聘</text>
-<text x="100" y="380" class="ms-leaf-sub" fill="#9c6f00">✓ 係數可直接解讀</text>
-<text x="100" y="396" class="ms-leaf-sub" fill="#7a1024">⚠ 非線性表現差</text>
-<text x="100" y="414" class="ms-leaf-sub" fill="#9c6f00">Lasso / Ridge 防過擬合</text>
-<rect x="190" y="262" width="160" height="160" class="ms-leaf-tree" rx="5"/>
-<text x="270" y="284" class="ms-leaf-name" fill="#0a4d3a">樹模型 / XGBoost</text>
-<text x="270" y="302" class="ms-leaf-sub" fill="#0a4d3a">Tree / RF / XGB / LGBM</text>
-<line x1="205" y1="312" x2="335" y2="312" stroke="#0a8060" stroke-dasharray="2,2"/>
-<text x="270" y="328" class="ms-leaf-sub" fill="#0a4d3a">★ 中-大資料</text>
-<text x="270" y="344" class="ms-leaf-sub" fill="#0a4d3a">表格資料王者</text>
-<text x="270" y="360" class="ms-leaf-sub" fill="#0a4d3a">Kaggle / 業務分類</text>
-<text x="270" y="380" class="ms-leaf-sub" fill="#0a4d3a">✓ 自動處理 NaN</text>
-<text x="270" y="396" class="ms-leaf-sub" fill="#0a4d3a">✓ 不需特徵縮放</text>
-<text x="270" y="414" class="ms-leaf-sub" fill="#7a1024">⚠ 黑盒，需 SHAP</text>
-<line x1="450" y1="222" x2="450" y2="240" class="ms-line"/>
-<line x1="370" y1="240" x2="530" y2="240" class="ms-line"/>
-<line x1="370" y1="240" x2="370" y2="260" class="ms-line"/>
-<line x1="530" y1="240" x2="530" y2="260" class="ms-line"/>
-<rect x="290" y="262" width="0" height="0" fill="none"/>
-<rect x="370" y="262" width="160" height="160" class="ms-leaf-lin" rx="5"/>
-<text x="450" y="284" class="ms-leaf-name" fill="#9c6f00">線性迴歸</text>
-<text x="450" y="302" class="ms-leaf-sub" fill="#9c6f00">Linear Regression</text>
-<line x1="385" y1="312" x2="515" y2="312" stroke="#e6a817" stroke-dasharray="2,2"/>
-<text x="450" y="328" class="ms-leaf-sub" fill="#9c6f00">★ 線性關係 + 小資料</text>
-<text x="450" y="344" class="ms-leaf-sub" fill="#9c6f00">解釋性高、可推論</text>
-<text x="450" y="364" class="ms-leaf-sub" fill="#9c6f00">房價、薪資、營收</text>
-<text x="450" y="384" class="ms-leaf-sub" fill="#9c6f00">Lasso / Ridge / ElasticNet</text>
-<text x="450" y="404" class="ms-leaf-sub" fill="#9c6f00">用 R² 評估</text>
-<rect x="540" y="262" width="160" height="160" class="ms-leaf-tree" rx="5"/>
-<text x="620" y="284" class="ms-leaf-name" fill="#0a4d3a">樹迴歸 / DNN</text>
-<text x="620" y="302" class="ms-leaf-sub" fill="#0a4d3a">Tree / RF / XGB / DNN</text>
-<line x1="555" y1="312" x2="685" y2="312" stroke="#0a8060" stroke-dasharray="2,2"/>
-<text x="620" y="328" class="ms-leaf-sub" fill="#0a4d3a">★ 非線性 + 中大資料</text>
-<text x="620" y="344" class="ms-leaf-sub" fill="#0a4d3a">能源消耗、流量預測</text>
-<text x="620" y="364" class="ms-leaf-sub" fill="#0a4d3a">XGBoost 表格首選</text>
-<text x="620" y="384" class="ms-leaf-sub" fill="#0a4d3a">DNN 適合高維特徵</text>
-<text x="620" y="404" class="ms-leaf-sub" fill="#7a1024">⚠ 易過擬合 + 黑盒</text>
-<line x1="750" y1="222" x2="750" y2="240" class="ms-line"/>
-<line x1="670" y1="240" x2="830" y2="240" class="ms-line"/>
-<line x1="670" y1="240" x2="670" y2="260" class="ms-line"/>
-<line x1="830" y1="240" x2="830" y2="260" class="ms-line"/>
-<rect x="670" y="262" width="160" height="160" class="ms-leaf-uns" rx="5"/>
-<text x="750" y="284" class="ms-leaf-name" fill="#0a4d3a">聚類</text>
-<text x="750" y="302" class="ms-leaf-sub" fill="#0a4d3a">K-means / DBSCAN</text>
-<line x1="685" y1="312" x2="815" y2="312" stroke="#0a8060" stroke-dasharray="2,2"/>
-<text x="750" y="328" class="ms-leaf-sub" fill="#0a4d3a">K-means：球狀群</text>
-<text x="750" y="346" class="ms-leaf-sub" fill="#0a4d3a">需指定 k</text>
-<text x="750" y="366" class="ms-leaf-sub" fill="#0a4d3a">DBSCAN：有噪聲</text>
-<text x="750" y="384" class="ms-leaf-sub" fill="#0a4d3a">客戶分群、異常偵測</text>
-<text x="750" y="404" class="ms-leaf-sub" fill="#7a1024">⚠ 無標籤難驗證</text>
-<rect x="840" y="262" width="160" height="160" class="ms-leaf-uns" rx="5"/>
-<text x="920" y="284" class="ms-leaf-name" fill="#0a4d3a">降維</text>
-<text x="920" y="302" class="ms-leaf-sub" fill="#0a4d3a">PCA / Autoencoder</text>
-<line x1="855" y1="312" x2="985" y2="312" stroke="#0a8060" stroke-dasharray="2,2"/>
-<text x="920" y="328" class="ms-leaf-sub" fill="#0a4d3a">PCA：線性、解釋好</text>
-<text x="920" y="346" class="ms-leaf-sub" fill="#0a4d3a">最大化變異</text>
-<text x="920" y="366" class="ms-leaf-sub" fill="#0a4d3a">Autoencoder：非線性</text>
-<text x="920" y="384" class="ms-leaf-sub" fill="#0a4d3a">視覺化 / 特徵提取</text>
-<text x="920" y="404" class="ms-leaf-sub" fill="#7a1024">⚠ t-SNE 只能視覺</text>
-<line x1="1020" y1="222" x2="1020" y2="240" class="ms-line"/>
-<line x1="940" y1="240" x2="1100" y2="240" class="ms-line"/>
-<line x1="940" y1="240" x2="940" y2="260" class="ms-line"/>
-<line x1="1100" y1="240" x2="1100" y2="260" class="ms-line"/>
-<rect x="860" y="262" width="0" height="0" fill="none"/>
-<rect x="1010" y="262" width="80" height="160" class="ms-leaf-nn" rx="5"/>
-<text x="1050" y="284" class="ms-leaf-name" fill="#7a1024" font-size="11">RNN</text>
-<text x="1050" y="298" class="ms-leaf-name" fill="#7a1024" font-size="11">LSTM</text>
-<text x="1050" y="312" class="ms-leaf-name" fill="#7a1024" font-size="11">GRU</text>
-<line x1="1015" y1="320" x2="1085" y2="320" stroke="#c8102e" stroke-dasharray="2,2"/>
-<text x="1050" y="338" class="ms-leaf-sub" fill="#7a1024">短-中序列</text>
-<text x="1050" y="354" class="ms-leaf-sub" fill="#7a1024">時序預測</text>
-<text x="1050" y="370" class="ms-leaf-sub" fill="#7a1024">股價</text>
-<text x="1050" y="386" class="ms-leaf-sub" fill="#7a1024">感測訊號</text>
-<text x="1050" y="402" class="ms-leaf-sub" fill="#7a1024">ARIMA</text>
-<text x="1050" y="416" class="ms-leaf-sub" fill="#7a1024">小資料適用</text>
-<rect x="1100" y="262" width="80" height="160" class="ms-leaf-nn" rx="5"/>
-<text x="1140" y="284" class="ms-leaf-name" fill="#7a1024" font-size="11">Transformer</text>
-<text x="1140" y="298" class="ms-leaf-name" fill="#7a1024" font-size="11">TCN</text>
-<line x1="1105" y1="320" x2="1175" y2="320" stroke="#c8102e" stroke-dasharray="2,2"/>
-<text x="1140" y="338" class="ms-leaf-sub" fill="#7a1024">長序列</text>
-<text x="1140" y="354" class="ms-leaf-sub" fill="#7a1024">需並行</text>
-<text x="1140" y="370" class="ms-leaf-sub" fill="#7a1024">語言模型</text>
-<text x="1140" y="386" class="ms-leaf-sub" fill="#7a1024">大資料適用</text>
-<text x="1140" y="402" class="ms-leaf-sub" fill="#7a1024">高算力需求</text>
-<text x="1140" y="416" class="ms-leaf-sub" fill="#7a1024">LLM 主流</text>
-<rect x="20" y="440" width="1160" height="110" fill="#fffbe6" stroke="#e6a817" stroke-width="1.5" rx="3"/>
-<text x="38" y="460" class="ms-tag" fill="#e6a817">🎯 第二層篩選 · 5 大因素再過濾</text>
-<text x="38" y="480" class="ms-desc"><tspan font-weight="700">① 資料量：</tspan>小型（&lt; 1k）→ 線性/邏輯迴歸 + 強正則化｜中型（1k-100k）→ XGBoost / LightGBM｜大型（&gt; 1M）→ DNN / Transformer</text>
-<text x="38" y="498" class="ms-desc"><tspan font-weight="700">② 解釋性：</tspan>高需求（醫療/信貸/法規）→ 線性 / 淺決策樹｜中需求（業務報告）→ 樹模型 + SHAP｜低需求（推薦/影像）→ DNN</text>
-<text x="38" y="516" class="ms-desc"><tspan font-weight="700">③ 部署環境：</tspan>邊緣 / IoT → MobileNet + 量化｜雲端 → 大模型 + 集成｜即時推論（&lt; 100ms）→ 知識蒸餾 + caching</text>
-<text x="38" y="534" class="ms-desc"><tspan font-weight="700" fill="#5c2880">⚠ 鐵則：先試最簡單模型（線性 / 邏輯迴歸）建立 baseline，再逐步加複雜度</tspan> — 不要一開始就上 DNN</text>
-<rect x="20" y="566" width="1160" height="146" fill="#f3e7fa" stroke="#7b3aa8" stroke-width="1.5" rx="3"/>
-<text x="38" y="586" class="ms-tag" fill="#7b3aa8">💡 實務情境決策範例 · 三個真實案例</text>
-<line x1="38" y1="596" x2="1162" y2="596" stroke="#7b3aa8" stroke-dasharray="3,2"/>
-<text x="38" y="615" class="ms-desc"><tspan font-weight="700">情境 A · 銀行信用風險評估：</tspan>分類任務 + 中等資料（10k 筆） + <tspan font-weight="700" fill="#c8102e">法規要求解釋</tspan> + 雲端部署 → <tspan font-weight="700" fill="#9c6f00">邏輯迴歸 + SHAP</tspan>（解釋性優先）</text>
-<text x="38" y="633" class="ms-desc"><tspan font-weight="700">情境 B · 電商即時推薦：</tspan>分類任務 + 大資料（1M 用戶） + 中解釋性需求 + <tspan font-weight="700" fill="#c8102e">即時 &lt; 50ms</tspan> → <tspan font-weight="700" fill="#0a4d3a">LightGBM</tspan> + <tspan font-weight="700">caching</tspan>（速度 + 準確平衡）</text>
-<text x="38" y="651" class="ms-desc"><tspan font-weight="700">情境 C · 工廠設備故障預測：</tspan>序列任務 + 中等資料 + 中解釋性 + 邊緣部署 → <tspan font-weight="700" fill="#5c2880">LSTM + 量化</tspan>（時序 + 邊緣壓縮）</text>
-<line x1="38" y1="664" x2="1162" y2="664" stroke="#7b3aa8" stroke-dasharray="3,2"/>
-<text x="38" y="684" class="ms-desc"><tspan font-weight="700" fill="#5c2880">所有情境的共通流程：</tspan>① 建 baseline（線性 / 邏輯）→ ② 換更強模型（XGBoost）→ ③ 評估解釋性需求 → ④ 視資源決定要不要上 DNN → ⑤ 部署前考慮壓縮</text>
-<text x="38" y="702" class="ms-desc"><tspan font-weight="700" fill="#c8102e">⚠ 永遠不要：</tspan>看到任務就直接跳到「Transformer」/「LLM」 — 90% 的企業 ML 用 XGBoost 就夠了</text>
+<!-- ============ 根節點（左側）============ -->
+<rect x="20" y="255" width="180" height="90" class="ms-root" rx="6"/>
+<text x="110" y="290" class="ms-root-txt">什麼任務？</text>
+<text x="110" y="312" class="ms-root-txt">什麼資料？</text>
+<text x="110" y="332" class="ms-root-txt" style="font-size:11px;opacity:.9">先選任務類型</text>
+
+<!-- 主幹線：根 → 垂直主幹 -->
+<line x1="200" y1="300" x2="210" y2="300" class="ms-line"/>
+<line x1="210" y1="100" x2="210" y2="520" class="ms-line"/>
+
+<!-- ============ 分類分支（y_center=100）============ -->
+<line x1="210" y1="100" x2="220" y2="100" class="ms-line"/>
+<rect x="220" y="70" width="180" height="60" class="ms-task" rx="5"/>
+<text x="310" y="94" class="ms-task-txt">分類 Classification</text>
+<text x="310" y="114" class="ms-sub" fill="#5c2880">預測離散類別</text>
+
+<line x1="400" y1="100" x2="440" y2="100" class="ms-line"/>
+<rect x="440" y="70" width="180" height="60" class="ms-q" rx="5"/>
+<text x="530" y="94" class="ms-q-txt">資料量？解釋性？</text>
+<text x="530" y="114" class="ms-sub" fill="#9c6f00">高解釋 vs 高預測力</text>
+
+<line x1="620" y1="100" x2="640" y2="100" class="ms-line"/>
+<line x1="640" y1="65" x2="640" y2="135" class="ms-line"/>
+<line x1="640" y1="65" x2="660" y2="65" class="ms-line"/>
+<line x1="640" y1="135" x2="660" y2="135" class="ms-line"/>
+
+<rect x="660" y="35" width="520" height="60" class="ms-leaf-lin" rx="5"/>
+<text x="678" y="58" class="ms-leaf-name" fill="#9c6f00">線性 / 邏輯迴歸 · Linear / Logistic</text>
+<text x="678" y="76" class="ms-leaf-sub" fill="#9c6f00">★ 高解釋性 · 小資料 + 法規場景（醫療 / 信貸 / 招聘）</text>
+<text x="678" y="91" class="ms-leaf-sub" fill="#9c6f00">✓ 係數可直接解讀 · Lasso / Ridge 防過擬合 <tspan fill="#7a1024">⚠ 非線性表現差</tspan></text>
+
+<rect x="660" y="105" width="520" height="60" class="ms-leaf-tree" rx="5"/>
+<text x="678" y="128" class="ms-leaf-name" fill="#0a4d3a">樹模型 / XGBoost · Tree / RF / XGB / LGBM</text>
+<text x="678" y="146" class="ms-leaf-sub" fill="#0a4d3a">★ 中-大資料 · 表格資料王者 · Kaggle / 業務分類</text>
+<text x="678" y="161" class="ms-leaf-sub" fill="#0a4d3a">✓ 自動處理 NaN + 不需特徵縮放 <tspan fill="#7a1024">⚠ 黑盒，需 SHAP</tspan></text>
+
+<!-- ============ 迴歸分支（y_center=240）============ -->
+<line x1="210" y1="240" x2="220" y2="240" class="ms-line"/>
+<rect x="220" y="210" width="180" height="60" class="ms-task" rx="5"/>
+<text x="310" y="234" class="ms-task-txt">迴歸 Regression</text>
+<text x="310" y="254" class="ms-sub" fill="#5c2880">預測連續數值</text>
+
+<line x1="400" y1="240" x2="440" y2="240" class="ms-line"/>
+<rect x="440" y="210" width="180" height="60" class="ms-q" rx="5"/>
+<text x="530" y="234" class="ms-q-txt">線性 vs 非線性？</text>
+<text x="530" y="254" class="ms-sub" fill="#9c6f00">資料規模？</text>
+
+<line x1="620" y1="240" x2="640" y2="240" class="ms-line"/>
+<line x1="640" y1="205" x2="640" y2="275" class="ms-line"/>
+<line x1="640" y1="205" x2="660" y2="205" class="ms-line"/>
+<line x1="640" y1="275" x2="660" y2="275" class="ms-line"/>
+
+<rect x="660" y="175" width="520" height="60" class="ms-leaf-lin" rx="5"/>
+<text x="678" y="198" class="ms-leaf-name" fill="#9c6f00">線性迴歸 · Linear Regression</text>
+<text x="678" y="216" class="ms-leaf-sub" fill="#9c6f00">★ 線性關係 + 小資料 · 解釋性高、可推論 · 房價 / 薪資 / 營收</text>
+<text x="678" y="231" class="ms-leaf-sub" fill="#9c6f00">✓ Lasso / Ridge / ElasticNet 防過擬合 · 用 R² 評估</text>
+
+<rect x="660" y="245" width="520" height="60" class="ms-leaf-tree" rx="5"/>
+<text x="678" y="268" class="ms-leaf-name" fill="#0a4d3a">樹迴歸 / DNN · Tree / RF / XGB / DNN</text>
+<text x="678" y="286" class="ms-leaf-sub" fill="#0a4d3a">★ 非線性 + 中大資料 · 能源消耗、流量預測 · XGBoost 表格首選</text>
+<text x="678" y="301" class="ms-leaf-sub" fill="#0a4d3a">DNN 適合高維特徵 <tspan fill="#7a1024">⚠ 易過擬合 + 黑盒</tspan></text>
+
+<!-- ============ 非監督分支（y_center=380）============ -->
+<line x1="210" y1="380" x2="220" y2="380" class="ms-line"/>
+<rect x="220" y="350" width="180" height="60" class="ms-task" rx="5"/>
+<text x="310" y="374" class="ms-task-txt">非監督 Unsupervised</text>
+<text x="310" y="394" class="ms-sub" fill="#5c2880">無標籤資料</text>
+
+<line x1="400" y1="380" x2="440" y2="380" class="ms-line"/>
+<rect x="440" y="350" width="180" height="60" class="ms-q" rx="5"/>
+<text x="530" y="374" class="ms-q-txt">分群還是降維？</text>
+<text x="530" y="394" class="ms-sub" fill="#9c6f00">有無噪聲？</text>
+
+<line x1="620" y1="380" x2="640" y2="380" class="ms-line"/>
+<line x1="640" y1="345" x2="640" y2="415" class="ms-line"/>
+<line x1="640" y1="345" x2="660" y2="345" class="ms-line"/>
+<line x1="640" y1="415" x2="660" y2="415" class="ms-line"/>
+
+<rect x="660" y="315" width="520" height="60" class="ms-leaf-uns" rx="5"/>
+<text x="678" y="338" class="ms-leaf-name" fill="#0a4d3a">聚類 · K-means / DBSCAN / 階層分群</text>
+<text x="678" y="356" class="ms-leaf-sub" fill="#0a4d3a">K-means 球狀群（需指定 k）· DBSCAN 有噪聲耐受性</text>
+<text x="678" y="371" class="ms-leaf-sub" fill="#0a4d3a">客戶分群、異常偵測 <tspan fill="#7a1024">⚠ 無標籤難驗證</tspan></text>
+
+<rect x="660" y="385" width="520" height="60" class="ms-leaf-uns" rx="5"/>
+<text x="678" y="408" class="ms-leaf-name" fill="#0a4d3a">降維 · PCA / Autoencoder</text>
+<text x="678" y="426" class="ms-leaf-sub" fill="#0a4d3a">PCA 線性、解釋好、最大化變異 · Autoencoder 非線性</text>
+<text x="678" y="441" class="ms-leaf-sub" fill="#0a4d3a">視覺化 / 特徵提取 <tspan fill="#7a1024">⚠ t-SNE 只能視覺化</tspan></text>
+
+<!-- ============ 序列分支（y_center=520）============ -->
+<line x1="210" y1="520" x2="220" y2="520" class="ms-line"/>
+<rect x="220" y="490" width="180" height="60" class="ms-task" rx="5"/>
+<text x="310" y="514" class="ms-task-txt">序列 / 時間序列</text>
+<text x="310" y="534" class="ms-sub" fill="#5c2880">時序依賴</text>
+
+<line x1="400" y1="520" x2="440" y2="520" class="ms-line"/>
+<rect x="440" y="490" width="180" height="60" class="ms-q" rx="5"/>
+<text x="530" y="514" class="ms-q-txt">序列長短？</text>
+<text x="530" y="534" class="ms-sub" fill="#9c6f00">資料量 + 並行需求</text>
+
+<line x1="620" y1="520" x2="640" y2="520" class="ms-line"/>
+<line x1="640" y1="485" x2="640" y2="555" class="ms-line"/>
+<line x1="640" y1="485" x2="660" y2="485" class="ms-line"/>
+<line x1="640" y1="555" x2="660" y2="555" class="ms-line"/>
+
+<rect x="660" y="455" width="520" height="60" class="ms-leaf-nn" rx="5"/>
+<text x="678" y="478" class="ms-leaf-name" fill="#7a1024">RNN / LSTM / GRU</text>
+<text x="678" y="496" class="ms-leaf-sub-c">★ 短-中序列 · 時序預測 · 股價 / 感測訊號</text>
+<text x="678" y="511" class="ms-leaf-sub-c">ARIMA 小資料適用（&lt; 1k 樣本）</text>
+
+<rect x="660" y="525" width="520" height="60" class="ms-leaf-nn" rx="5"/>
+<text x="678" y="548" class="ms-leaf-name" fill="#7a1024">Transformer / TCN</text>
+<text x="678" y="566" class="ms-leaf-sub-c">★ 長序列 + 需並行 · 語言模型 · LLM 主流</text>
+<text x="678" y="581" class="ms-leaf-sub-c">大資料適用（&gt; 1M） <tspan fill="#5c2880">⚠ 高算力需求</tspan></text>
+
+<!-- ============ 底部：5 大因素 + 3 情境 ============ -->
+<rect x="20" y="605" width="1160" height="115" fill="#fffbe6" stroke="#e6a817" stroke-width="1.5" rx="3"/>
+<text x="38" y="625" class="ms-tag" fill="#e6a817">🎯 第二層篩選 · 5 大因素再過濾</text>
+<text x="38" y="645" class="ms-desc"><tspan font-weight="700">① 資料量：</tspan>小型（&lt; 1k）→ 線性/邏輯迴歸 + 強正則化｜中型（1k-100k）→ XGBoost / LightGBM｜大型（&gt; 1M）→ DNN / Transformer</text>
+<text x="38" y="663" class="ms-desc"><tspan font-weight="700">② 解釋性：</tspan>高需求（醫療/信貸/法規）→ 線性 / 淺決策樹｜中需求（業務報告）→ 樹模型 + SHAP｜低需求（推薦/影像）→ DNN</text>
+<text x="38" y="681" class="ms-desc"><tspan font-weight="700">③ 部署環境：</tspan>邊緣 / IoT → MobileNet + 量化｜雲端 → 大模型 + 集成｜即時推論（&lt; 100ms）→ 知識蒸餾 + caching</text>
+<text x="38" y="700" class="ms-desc"><tspan font-weight="700" fill="#5c2880">⚠ 鐵則：先試最簡單模型（線性 / 邏輯迴歸）建立 baseline，再逐步加複雜度</tspan> — 不要一開始就上 DNN</text>
+
+<rect x="20" y="735" width="1160" height="146" fill="#f3e7fa" stroke="#7b3aa8" stroke-width="1.5" rx="3"/>
+<text x="38" y="755" class="ms-tag" fill="#7b3aa8">💡 實務情境決策範例 · 三個真實案例</text>
+<line x1="38" y1="765" x2="1162" y2="765" stroke="#7b3aa8" stroke-dasharray="3,2"/>
+<text x="38" y="784" class="ms-desc"><tspan font-weight="700">情境 A · 銀行信用風險評估：</tspan>分類任務 + 中等資料（10k 筆） + <tspan font-weight="700" fill="#c8102e">法規要求解釋</tspan> + 雲端部署 → <tspan font-weight="700" fill="#9c6f00">邏輯迴歸 + SHAP</tspan>（解釋性優先）</text>
+<text x="38" y="802" class="ms-desc"><tspan font-weight="700">情境 B · 電商即時推薦：</tspan>分類任務 + 大資料（1M 用戶） + 中解釋性需求 + <tspan font-weight="700" fill="#c8102e">即時 &lt; 50ms</tspan> → <tspan font-weight="700" fill="#0a4d3a">LightGBM</tspan> + <tspan font-weight="700">caching</tspan>（速度 + 準確平衡）</text>
+<text x="38" y="820" class="ms-desc"><tspan font-weight="700">情境 C · 工廠設備故障預測：</tspan>序列任務 + 中等資料 + 中解釋性 + 邊緣部署 → <tspan font-weight="700" fill="#5c2880">LSTM + 量化</tspan>（時序 + 邊緣壓縮）</text>
+<line x1="38" y1="833" x2="1162" y2="833" stroke="#7b3aa8" stroke-dasharray="3,2"/>
+<text x="38" y="853" class="ms-desc"><tspan font-weight="700" fill="#5c2880">所有情境的共通流程：</tspan>① 建 baseline（線性 / 邏輯）→ ② 換更強模型（XGBoost）→ ③ 評估解釋性需求 → ④ 視資源決定要不要上 DNN → ⑤ 部署前考慮壓縮</text>
+<text x="38" y="871" class="ms-desc"><tspan font-weight="700" fill="#c8102e">⚠ 永遠不要：</tspan>看到任務就直接跳到「Transformer」/「LLM」 — 90% 的企業 ML 用 XGBoost 就夠了</text>
 </svg>
 <div class="diagram-cap">紫 = 任務類型 · 黃 = 線性模型（高解釋）· 綠 = 樹/集成（表格王者）· 紅 = 神經網路（非線性 / 序列）— 四大任務各自往下推，再用「資料量 × 解釋性 × 資源」三個維度過濾</div>
 </div>
@@ -10072,6 +10084,220 @@ NAS 是「自動設計神經網路架構」的技術 — 給定任務與計算�
 </div>
 </div>
 
+<div class="diagram" style="max-width:1240px">
+<div class="diagram-title">K-匿名 → L-多樣 → T-接近 · 三階段防護演化（病歷資料案例）</div>
+<svg viewBox="0 0 1210 380" xmlns="http://www.w3.org/2000/svg">
+<style>
+.kl-chip-1{fill:#c8102e}
+.kl-chip-2{fill:#e6a817}
+.kl-chip-3{fill:#7b3aa8}
+.kl-chip-4{fill:#5c2880}
+.kl-chip-t{font-family:'Noto Serif TC',serif;font-weight:900;font-size:13.5px;fill:#fff;text-anchor:middle;letter-spacing:1px}
+.kl-chip-sub{font-family:'JetBrains Mono',monospace;font-size:9.5px;fill:#fff;text-anchor:middle;letter-spacing:1.5px}
+.kl-th-bg{fill:#1a1a1a}
+.kl-th{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;fill:#fff;text-anchor:middle;letter-spacing:0.5px}
+.kl-tr-redbg{fill:#fef0f3;stroke:#999;stroke-width:0.8}
+.kl-tr-yellowbg{fill:#fffbe6;stroke:#999;stroke-width:0.8}
+.kl-tr-purplebg{fill:#f3e7fa;stroke:#999;stroke-width:0.8}
+.kl-td{font-family:'Noto Sans TC',sans-serif;font-size:11.5px;text-anchor:middle;fill:#1a1a1a}
+.kl-td-red{font-family:'Noto Sans TC',sans-serif;font-size:11.5px;text-anchor:middle;fill:#c8102e;font-weight:700}
+.kl-td-mute{font-family:'JetBrains Mono',monospace;font-size:11.5px;text-anchor:middle;fill:#999}
+.kl-td-gen{font-family:'JetBrains Mono',monospace;font-size:11.5px;text-anchor:middle;fill:#9c6f00;font-weight:700}
+.kl-td-pur{font-family:'Noto Sans TC',sans-serif;font-size:11.5px;text-anchor:middle;fill:#5c2880;font-weight:700}
+.kl-att-bx{fill:#fef0f3;stroke:#c8102e;stroke-width:1.5}
+.kl-mix-bx{fill:#fffbe6;stroke:#e6a817;stroke-width:1.5}
+.kl-pur-bx{fill:#f3e7fa;stroke:#7b3aa8;stroke-width:1.5}
+.kl-pro-bx{fill:#e8f1ec;stroke:#0a8060;stroke-width:1.5}
+.kl-h-att{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;fill:#c8102e;text-anchor:middle;letter-spacing:0.5px}
+.kl-h-pro{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;fill:#0a8060;text-anchor:middle;letter-spacing:0.5px}
+.kl-h-pur{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;fill:#5c2880;text-anchor:middle;letter-spacing:0.5px}
+.kl-sub{font-family:'Noto Sans TC',sans-serif;font-size:10.5px;fill:#3d3528;text-anchor:middle}
+.kl-arr{stroke:#7b3aa8;stroke-width:2.5;fill:none}
+.kl-arr-l{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;fill:#7b3aa8;text-anchor:middle;letter-spacing:1px}
+</style>
+<marker id="kl-ar" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><polygon points="0,0 8,3 0,6" fill="#7b3aa8"/></marker>
+
+<!-- ====== 階段 1: 原始資料 ====== -->
+<rect x="15" y="20" width="265" height="38" class="kl-chip-1" rx="4"/>
+<text x="147" y="40" class="kl-chip-t">① 原始資料</text>
+<text x="147" y="54" class="kl-chip-sub">ORIGINAL DATA</text>
+
+<rect x="15" y="72" width="265" height="26" class="kl-th-bg"/>
+<text x="47" y="90" class="kl-th">姓名</text>
+<text x="110" y="90" class="kl-th">年齡</text>
+<text x="180" y="90" class="kl-th">區號</text>
+<text x="240" y="90" class="kl-th">疾病</text>
+
+<rect x="15" y="98" width="265" height="30" class="kl-tr-redbg"/>
+<text x="47" y="118" class="kl-td-red">王小明</text>
+<text x="110" y="118" class="kl-td">28</text>
+<text x="180" y="118" class="kl-td">11055</text>
+<text x="240" y="118" class="kl-td">心臟病</text>
+
+<rect x="15" y="128" width="265" height="30" class="kl-tr-redbg"/>
+<text x="47" y="148" class="kl-td-red">李大華</text>
+<text x="110" y="148" class="kl-td">35</text>
+<text x="180" y="148" class="kl-td">11055</text>
+<text x="240" y="148" class="kl-td">流感</text>
+
+<rect x="15" y="158" width="265" height="30" class="kl-tr-redbg"/>
+<text x="47" y="178" class="kl-td-red">張三</text>
+<text x="110" y="178" class="kl-td">42</text>
+<text x="180" y="178" class="kl-td">11055</text>
+<text x="240" y="178" class="kl-td">糖尿病</text>
+
+<rect x="15" y="188" width="265" height="30" class="kl-tr-redbg"/>
+<text x="47" y="208" class="kl-td-red">陳四</text>
+<text x="110" y="208" class="kl-td">29</text>
+<text x="180" y="208" class="kl-td">11055</text>
+<text x="240" y="208" class="kl-td">心臟病</text>
+
+<rect x="15" y="240" width="265" height="100" class="kl-att-bx" rx="3"/>
+<text x="147" y="260" class="kl-h-att">⚠ 攻擊：SINGLING OUT</text>
+<text x="147" y="280" class="kl-sub">姓名 + 區號 → 直接識別個人</text>
+<text x="147" y="300" class="kl-sub"><tspan font-weight="700" fill="#c8102e">⌖ 例：</tspan>查「王小明」→ 心臟病</text>
+<text x="147" y="320" class="kl-sub">病歷曝光、可被勒索</text>
+
+<!-- 箭頭 1→2 -->
+<path d="M 285 175 L 314 175" class="kl-arr" marker-end="url(#kl-ar)"/>
+<text x="299" y="155" class="kl-arr-l">K=4</text>
+<text x="299" y="195" class="kl-arr-l">匿名</text>
+
+<!-- ====== 階段 2: K=4 匿名 ====== -->
+<rect x="320" y="20" width="265" height="38" class="kl-chip-2" rx="4"/>
+<text x="452" y="40" class="kl-chip-t">② K=4 匿名</text>
+<text x="452" y="54" class="kl-chip-sub">REMOVE PII + GENERALIZE</text>
+
+<rect x="320" y="72" width="265" height="26" class="kl-th-bg"/>
+<text x="352" y="90" class="kl-th">姓名</text>
+<text x="415" y="90" class="kl-th">年齡</text>
+<text x="485" y="90" class="kl-th">區號</text>
+<text x="545" y="90" class="kl-th">疾病</text>
+
+<rect x="320" y="98" width="265" height="30" class="kl-tr-yellowbg"/>
+<text x="352" y="118" class="kl-td-mute">███</text>
+<text x="415" y="118" class="kl-td-gen">20-49</text>
+<text x="485" y="118" class="kl-td-gen">110**</text>
+<text x="545" y="118" class="kl-td">心臟病</text>
+
+<rect x="320" y="128" width="265" height="30" class="kl-tr-yellowbg"/>
+<text x="352" y="148" class="kl-td-mute">███</text>
+<text x="415" y="148" class="kl-td-gen">20-49</text>
+<text x="485" y="148" class="kl-td-gen">110**</text>
+<text x="545" y="148" class="kl-td">心臟病</text>
+
+<rect x="320" y="158" width="265" height="30" class="kl-tr-yellowbg"/>
+<text x="352" y="178" class="kl-td-mute">███</text>
+<text x="415" y="178" class="kl-td-gen">20-49</text>
+<text x="485" y="178" class="kl-td-gen">110**</text>
+<text x="545" y="178" class="kl-td">心臟病</text>
+
+<rect x="320" y="188" width="265" height="30" class="kl-tr-yellowbg"/>
+<text x="352" y="208" class="kl-td-mute">███</text>
+<text x="415" y="208" class="kl-td-gen">20-49</text>
+<text x="485" y="208" class="kl-td-gen">110**</text>
+<text x="545" y="208" class="kl-td">糖尿病</text>
+
+<rect x="320" y="240" width="265" height="100" class="kl-mix-bx" rx="3"/>
+<text x="452" y="260" class="kl-h-pro">✓ 防 SINGLING OUT</text>
+<text x="452" y="278" class="kl-sub">準識別符組合 ≥ 4 人</text>
+<text x="452" y="300" class="kl-h-att">✗ 同質性攻擊</text>
+<text x="452" y="318" class="kl-sub">3/4 心臟病 → 攻擊者高機率推</text>
+<text x="452" y="334" class="kl-sub">「這組人很可能都得心臟病」</text>
+
+<!-- 箭頭 2→3 -->
+<path d="M 590 175 L 619 175" class="kl-arr" marker-end="url(#kl-ar)"/>
+<text x="604" y="155" class="kl-arr-l">L=3</text>
+<text x="604" y="195" class="kl-arr-l">多樣</text>
+
+<!-- ====== 階段 3: L=3 多樣 ====== -->
+<rect x="625" y="20" width="265" height="38" class="kl-chip-3" rx="4"/>
+<text x="757" y="40" class="kl-chip-t">③ L=3 多樣</text>
+<text x="757" y="54" class="kl-chip-sub">DIVERSIFY SENSITIVE</text>
+
+<rect x="625" y="72" width="265" height="26" class="kl-th-bg"/>
+<text x="657" y="90" class="kl-th">姓名</text>
+<text x="720" y="90" class="kl-th">年齡</text>
+<text x="790" y="90" class="kl-th">區號</text>
+<text x="850" y="90" class="kl-th">疾病</text>
+
+<rect x="625" y="98" width="265" height="30" class="kl-tr-purplebg"/>
+<text x="657" y="118" class="kl-td-mute">███</text>
+<text x="720" y="118" class="kl-td-gen">20-49</text>
+<text x="790" y="118" class="kl-td-gen">110**</text>
+<text x="850" y="118" class="kl-td-pur">心臟病</text>
+
+<rect x="625" y="128" width="265" height="30" class="kl-tr-purplebg"/>
+<text x="657" y="148" class="kl-td-mute">███</text>
+<text x="720" y="148" class="kl-td-gen">20-49</text>
+<text x="790" y="148" class="kl-td-gen">110**</text>
+<text x="850" y="148" class="kl-td-pur">流感</text>
+
+<rect x="625" y="158" width="265" height="30" class="kl-tr-purplebg"/>
+<text x="657" y="178" class="kl-td-mute">███</text>
+<text x="720" y="178" class="kl-td-gen">20-49</text>
+<text x="790" y="178" class="kl-td-gen">110**</text>
+<text x="850" y="178" class="kl-td-pur">糖尿病</text>
+
+<rect x="625" y="188" width="265" height="30" class="kl-tr-purplebg"/>
+<text x="657" y="208" class="kl-td-mute">███</text>
+<text x="720" y="208" class="kl-td-gen">20-49</text>
+<text x="790" y="208" class="kl-td-gen">110**</text>
+<text x="850" y="208" class="kl-td-pur">肺炎</text>
+
+<rect x="625" y="240" width="265" height="100" class="kl-mix-bx" rx="3"/>
+<text x="757" y="260" class="kl-h-pro">✓ 防 同質性攻擊</text>
+<text x="757" y="278" class="kl-sub">敏感欄 ≥ L 種值（本組 = 4）</text>
+<text x="757" y="300" class="kl-h-att">✗ 分佈推斷</text>
+<text x="757" y="318" class="kl-sub">本組糖尿病 25% &gt; 全體 5%</text>
+<text x="757" y="334" class="kl-sub">「這組糖尿病比例異常高」</text>
+
+<!-- 箭頭 3→4 -->
+<path d="M 895 175 L 924 175" class="kl-arr" marker-end="url(#kl-ar)"/>
+<text x="909" y="155" class="kl-arr-l">T=0.1</text>
+<text x="909" y="195" class="kl-arr-l">接近</text>
+
+<!-- ====== 階段 4: T-接近 ====== -->
+<rect x="930" y="20" width="265" height="38" class="kl-chip-4" rx="4"/>
+<text x="1062" y="40" class="kl-chip-t">④ T-接近 (t=0.1)</text>
+<text x="1062" y="54" class="kl-chip-sub">MATCH GLOBAL DISTRIBUTION</text>
+
+<rect x="930" y="72" width="265" height="156" class="kl-tr-purplebg"/>
+<text x="1062" y="94" class="kl-h-pur">本組 vs 全體 疾病分佈</text>
+
+<text x="945" y="118" class="kl-sub" style="text-anchor:start"><tspan font-weight="700">本組</tspan></text>
+<rect x="985" y="108" width="42" height="14" fill="#7b3aa8"/>
+<rect x="1027" y="108" width="42" height="14" fill="#0a8060"/>
+<rect x="1069" y="108" width="42" height="14" fill="#e6a817"/>
+<rect x="1111" y="108" width="42" height="14" fill="#c8102e"/>
+<text x="1006" y="138" class="kl-sub">心 25</text>
+<text x="1048" y="138" class="kl-sub">流 25</text>
+<text x="1090" y="138" class="kl-sub">糖 25</text>
+<text x="1132" y="138" class="kl-sub">癌 25</text>
+
+<text x="945" y="166" class="kl-sub" style="text-anchor:start"><tspan font-weight="700">全體</tspan></text>
+<rect x="985" y="156" width="42" height="14" fill="#7b3aa8"/>
+<rect x="1027" y="156" width="42" height="14" fill="#0a8060"/>
+<rect x="1069" y="156" width="42" height="14" fill="#e6a817"/>
+<rect x="1111" y="156" width="42" height="14" fill="#c8102e"/>
+<text x="1006" y="186" class="kl-sub">心 25</text>
+<text x="1048" y="186" class="kl-sub">流 25</text>
+<text x="1090" y="186" class="kl-sub">糖 25</text>
+<text x="1132" y="186" class="kl-sub">癌 25</text>
+
+<text x="1062" y="216" class="kl-h-pro">✓ 分佈差異 &lt; t = 10%</text>
+
+<rect x="930" y="240" width="265" height="100" class="kl-pro-bx" rx="3"/>
+<text x="1062" y="260" class="kl-h-pro">★ 防全部三種攻擊</text>
+<text x="1062" y="278" class="kl-sub">SINGLING OUT + 同質性 + 分佈推斷</text>
+<text x="1062" y="300" class="kl-sub"><tspan font-weight="700" fill="#0a8060">最強保護</tspan> · 適用對外發布</text>
+<text x="1062" y="320" class="kl-sub">如政府開放醫療研究資料</text>
+<text x="1062" y="334" class="kl-sub">（台灣健保資料庫 t≈0.1）</text>
+
+</svg>
+<div class="diagram-cap">同一份病歷資料的三階段演化：<b style="color:#c8102e">紅 = 原始（高風險）</b> → <b style="color:#9c6f00">黃 = K-匿名（防直接識別但有殘存風險）</b> → <b style="color:#7b3aa8">紫 = L-多樣（防同質但仍有分佈偏斜）</b> → <b style="color:#0a8060">綠 = T-接近（全防）</b>。<b>關鍵：三者層層加強，但會逐步降低資料效用（precision loss）</b>。</div>
+</div>
+
 <div class="def-card">
 <div class="def-card-head"><h4>聯邦學習 Federated Learning</h4></div>
 <div class="def-card-body">
@@ -10081,12 +10307,246 @@ NAS 是「自動設計神經網路架構」的技術 — 給定任務與計算�
 </div>
 </div>
 
+<div class="diagram" style="max-width:1080px">
+<div class="diagram-title">聯邦學習架構 · 「資料不出端、只傳模型參數」的 5 步驟循環</div>
+<svg viewBox="0 0 1040 600" xmlns="http://www.w3.org/2000/svg">
+<style>
+.fl-server{fill:#7b3aa8;stroke:#3a1860;stroke-width:2.5}
+.fl-client{fill:#fff;stroke:#7b3aa8;stroke-width:2}
+.fl-data{fill:#fef0f3;stroke:#c8102e;stroke-width:1.5}
+.fl-st{font-family:'Noto Serif TC',serif;font-weight:900;font-size:14.5px;text-anchor:middle;fill:#fff}
+.fl-sub-w{font-family:'Noto Sans TC',sans-serif;font-size:11.5px;text-anchor:middle;fill:#fff}
+.fl-en-w{font-family:'JetBrains Mono',monospace;font-size:10px;text-anchor:middle;fill:#e8d8f5;letter-spacing:1px}
+.fl-formula-w{font-family:'JetBrains Mono',monospace;font-size:12px;text-anchor:middle;font-weight:700;fill:#ffd966}
+.fl-icon{font-size:26px;text-anchor:middle}
+.fl-name{font-family:'Noto Serif TC',serif;font-weight:700;font-size:13.5px;text-anchor:middle;fill:#1a1a1a}
+.fl-d{font-family:'JetBrains Mono',monospace;font-size:10px;text-anchor:middle;fill:#5c2880}
+.fl-lock{font-family:'Noto Sans TC',sans-serif;font-size:11px;text-anchor:middle;fill:#c8102e;font-weight:700}
+.fl-arr-down{stroke:#1a1a1a;stroke-width:2;fill:none}
+.fl-arr-up{stroke:#0a8060;stroke-width:2.4;fill:none;stroke-dasharray:6,4}
+.fl-step{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.2px;fill:#1a1a1a;text-anchor:middle}
+.fl-step-up{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.2px;fill:#0a8060;text-anchor:middle}
+.fl-step-mid{font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;letter-spacing:1px;fill:#5c2880;text-anchor:middle}
+.fl-callout-p{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;fill:#5c2880;text-anchor:start}
+.fl-callout-r{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;fill:#c8102e;text-anchor:start}
+.fl-note{font-family:'Noto Sans TC',sans-serif;font-size:11.5px;fill:#3d3528;text-anchor:start}
+</style>
+<marker id="fl-ar" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><polygon points="0,0 8,3 0,6" fill="#1a1a1a"/></marker>
+<marker id="fl-ar-up" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><polygon points="0,0 8,3 0,6" fill="#0a8060"/></marker>
+
+<!-- 中央伺服器 -->
+<rect x="330" y="35" width="380" height="125" class="fl-server" rx="6"/>
+<text x="520" y="62" class="fl-st">🌐 中央伺服器 · CENTRAL SERVER</text>
+<text x="520" y="86" class="fl-sub-w">全域模型 W_global · FedAvg 聚合 N 個 client 梯度</text>
+<text x="520" y="115" class="fl-formula-w">W_{t+1} = Σ (n_i / n) × ΔW_i</text>
+<text x="520" y="140" class="fl-en-w">FEDERATED AVERAGING</text>
+
+<!-- 中段步驟說明 -->
+<text x="520" y="186" class="fl-step-mid">④ FedAvg 聚合新模型 · ⑤ 重複 50+ 輪直到收斂</text>
+<text x="520" y="298" class="fl-step-mid">② 本地訓練 · 各 client 在自己資料 D_i 上算梯度 ΔW_i</text>
+
+<!-- 4 個客戶端 -->
+<rect x="40" y="380" width="200" height="155" class="fl-client" rx="6"/>
+<text x="140" y="410" class="fl-icon">📱</text>
+<text x="140" y="436" class="fl-name">手機 · Gboard</text>
+<rect x="60" y="450" width="160" height="38" class="fl-data" rx="3"/>
+<text x="140" y="467" class="fl-d">本地資料 D_1</text>
+<text x="140" y="481" class="fl-d">輸入習慣</text>
+<text x="140" y="513" class="fl-lock">🔒 資料不出端</text>
+
+<rect x="280" y="380" width="200" height="155" class="fl-client" rx="6"/>
+<text x="380" y="410" class="fl-icon">🏥</text>
+<text x="380" y="436" class="fl-name">醫院 A</text>
+<rect x="300" y="450" width="160" height="38" class="fl-data" rx="3"/>
+<text x="380" y="467" class="fl-d">本地資料 D_2</text>
+<text x="380" y="481" class="fl-d">病歷影像</text>
+<text x="380" y="513" class="fl-lock">🔒 資料不出端</text>
+
+<rect x="520" y="380" width="200" height="155" class="fl-client" rx="6"/>
+<text x="620" y="410" class="fl-icon">🏦</text>
+<text x="620" y="436" class="fl-name">銀行 B</text>
+<rect x="540" y="450" width="160" height="38" class="fl-data" rx="3"/>
+<text x="620" y="467" class="fl-d">本地資料 D_3</text>
+<text x="620" y="481" class="fl-d">交易紀錄</text>
+<text x="620" y="513" class="fl-lock">🔒 資料不出端</text>
+
+<rect x="760" y="380" width="200" height="155" class="fl-client" rx="6"/>
+<text x="860" y="410" class="fl-icon">🌡</text>
+<text x="860" y="436" class="fl-name">IoT 裝置</text>
+<rect x="780" y="450" width="160" height="38" class="fl-data" rx="3"/>
+<text x="860" y="467" class="fl-d">本地資料 D_4</text>
+<text x="860" y="481" class="fl-d">感測訊號</text>
+<text x="860" y="513" class="fl-lock">🔒 資料不出端</text>
+
+<!-- 下發箭頭（黑色實線，伺服器底邊 → client 上方偏左） -->
+<path d="M 410 160 L 120 380" class="fl-arr-down" marker-end="url(#fl-ar)"/>
+<path d="M 470 160 L 360 380" class="fl-arr-down" marker-end="url(#fl-ar)"/>
+<path d="M 540 160 L 600 380" class="fl-arr-down" marker-end="url(#fl-ar)"/>
+<path d="M 600 160 L 840 380" class="fl-arr-down" marker-end="url(#fl-ar)"/>
+
+<!-- 上傳箭頭（綠色虛線，client 上方偏右 → 伺服器底邊） -->
+<path d="M 160 380 L 430 160" class="fl-arr-up" marker-end="url(#fl-ar-up)"/>
+<path d="M 400 380 L 490 160" class="fl-arr-up" marker-end="url(#fl-ar-up)"/>
+<path d="M 640 380 L 560 160" class="fl-arr-up" marker-end="url(#fl-ar-up)"/>
+<path d="M 880 380 L 620 160" class="fl-arr-up" marker-end="url(#fl-ar-up)"/>
+
+<!-- 步驟①③ 標籤（在箭頭中段空白處） -->
+<text x="115" y="260" class="fl-step">① 下發 W_t</text>
+<text x="925" y="260" class="fl-step-up">③ 上傳 ΔW_i</text>
+
+<!-- 底部 callout -->
+<rect x="20" y="552" width="500" height="44" fill="#f3e7fa" stroke="#7b3aa8" stroke-width="1.5" rx="3"/>
+<text x="32" y="571" class="fl-callout-p">✓ 為什麼安全</text>
+<text x="32" y="588" class="fl-note">原始資料永遠在端 · 只傳參數梯度 · 配合 DP 噪聲 = 強保證</text>
+
+<rect x="530" y="552" width="490" height="44" fill="#fef0f3" stroke="#c8102e" stroke-width="1.5" rx="3"/>
+<text x="542" y="571" class="fl-callout-r">⚠ 仍有風險</text>
+<text x="542" y="588" class="fl-note">梯度逆向工程 · Byzantine 攻擊 · 通訊成本高（需 50+ 輪）</text>
+
+</svg>
+<div class="diagram-cap"><b style="color:#0a8060">綠色虛線</b> = 只傳模型梯度（資料留在端上）· <b style="color:#1a1a1a">黑色實線</b> = 下發全域模型 — 經 5 步循環不斷迭代直到全域模型收斂。<b>關鍵差別：傳統 ML 把資料上傳到中央訓練，聯邦學習把訓練下放到資料所在端</b>。</div>
+</div>
+
+<div class="callout key" style="margin:10px 0 18px">
+<strong>真實案例 · Google Gboard 鍵盤預測（聯邦學習史上最大規模部署）</strong>
+全球數十億支 Android 手機 = 數十億個 client。① 每支手機本地學使用者打字模式 → ② 上傳前用 HE 加密梯度 → ③ Secure Aggregation 算總和 → ④ 加 DP 噪聲後彙整成新模型。<b>結果：</b>Google 永遠看不到你打了什麼，但全球輸入法仍持續變聰明。Apple PCC（2024）、Meta NLLB 翻譯模型、台灣健保聯邦學習都是同樣架構。
+</div>
+
 <div class="def-card">
 <div class="def-card-head"><h4>同態加密 Homomorphic Encryption</h4></div>
 <div class="def-card-body">
 <p><b>在加密資料上直接運算</b>（加、乘），解密後結果與明文運算一致。</p>
 <p><b>優勢：</b>資料全程加密、密碼學強保證。<b>限制：</b>計算效能低，特別是 FHE 全同態加密需高效能硬體。</p>
 </div>
+</div>
+
+<div class="diagram" style="max-width:1080px">
+<div class="diagram-title">同態加密工作流程 · 「在密文上直接運算」雲端不解密就能算</div>
+<svg viewBox="0 0 1040 555" xmlns="http://www.w3.org/2000/svg">
+<style>
+.he-trust{fill:#e8f1ec;stroke:#0a8060;stroke-width:1.5;stroke-dasharray:8,4}
+.he-untrust{fill:#fbe5e9;stroke:#c8102e;stroke-width:1.5;stroke-dasharray:8,4}
+.he-box{fill:#fff;stroke:#7b3aa8;stroke-width:2}
+.he-box-cloud{fill:#fef0f3;stroke:#c8102e;stroke-width:2}
+.he-zone-trust{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:1.5px;font-weight:700;fill:#0a4d3a;text-anchor:middle}
+.he-zone-untrust{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:1.5px;font-weight:700;fill:#8a0820;text-anchor:middle}
+.he-num{font-family:'JetBrains Mono',monospace;font-size:13.5px;font-weight:900;text-anchor:middle;fill:#7b3aa8}
+.he-num-r{font-family:'JetBrains Mono',monospace;font-size:13.5px;font-weight:900;text-anchor:middle;fill:#c8102e}
+.he-icon{font-size:28px;text-anchor:middle}
+.he-name{font-family:'Noto Serif TC',serif;font-weight:700;font-size:13px;text-anchor:middle;fill:#1a1a1a}
+.he-name-r{font-family:'Noto Serif TC',serif;font-weight:700;font-size:13px;text-anchor:middle;fill:#c8102e}
+.he-val{font-family:'JetBrains Mono',monospace;font-size:11.5px;text-anchor:middle;font-weight:700;fill:#5c2880}
+.he-val-r{font-family:'JetBrains Mono',monospace;font-size:11.5px;text-anchor:middle;font-weight:700;fill:#c8102e}
+.he-sub{font-family:'JetBrains Mono',monospace;font-size:10px;text-anchor:middle;letter-spacing:0.5px;fill:#6b6357}
+.he-sub-r{font-family:'JetBrains Mono',monospace;font-size:10px;text-anchor:middle;letter-spacing:0.5px;fill:#8a0820}
+.he-arr{stroke:#7b3aa8;stroke-width:2.4;fill:none}
+.he-zone-label{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:1.5px;font-weight:700;text-anchor:middle;fill:#5c2880}
+.he-tier-title{font-family:'Noto Serif TC',serif;font-weight:900;font-size:14.5px;text-anchor:middle;fill:#fff}
+.he-tier-sub{font-family:'JetBrains Mono',monospace;font-size:10px;text-anchor:middle;fill:#e8d8f5;letter-spacing:1px}
+.he-tier-row{font-family:'Noto Sans TC',sans-serif;font-size:11.5px;fill:#1a1a1a}
+.he-tier-row-good{font-family:'Noto Sans TC',sans-serif;font-size:11.5px;fill:#0a8060;font-weight:700}
+.he-tier-row-bad{font-family:'Noto Sans TC',sans-serif;font-size:11.5px;fill:#c8102e;font-weight:700}
+.he-phe{fill:#7b3aa8;stroke:#3a1860;stroke-width:2.5}
+.he-she{fill:#5c2880;stroke:#3a1860;stroke-width:2.5}
+.he-fhe{fill:#3a1860;stroke:#1a0530;stroke-width:2.5}
+</style>
+<marker id="he-ar" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><polygon points="0,0 8,3 0,6" fill="#7b3aa8"/></marker>
+
+<!-- 信任區 / 不信任區 大框 -->
+<rect x="20" y="30" width="380" height="260" class="he-trust" rx="6"/>
+<text x="210" y="52" class="he-zone-trust">🔓 客戶端 · TRUSTED · 持有金鑰</text>
+
+<rect x="410" y="30" width="245" height="260" class="he-untrust" rx="6"/>
+<text x="532" y="52" class="he-zone-untrust">☁ 雲端 · UNTRUSTED · 無金鑰</text>
+
+<rect x="665" y="30" width="365" height="260" class="he-trust" rx="6"/>
+<text x="847" y="52" class="he-zone-trust">🔓 客戶端 · TRUSTED · 解密金鑰</text>
+
+<!-- 5 步驟方塊 -->
+<rect x="40" y="80" width="170" height="195" class="he-box" rx="6"/>
+<text x="125" y="106" class="he-num">① 明文</text>
+<text x="125" y="148" class="he-icon">📄</text>
+<text x="125" y="182" class="he-name">原始資料</text>
+<text x="125" y="208" class="he-val">x = 1000</text>
+<text x="125" y="232" class="he-sub">PLAINTEXT</text>
+<text x="125" y="252" class="he-sub">敏感資料</text>
+
+<rect x="222" y="80" width="170" height="195" class="he-box" rx="6"/>
+<text x="307" y="106" class="he-num">② 加密</text>
+<text x="307" y="148" class="he-icon">🔐</text>
+<text x="307" y="182" class="he-name">用公鑰加密</text>
+<text x="307" y="208" class="he-val">E(x) = 密文</text>
+<text x="307" y="232" class="he-sub">ENCRYPT</text>
+<text x="307" y="252" class="he-sub">+ Public Key</text>
+
+<rect x="425" y="80" width="225" height="195" class="he-box-cloud" rx="6"/>
+<text x="537" y="106" class="he-num-r">③ 密文運算</text>
+<text x="537" y="148" class="he-icon">☁ ❌</text>
+<text x="537" y="182" class="he-name-r">雲端看不到 x</text>
+<text x="537" y="208" class="he-val-r">E(x) ⊕ E(x) = E(x²)</text>
+<text x="537" y="232" class="he-sub-r">HOMOMORPHIC COMPUTE</text>
+<text x="537" y="252" class="he-sub-r">直接在密文上加減乘</text>
+
+<rect x="675" y="80" width="170" height="195" class="he-box" rx="6"/>
+<text x="760" y="106" class="he-num">④ 回傳</text>
+<text x="760" y="148" class="he-icon">📦</text>
+<text x="760" y="182" class="he-name">加密結果</text>
+<text x="760" y="208" class="he-val">E(x²) 仍為密文</text>
+<text x="760" y="232" class="he-sub">RETURN CIPHERTEXT</text>
+<text x="760" y="252" class="he-sub">無金鑰不可解</text>
+
+<rect x="855" y="80" width="170" height="195" class="he-box" rx="6"/>
+<text x="940" y="106" class="he-num">⑤ 解密</text>
+<text x="940" y="148" class="he-icon">🗝</text>
+<text x="940" y="182" class="he-name">用私鑰解密</text>
+<text x="940" y="208" class="he-val">f(x) = 1,000,000</text>
+<text x="940" y="232" class="he-sub">DECRYPT</text>
+<text x="940" y="252" class="he-sub">+ Private Key</text>
+
+<!-- 步驟間箭頭 -->
+<path d="M 210 178 L 222 178" class="he-arr" marker-end="url(#he-ar)"/>
+<path d="M 392 178 L 425 178" class="he-arr" marker-end="url(#he-ar)"/>
+<path d="M 650 178 L 675 178" class="he-arr" marker-end="url(#he-ar)"/>
+<path d="M 845 178 L 855 178" class="he-arr" marker-end="url(#he-ar)"/>
+
+<!-- 下半 PHE / SHE / FHE 三層級對比 -->
+<text x="525" y="320" class="he-zone-label">▾ 同態加密三層級 · PHE → SHE → FHE 計算能力演進</text>
+
+<rect x="20" y="334" width="320" height="210" class="he-box" rx="6"/>
+<rect x="20" y="334" width="320" height="46" class="he-phe" rx="6"/>
+<text x="180" y="357" class="he-tier-title">PHE · 部分同態</text>
+<text x="180" y="373" class="he-tier-sub">PARTIALLY HOMOMORPHIC</text>
+<text x="40" y="402" class="he-tier-row">支援運算：<tspan font-weight="700">僅單一</tspan>（加 或 乘）</text>
+<text x="40" y="422" class="he-tier-row">效能：<tspan font-weight="700" fill="#0a8060">快 · 可實用</tspan></text>
+<text x="40" y="442" class="he-tier-row">代表方案：<tspan font-weight="700">RSA · ElGamal · Paillier</tspan></text>
+<text x="40" y="474" class="he-tier-row-good">✓ 應用：電子投票（只加）</text>
+<text x="40" y="494" class="he-tier-row-good">✓ 應用：安全多方加總</text>
+<text x="40" y="522" class="he-tier-row-bad">✗ 限制：不能跑通用 ML 模型</text>
+
+<rect x="360" y="334" width="320" height="210" class="he-box" rx="6"/>
+<rect x="360" y="334" width="320" height="46" class="he-she" rx="6"/>
+<text x="520" y="357" class="he-tier-title">SHE · 些許同態</text>
+<text x="520" y="373" class="he-tier-sub">SOMEWHAT HOMOMORPHIC</text>
+<text x="380" y="402" class="he-tier-row">支援運算：<tspan font-weight="700">加 + 乘</tspan>有限次數</text>
+<text x="380" y="422" class="he-tier-row">效能：<tspan font-weight="700" fill="#9c6f00">中等 · 噪聲累積</tspan></text>
+<text x="380" y="442" class="he-tier-row">代表方案：<tspan font-weight="700">BGN · YASHE</tspan></text>
+<text x="380" y="474" class="he-tier-row-good">✓ 應用：簡單預測模型</text>
+<text x="380" y="494" class="he-tier-row-good">✓ 應用：加密向量運算</text>
+<text x="380" y="522" class="he-tier-row-bad">✗ 限制：深層運算噪聲爆炸</text>
+
+<rect x="700" y="334" width="330" height="210" class="he-box" rx="6"/>
+<rect x="700" y="334" width="330" height="46" class="he-fhe" rx="6"/>
+<text x="865" y="357" class="he-tier-title">FHE · 全同態</text>
+<text x="865" y="373" class="he-tier-sub">FULLY HOMOMORPHIC</text>
+<text x="720" y="402" class="he-tier-row">支援運算：<tspan font-weight="700">任意次 加 + 乘</tspan></text>
+<text x="720" y="422" class="he-tier-row">效能：<tspan font-weight="700" fill="#c8102e">慢 1000x · 需 FPGA</tspan></text>
+<text x="720" y="442" class="he-tier-row">代表方案：<tspan font-weight="700">CKKS · BFV · BGV · TFHE</tspan></text>
+<text x="720" y="474" class="he-tier-row-good">✓ 應用：AWS SageMaker FHE 推論</text>
+<text x="720" y="494" class="he-tier-row-good">✓ 應用：醫療影像加密推論</text>
+<text x="720" y="522" class="he-tier-row-bad">✗ 限制：訓練 1B 模型需數週</text>
+
+</svg>
+<div class="diagram-cap"><b style="color:#0a8060">綠色虛框</b> = 客戶端信任區（持有金鑰）· <b style="color:#c8102e">紅色虛框</b> = 雲端不信任區（看不到原始資料）。<b>關鍵：雲端只看到密文 E(x)，卻能算出 E(x²)、E(x+y) 等運算結果 — 解密後就是 x²，全程資料零洩漏</b>。</div>
 </div>
 
 <div class="callout note">
@@ -10112,6 +10572,117 @@ NAS 是「自動設計神經網路架構」的技術 — 給定任務與計算�
 • <b>Apple Private Cloud Compute（2024）</b>：iOS 18 雲端推論加入 DP 機制，端到端可審計<br>
 • <b>美國人口普查局（2020 普查）</b>：首次用 DP 發布資料，防止「重識別攻擊」<br>
 <b>核心參數 ε（隱私預算）：</b>ε 小 = 隱私強但效用低；ε 大 = 效用高但隱私弱。典型值 ε=1-3。<b>這是 2024-2026 隱私工程的關鍵指標</b>。
+</div>
+
+<div class="diagram" style="max-width:1080px">
+<div class="diagram-title">差分隱私機制 · 「加噪 → 防個體識別」與 ε 預算的權衡</div>
+<svg viewBox="0 0 1040 425" xmlns="http://www.w3.org/2000/svg">
+<style>
+.dp-step{fill:#fff;stroke:#7b3aa8;stroke-width:2}
+.dp-step-noise{fill:#f3e7fa;stroke:#7b3aa8;stroke-width:2}
+.dp-num{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:900;text-anchor:middle;fill:#7b3aa8;letter-spacing:1px}
+.dp-title{font-family:'Noto Serif TC',serif;font-weight:700;font-size:14px;text-anchor:middle;fill:#1a1a1a}
+.dp-icon{font-size:32px;text-anchor:middle}
+.dp-val{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;text-anchor:middle;fill:#5c2880}
+.dp-val-g{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;text-anchor:middle;fill:#0a8060}
+.dp-sub{font-family:'Noto Sans TC',sans-serif;font-size:11px;text-anchor:middle;fill:#3d3528}
+.dp-arr{stroke:#7b3aa8;stroke-width:2.4;fill:none}
+.dp-axis{stroke:#1a1a1a;stroke-width:2;fill:none}
+.dp-eps-l{font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;text-anchor:middle;letter-spacing:1px}
+.dp-axis-h{font-family:'Noto Serif TC',serif;font-weight:700;font-size:13.5px;text-anchor:middle;fill:#5c2880}
+.dp-tier-bx-c{fill:#fef0f3;stroke:#c8102e;stroke-width:1.5}
+.dp-tier-bx-l{fill:#e8f1ec;stroke:#0a8060;stroke-width:1.5}
+.dp-tier-title{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;text-anchor:middle;letter-spacing:1px}
+.dp-tier-h{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-anchor:start;letter-spacing:0.5px}
+.dp-tier-sub{font-family:'Noto Sans TC',sans-serif;font-size:11px;fill:#3d3528;text-anchor:start}
+</style>
+<marker id="dp-ar" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><polygon points="0,0 8,3 0,6" fill="#7b3aa8"/></marker>
+
+<!-- ============ 上半：機制示意（3 步驟） ============ -->
+<rect x="20" y="20" width="280" height="180" class="dp-step" rx="6"/>
+<text x="160" y="44" class="dp-num">① 真實查詢</text>
+<text x="160" y="84" class="dp-icon">🗄️</text>
+<text x="160" y="118" class="dp-title">資料集 D</text>
+<text x="160" y="140" class="dp-sub">Query: count(疾病=糖尿病)</text>
+<text x="160" y="170" class="dp-val">真實答案 = 42</text>
+<text x="160" y="190" class="dp-sub">⚠ 但直接公開 = 洩漏個人</text>
+
+<rect x="340" y="20" width="280" height="180" class="dp-step-noise" rx="6"/>
+<text x="480" y="44" class="dp-num">② 加噪機制</text>
+<text x="480" y="84" class="dp-icon">📊</text>
+<text x="480" y="118" class="dp-title">Noise ~ Lap(Δf / ε)</text>
+<text x="480" y="140" class="dp-sub">Laplace 機制 · 簡單查詢</text>
+<text x="480" y="158" class="dp-sub">Gaussian 機制 · 複雜分析</text>
+<text x="480" y="182" class="dp-val">+ 隨機噪聲</text>
+
+<rect x="660" y="20" width="350" height="180" class="dp-step" rx="6"/>
+<text x="835" y="44" class="dp-num">③ 含噪結果（每次不同）</text>
+<text x="835" y="84" class="dp-icon">🎲</text>
+<text x="705" y="118" class="dp-val">42.3</text>
+<text x="780" y="118" class="dp-val">41.5</text>
+<text x="855" y="118" class="dp-val">43.1</text>
+<text x="935" y="118" class="dp-val">42.0</text>
+<text x="835" y="142" class="dp-sub">每次查詢結果略有差異</text>
+<text x="835" y="172" class="dp-val-g">✓ 攻擊者無法推單一人</text>
+<text x="835" y="190" class="dp-sub">「加入/移除單筆 → 結果幾乎無差」</text>
+
+<path d="M 300 110 L 340 110" class="dp-arr" marker-end="url(#dp-ar)"/>
+<path d="M 620 110 L 660 110" class="dp-arr" marker-end="url(#dp-ar)"/>
+
+<!-- ============ 下半左：ε 預算軸 ============ -->
+<text x="245" y="234" class="dp-axis-h">▾ ε（隱私預算）的權衡軸 · 噪聲大小 ∝ 1/ε</text>
+
+<line x1="40" y1="280" x2="480" y2="280" class="dp-axis"/>
+<line x1="40" y1="275" x2="40" y2="285" class="dp-axis"/>
+<line x1="160" y1="275" x2="160" y2="285" class="dp-axis"/>
+<line x1="280" y1="275" x2="280" y2="285" class="dp-axis"/>
+<line x1="370" y1="275" x2="370" y2="285" class="dp-axis"/>
+<line x1="480" y1="275" x2="480" y2="285" class="dp-axis"/>
+
+<text x="40" y="300" class="dp-eps-l" fill="#5c2880">ε=0.1</text>
+<text x="40" y="316" class="dp-sub" fill="#5c2880">極強隱私</text>
+<text x="40" y="330" class="dp-sub" fill="#5c2880">效用低</text>
+
+<text x="160" y="300" class="dp-eps-l" fill="#0a8060">ε=1</text>
+<text x="160" y="316" class="dp-sub" fill="#0a8060">業界主流</text>
+<text x="160" y="330" class="dp-sub" fill="#0a8060">合理平衡</text>
+
+<text x="280" y="300" class="dp-eps-l" fill="#0a8060">ε=3</text>
+<text x="280" y="316" class="dp-sub" fill="#0a8060">業界主流</text>
+<text x="280" y="330" class="dp-sub" fill="#0a8060">高效用</text>
+
+<text x="370" y="300" class="dp-eps-l" fill="#e6a817">ε=5</text>
+<text x="370" y="316" class="dp-sub" fill="#9c6f00">弱保護</text>
+
+<text x="480" y="300" class="dp-eps-l" fill="#c8102e">ε=10</text>
+<text x="480" y="316" class="dp-sub" fill="#c8102e">隱私差</text>
+<text x="480" y="330" class="dp-sub" fill="#c8102e">效用最高</text>
+
+<text x="245" y="365" class="dp-sub" font-weight="700">←  噪聲大 / 隱私強  ｜  噪聲小 / 隱私弱  →</text>
+<text x="245" y="385" class="dp-sub">業界經驗：<tspan font-weight="700" fill="#5c2880">ε=1-3 為合理範圍</tspan></text>
+<text x="245" y="403" class="dp-sub">Google VaultGemma 用 ε=2.0、效用達非 DP 模型 95%</text>
+
+<!-- ============ 下半右：Central vs Local DP 對比 ============ -->
+<rect x="510" y="240" width="245" height="180" class="dp-tier-bx-c" rx="3"/>
+<text x="632" y="263" class="dp-tier-title" fill="#c8102e">CENTRAL DP</text>
+<text x="525" y="288" class="dp-tier-sub"><tspan font-weight="700">加噪位置：</tspan>伺服器聚合後</text>
+<text x="525" y="306" class="dp-tier-sub"><tspan font-weight="700">信任模型：</tspan>需信任伺服器</text>
+<text x="525" y="324" class="dp-tier-sub"><tspan font-weight="700">效用：</tspan>較高（噪聲少）</text>
+<text x="525" y="342" class="dp-tier-sub"><tspan font-weight="700">代表案例：</tspan>美國人口普查 2020</text>
+<text x="525" y="372" class="dp-tier-h" fill="#0a8060">✓ 適合：聯邦學習聚合層</text>
+<text x="525" y="395" class="dp-tier-h" fill="#c8102e">✗ 風險：惡意伺服器仍見原始</text>
+
+<rect x="765" y="240" width="245" height="180" class="dp-tier-bx-l" rx="3"/>
+<text x="887" y="263" class="dp-tier-title" fill="#0a8060">LOCAL DP</text>
+<text x="780" y="288" class="dp-tier-sub"><tspan font-weight="700">加噪位置：</tspan>每個 client 上</text>
+<text x="780" y="306" class="dp-tier-sub"><tspan font-weight="700">信任模型：</tspan>零信任</text>
+<text x="780" y="324" class="dp-tier-sub"><tspan font-weight="700">效用：</tspan>較低（噪聲累積）</text>
+<text x="780" y="342" class="dp-tier-sub"><tspan font-weight="700">代表案例：</tspan>Apple PCC（iOS 18）</text>
+<text x="780" y="372" class="dp-tier-h" fill="#0a8060">✓ 適合：高敏感個人資料</text>
+<text x="780" y="395" class="dp-tier-h" fill="#c8102e">✗ 限制：模型準確度下降</text>
+
+</svg>
+<div class="diagram-cap">三步驟機制：<b>真實查詢</b> → <b>加噪（Laplace 或 Gaussian）</b> → <b>含噪結果（每次不同）</b>。<b>ε 軸</b>：噪聲量 ∝ 1/ε — ε 越小噪聲越大隱私越強、ε 越大噪聲越小效用越高。<b>業界主流 ε=1-3</b>。Central DP（伺服器加噪、高效用）vs Local DP（client 加噪、零信任）為兩大實作策略。</div>
 </div>
 
 <div class="diagram" style="max-width:1180px">
@@ -11563,6 +12134,133 @@ model_sm = sm.<span class="f">OLS</span>(y, X2).<span class="f">fit</span>()    
 <strong>§7 小結 · 程式類教材的「最後一哩」</strong>
 傳統 iPAS 教材只談概念、不教程式碼 — 但 114 年第二梯次考古題已有 26% 是程式題（科三）+ 18% pandas/seaborn（科二），未來只會更多。本章<b>八節</b>覆蓋 <b>NumPy / sklearn / 評估指標 / PyTorch / 遷移學習 / 降維 / 陷阱速查 / pandas-seaborn</b>，每節都對應具體考題、附完整可執行範例。<b>看完這章 + 動手跑過範例</b>，程式題不再是失分點。
 </div>
+
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ====== APPENDIX · 英文縮寫對照表 ============================== -->
+<!-- ============================================================ -->
+<section>
+<div class="container">
+<div class="sec-eyebrow"><span class="chip">APPENDIX</span>附錄 · ENGLISH ABBREVIATIONS</div>
+<h2 class="sec-title" id="s3-abbr">英文縮寫對照表</h2>
+<p class="sec-intro">本科 §3-7 主文出現的英文縮寫，按主題分組整理。考試或閱讀時可隨時對照、強化中英對應記憶。</p>
+
+<h3 class="sub-title" data-num="附A">基礎數學（§3）</h3>
+<table class="matrix">
+<tr><th style="width:18%">縮寫</th><th style="width:42%">英文全稱</th><th>中文 / 簡述</th></tr>
+<tr><td><b>PMF</b></td><td>Probability Mass Function</td><td>機率質量函數（離散）</td></tr>
+<tr><td><b>PDF</b></td><td>Probability Density Function</td><td>機率密度函數（連續）</td></tr>
+<tr><td><b>CDF</b></td><td>Cumulative Distribution Function</td><td>累積分佈函數</td></tr>
+<tr><td><b>MLE</b></td><td>Maximum Likelihood Estimation</td><td>最大似然估計</td></tr>
+<tr><td><b>MAP</b></td><td>Maximum A Posteriori</td><td>最大後驗估計</td></tr>
+<tr><td><b>EVD</b></td><td>Eigenvalue Decomposition</td><td>特徵值分解</td></tr>
+<tr><td><b>SVD</b></td><td>Singular Value Decomposition</td><td>奇異值分解</td></tr>
+<tr><td><b>NMF</b></td><td>Non-negative Matrix Factorization</td><td>非負矩陣分解</td></tr>
+<tr><td><b>GD</b></td><td>Gradient Descent</td><td>梯度下降</td></tr>
+<tr><td><b>SGD</b></td><td>Stochastic Gradient Descent</td><td>隨機梯度下降</td></tr>
+<tr><td><b>Adam</b></td><td>Adaptive Moment Estimation</td><td>自適應動量估計（優化器）</td></tr>
+<tr><td><b>GEMM</b></td><td>General Matrix Multiply</td><td>通用矩陣乘法（GPU 主算力）</td></tr>
+</table>
+
+<h3 class="sub-title" data-num="附B">ML / DL 主軸（§4）</h3>
+<table class="matrix">
+<tr><th style="width:18%">縮寫</th><th style="width:42%">英文全稱</th><th>中文 / 簡述</th></tr>
+<tr><td><b>ML</b></td><td>Machine Learning</td><td>機器學習</td></tr>
+<tr><td><b>DL</b></td><td>Deep Learning</td><td>深度學習</td></tr>
+<tr><td><b>RL</b></td><td>Reinforcement Learning</td><td>強化學習</td></tr>
+<tr><td><b>SVM</b></td><td>Support Vector Machine</td><td>支援向量機</td></tr>
+<tr><td><b>KNN</b></td><td>K-Nearest Neighbors</td><td>K 近鄰演算法</td></tr>
+<tr><td><b>RF</b></td><td>Random Forest</td><td>隨機森林</td></tr>
+<tr><td><b>GBDT</b></td><td>Gradient Boosting Decision Tree</td><td>梯度提升決策樹</td></tr>
+<tr><td><b>XGBoost</b></td><td>eXtreme Gradient Boosting</td><td>極端梯度提升</td></tr>
+<tr><td><b>LightGBM</b></td><td>Light Gradient Boosting Machine</td><td>輕量梯度提升機（Microsoft）</td></tr>
+<tr><td><b>DBSCAN</b></td><td>Density-Based Spatial Clustering of Applications with Noise</td><td>基於密度的聚類</td></tr>
+<tr><td><b>PCA</b></td><td>Principal Component Analysis</td><td>主成分分析</td></tr>
+<tr><td><b>LDA</b></td><td>Linear Discriminant Analysis</td><td>線性判別分析</td></tr>
+<tr><td><b>t-SNE</b></td><td>t-Distributed Stochastic Neighbor Embedding</td><td>t 分布隨機鄰近嵌入（視覺化）</td></tr>
+<tr><td><b>UMAP</b></td><td>Uniform Manifold Approximation and Projection</td><td>均勻流形近似與投影</td></tr>
+<tr><td><b>NN / DNN</b></td><td>(Deep) Neural Network</td><td>(深度) 神經網路</td></tr>
+<tr><td><b>MLP</b></td><td>Multi-Layer Perceptron</td><td>多層感知器</td></tr>
+<tr><td><b>CNN</b></td><td>Convolutional Neural Network</td><td>卷積神經網路</td></tr>
+<tr><td><b>RNN</b></td><td>Recurrent Neural Network</td><td>循環神經網路</td></tr>
+<tr><td><b>LSTM</b></td><td>Long Short-Term Memory</td><td>長短期記憶</td></tr>
+<tr><td><b>GRU</b></td><td>Gated Recurrent Unit</td><td>閘控循環單元</td></tr>
+<tr><td><b>TCN</b></td><td>Temporal Convolutional Network</td><td>時間卷積網路</td></tr>
+<tr><td><b>ReLU</b></td><td>Rectified Linear Unit</td><td>修正線性單元（激活函數）</td></tr>
+<tr><td><b>GAN</b></td><td>Generative Adversarial Network</td><td>生成對抗網路</td></tr>
+<tr><td><b>VAE</b></td><td>Variational Autoencoder</td><td>變分自編碼器</td></tr>
+<tr><td><b>LLM</b></td><td>Large Language Model</td><td>大型語言模型</td></tr>
+<tr><td><b>BERT</b></td><td>Bidirectional Encoder Representations from Transformers</td><td>雙向編碼器表示（Google）</td></tr>
+<tr><td><b>GPT</b></td><td>Generative Pre-trained Transformer</td><td>生成式預訓練變換器（OpenAI）</td></tr>
+<tr><td><b>RAG</b></td><td>Retrieval-Augmented Generation</td><td>檢索增強生成</td></tr>
+<tr><td><b>CoT</b></td><td>Chain-of-Thought</td><td>思維鏈</td></tr>
+<tr><td><b>LoRA</b></td><td>Low-Rank Adaptation</td><td>低秩適應（高效微調）</td></tr>
+<tr><td><b>QLoRA</b></td><td>Quantized LoRA</td><td>量化 LoRA（4-bit + LoRA）</td></tr>
+<tr><td><b>FT</b></td><td>Fine-Tuning</td><td>微調</td></tr>
+<tr><td><b>PE</b></td><td>Prompt Engineering</td><td>提示工程</td></tr>
+</table>
+
+<h3 class="sub-title" data-num="附C">ML 流程 / 評估（§5）</h3>
+<table class="matrix">
+<tr><th style="width:18%">縮寫</th><th style="width:42%">英文全稱</th><th>中文 / 簡述</th></tr>
+<tr><td><b>EDA</b></td><td>Exploratory Data Analysis</td><td>探索性資料分析</td></tr>
+<tr><td><b>SMOTE</b></td><td>Synthetic Minority Over-sampling Technique</td><td>合成少數類別過採樣</td></tr>
+<tr><td><b>CV</b></td><td>Cross-Validation</td><td>交叉驗證</td></tr>
+<tr><td><b>K-fold</b></td><td>K-fold Cross-Validation</td><td>K 折交叉驗證</td></tr>
+<tr><td><b>ROC</b></td><td>Receiver Operating Characteristic</td><td>接受者操作特徵曲線</td></tr>
+<tr><td><b>AUC</b></td><td>Area Under the Curve</td><td>曲線下面積</td></tr>
+<tr><td><b>TP / FP / TN / FN</b></td><td>True / False Positive / Negative</td><td>真正例 / 偽正例 / 真負例 / 偽負例</td></tr>
+<tr><td><b>MAE</b></td><td>Mean Absolute Error</td><td>平均絕對誤差</td></tr>
+<tr><td><b>MSE</b></td><td>Mean Squared Error</td><td>均方誤差</td></tr>
+<tr><td><b>RMSE</b></td><td>Root Mean Squared Error</td><td>均方根誤差</td></tr>
+<tr><td><b>R²</b></td><td>Coefficient of Determination</td><td>決定係數</td></tr>
+<tr><td><b>F1</b></td><td>F1 Score</td><td>精確率與召回率調和平均</td></tr>
+<tr><td><b>Bias-Var</b></td><td>Bias-Variance Tradeoff</td><td>偏差-變異權衡</td></tr>
+<tr><td><b>AutoML</b></td><td>Automated Machine Learning</td><td>自動化機器學習</td></tr>
+<tr><td><b>HPO</b></td><td>Hyperparameter Optimization</td><td>超參數優化</td></tr>
+</table>
+
+<h3 class="sub-title" data-num="附D">治理 / 隱私 / 公平性（§6）</h3>
+<table class="matrix">
+<tr><th style="width:18%">縮寫</th><th style="width:42%">英文全稱</th><th>中文 / 簡述</th></tr>
+<tr><td><b>PETs</b></td><td>Privacy Enhancing Technologies</td><td>隱私強化技術</td></tr>
+<tr><td><b>DP</b></td><td>Differential Privacy</td><td>差分隱私</td></tr>
+<tr><td><b>DP-SGD</b></td><td>Differentially Private Stochastic Gradient Descent</td><td>差分隱私隨機梯度下降</td></tr>
+<tr><td><b>HE</b></td><td>Homomorphic Encryption</td><td>同態加密</td></tr>
+<tr><td><b>PHE</b></td><td>Partially Homomorphic Encryption</td><td>部分同態加密</td></tr>
+<tr><td><b>SHE</b></td><td>Somewhat Homomorphic Encryption</td><td>些許同態加密</td></tr>
+<tr><td><b>FHE</b></td><td>Fully Homomorphic Encryption</td><td>全同態加密</td></tr>
+<tr><td><b>FL</b></td><td>Federated Learning</td><td>聯邦學習</td></tr>
+<tr><td><b>MPC</b></td><td>Secure Multi-Party Computation</td><td>安全多方計算</td></tr>
+<tr><td><b>GDPR</b></td><td>General Data Protection Regulation</td><td>歐盟一般資料保護規則</td></tr>
+<tr><td><b>EU AI Act</b></td><td>European Union Artificial Intelligence Act</td><td>歐盟人工智慧法案</td></tr>
+<tr><td><b>SHAP</b></td><td>SHapley Additive exPlanations</td><td>沙普利加性解釋</td></tr>
+<tr><td><b>LIME</b></td><td>Local Interpretable Model-agnostic Explanations</td><td>區域可解釋模型不可知解釋</td></tr>
+<tr><td><b>XAI</b></td><td>Explainable AI</td><td>可解釋人工智慧</td></tr>
+<tr><td><b>DPO</b></td><td>Direct Preference Optimization</td><td>直接偏好優化</td></tr>
+<tr><td><b>RLHF</b></td><td>Reinforcement Learning from Human Feedback</td><td>人類回饋強化學習</td></tr>
+</table>
+
+<h3 class="sub-title" data-num="附E">程式 / 框架（§7）</h3>
+<table class="matrix">
+<tr><th style="width:18%">縮寫</th><th style="width:42%">英文全稱 / 中文</th><th>用途</th></tr>
+<tr><td><b>NumPy</b></td><td>Numerical Python</td><td>數值運算函式庫</td></tr>
+<tr><td><b>pandas</b></td><td>Panel Data</td><td>資料表處理函式庫</td></tr>
+<tr><td><b>sklearn</b></td><td>scikit-learn</td><td>傳統 ML 函式庫</td></tr>
+<tr><td><b>PyTorch</b></td><td>—</td><td>Meta 深度學習框架</td></tr>
+<tr><td><b>TF</b></td><td>TensorFlow</td><td>Google 深度學習框架</td></tr>
+<tr><td><b>JAX</b></td><td>—</td><td>Google 高效能數值運算（NumPy + GPU/TPU）</td></tr>
+<tr><td><b>HF</b></td><td>Hugging Face</td><td>開源模型 / 資料集樞紐</td></tr>
+<tr><td><b>API</b></td><td>Application Programming Interface</td><td>應用程式介面</td></tr>
+<tr><td><b>GPU</b></td><td>Graphics Processing Unit</td><td>圖形處理單元</td></tr>
+<tr><td><b>TPU</b></td><td>Tensor Processing Unit</td><td>張量處理單元（Google）</td></tr>
+<tr><td><b>FPGA</b></td><td>Field-Programmable Gate Array</td><td>現場可程式化邏輯閘陣列</td></tr>
+<tr><td><b>VRAM</b></td><td>Video RAM</td><td>顯示記憶體（GPU 內）</td></tr>
+<tr><td><b>FP32 / FP16 / FP4</b></td><td>Floating Point (32/16/4-bit)</td><td>32 / 16 / 4 位元浮點數</td></tr>
+<tr><td><b>INT8 / INT4</b></td><td>Integer (8/4-bit)</td><td>8 / 4 位元整數（量化用）</td></tr>
+</table>
 
 </div>
 </section>
