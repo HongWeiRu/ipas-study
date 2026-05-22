@@ -14085,11 +14085,34 @@ AI 模型部署比一般軟體部署<b>更需要 Canary</b>，原因：<br>
     const vars = ['--ink','--paper','--accent','--accent-deep','--accent-soft','--gold','--sub','--mute','--red','--green'];
     const rootDecls = vars.map(v => { const val = cs.getPropertyValue(v).trim(); return val ? (v + ':' + val) : ''; }).filter(Boolean).join(';');
 
+    const headings = Array.from(document.querySelectorAll('h2.sec-title, h3.sub-title'));
+    function crumbFor(el){
+      let chapter = null, section = null;
+      for(const h of headings){
+        if(!(el.compareDocumentPosition(h) & Node.DOCUMENT_POSITION_PRECEDING)) break;
+        if(h.matches('h2.sec-title')){ chapter = h.textContent.trim(); section = null; }
+        else { const num = h.getAttribute('data-num'); section = (num ? '§' + num + ' ' : '') + h.textContent.trim(); }
+      }
+      return { chapter, section };
+    }
+    const sb = (document.querySelector('.sb-brand')||{}).textContent || '';
+    const ss = (document.querySelector('.sb-brand-sub')||{}).textContent || '';
+    const subjectLabel = ((sb.trim() + ' · ' + ss.trim()).replace(/^ · | · $/g,'').trim()) || 'iPAS 互動式教材';
+    const escHtml = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+    let lastCrumbStr = '';
     const blocksHtml = items.map(el => {
       const clone = el.cloneNode(true);
       clone.querySelectorAll('.print-check').forEach(n => n.remove());
-      if(clone.classList.contains('matrix-wrap')) return clone.innerHTML;
-      return clone.outerHTML;
+      const html = clone.classList.contains('matrix-wrap') ? clone.innerHTML : clone.outerHTML;
+      const c = crumbFor(el);
+      const parts = [];
+      if(c.chapter) parts.push(c.chapter);
+      if(c.section) parts.push(c.section);
+      const crumbStr = parts.join(' › ');
+      const crumb = (crumbStr && crumbStr !== lastCrumbStr) ? '<div class="print-crumb">' + escHtml(crumbStr) + '</div>' : '';
+      lastCrumbStr = crumbStr;
+      return crumb + html;
     }).join('\n<div class="page-break"></div>\n');
 
     const win = window.open('', '_blank', 'width=900,height=720');
@@ -14097,7 +14120,7 @@ AI 模型部署比一般軟體部署<b>更需要 Canary</b>，原因：<br>
 
     win.document.write(
       '<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8">' +
-      '<title>列印選取 · ' + items.length + ' 項</title>' +
+      '<title>' + escHtml(subjectLabel) + ' · 列印 ' + items.length + ' 項</title>' +
       '<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">' +
       '<style>' +
       ':root{' + rootDecls + '}' +
@@ -14106,6 +14129,8 @@ AI 模型部署比一般軟體部署<b>更需要 Canary</b>，原因：<br>
       'h1.print-head{font-family:"Noto Serif TC",serif;font-size:15px;font-weight:700;color:var(--accent);border-bottom:2px solid var(--ink);padding-bottom:10px;margin:0 0 22px;text-align:center;letter-spacing:1px}' +
       '.page-break{page-break-after:always;break-after:page;height:0;margin:22px 0}' +
       '.foot{margin-top:40px;padding-top:10px;border-top:1px dashed #ccc;font-family:"JetBrains Mono",monospace;font-size:10px;color:#999;text-align:center;letter-spacing:1px}' +
+      '.print-crumb{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:1.5px;color:var(--accent);margin:22px 0 8px;padding-bottom:5px;border-bottom:1px dashed #ddd;font-weight:700;text-transform:uppercase}' +
+      '.print-crumb:first-child{margin-top:0}' +
       'b,strong{color:var(--ink)}' +
       '.callout{background:#fffbe6;border-left:5px solid var(--gold);padding:18px 22px;margin:18px 0;font-size:14.5px;line-height:1.75;position:relative;page-break-inside:avoid}' +
       '.callout strong{font-family:"Noto Serif TC",serif;color:var(--accent);display:block;margin-bottom:6px;font-size:16px}' +
@@ -14157,7 +14182,7 @@ AI 模型部署比一般軟體部署<b>更需要 Canary</b>，原因：<br>
       '@page{margin:1.3cm}' +
       '@media print{.page-break{margin:0}.foot{position:fixed;bottom:0;left:0;right:0}}' +
       '</style></head><body>' +
-      '<h1 class="print-head">iPAS 互動式教材 · 列印選取 ' + items.length + ' 項</h1>' +
+      '<h1 class="print-head">' + escHtml(subjectLabel) + ' · 列印選取 ' + items.length + ' 項</h1>' +
       blocksHtml +
       '<div class="foot">iPAS AI 應用規劃師 · 互動式教材</div>' +
       '<script>window.addEventListener("load",function(){setTimeout(function(){window.focus();window.print();},700);});<\/script>' +
