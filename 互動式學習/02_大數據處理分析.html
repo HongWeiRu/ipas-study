@@ -486,6 +486,25 @@ table.matrix td .en{
 .diagram-print-btn{position:absolute;top:10px;right:12px;background:var(--accent);color:#fff;border:none;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1.2px;padding:5px 11px;cursor:pointer;border-radius:2px;opacity:0.55;transition:opacity .15s;text-transform:uppercase}
 .diagram-print-btn:hover{opacity:1}
 @media print{.diagram-print-btn{display:none}}
+/* ===== Multi-select print system (callout / matrix / tcard) ===== */
+.callout,.tcard{position:relative}
+.matrix-wrap{position:relative;margin:24px 0}
+.matrix-wrap > table.matrix{margin:0}
+.print-check{position:absolute;top:6px;left:6px;width:18px;height:18px;cursor:pointer;opacity:0;transition:opacity .15s;z-index:20;margin:0;background:#fff;border:1.5px solid #999;border-radius:3px;appearance:none;-webkit-appearance:none}
+.callout:hover > .print-check,.tcard:hover > .print-check,.matrix-wrap:hover > .print-check,.print-check:focus{opacity:0.85}
+.print-check:checked{background:var(--accent);border-color:var(--accent);opacity:1}
+.print-check:checked::after{content:'\2713';position:absolute;top:-3px;left:1px;color:#fff;font-size:14px;font-weight:700;font-family:sans-serif;line-height:1}
+.callout:has(> .print-check:checked),.tcard:has(> .print-check:checked),.matrix-wrap:has(> .print-check:checked){box-shadow:0 0 0 3px var(--accent)}
+.print-tray{position:fixed;right:24px;bottom:24px;background:var(--ink);color:var(--paper);padding:12px 16px;border:2px solid var(--gold);font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:1px;z-index:200;display:none;box-shadow:0 6px 20px rgba(0,0,0,0.4);min-width:230px}
+.print-tray.active{display:block}
+.print-tray-count{font-family:'Noto Serif TC',serif;font-weight:700;font-size:14px;color:var(--gold);margin-bottom:6px;letter-spacing:0}
+.print-tray-count .n{font-size:18px;color:#fff;margin:0 3px}
+.print-tray-detail{font-size:10.5px;color:#a89e8e;margin-bottom:10px;line-height:1.6;min-height:14px}
+.print-tray-btns{display:flex;gap:8px}
+.print-tray-btns button{flex:1;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1.5px;padding:7px 10px;border:1px solid var(--paper);background:transparent;color:var(--paper);cursor:pointer;text-transform:uppercase}
+.print-tray-btns button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+.print-tray-btns button:hover{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+@media print{.print-check,.print-tray{display:none !important}.callout,.tcard,.matrix-wrap{box-shadow:none !important}}
 
 /* ===== Step process ===== */
 .steps{margin:24px 0;max-width:840px}
@@ -11901,6 +11920,170 @@ PETs 在 2025–2026 從學術轉向實戰：<br>
     btn.addEventListener('click', () => printDiagram(d));
     d.appendChild(btn);
   });
+})();
+</script>
+
+<!-- ===== Multi-select print system (callout / matrix / tcard) ===== -->
+<script>
+(function(){
+  document.querySelectorAll('table.matrix').forEach(t => {
+    if(t.parentElement && t.parentElement.classList.contains('matrix-wrap')) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'matrix-wrap';
+    t.parentNode.insertBefore(wrap, t);
+    wrap.appendChild(t);
+  });
+
+  const blocks = Array.from(document.querySelectorAll('.callout, .matrix-wrap, .tcard'));
+  if(!blocks.length) return;
+  const selected = new Set();
+
+  const tray = document.createElement('div');
+  tray.className = 'print-tray';
+  tray.innerHTML =
+    '<div class="print-tray-count">📋 已選 <span class="n">0</span> 項</div>' +
+    '<div class="print-tray-detail"><span class="detail">勾選任何提示框、表格或卡片</span></div>' +
+    '<div class="print-tray-btns">' +
+      '<button type="button" class="primary print-btn">🖨 列印</button>' +
+      '<button type="button" class="clear-btn">清空</button>' +
+    '</div>';
+  document.body.appendChild(tray);
+  const trayN = tray.querySelector('.n');
+  const trayDetail = tray.querySelector('.detail');
+
+  function typeOf(el){
+    if(el.classList.contains('callout')) return 'callout';
+    if(el.classList.contains('matrix-wrap')) return 'table';
+    if(el.classList.contains('tcard')) return 'tcard';
+    return 'block';
+  }
+
+  function updateTray(){
+    const n = selected.size;
+    trayN.textContent = n;
+    if(!n){ tray.classList.remove('active'); trayDetail.textContent = '勾選任何提示框、表格或卡片'; return; }
+    tray.classList.add('active');
+    const counts = {tcard:0, table:0, callout:0};
+    selected.forEach(el => counts[typeOf(el)]++);
+    const parts = [];
+    if(counts.tcard) parts.push(counts.tcard + ' 張卡片');
+    if(counts.table) parts.push(counts.table + ' 個表格');
+    if(counts.callout) parts.push(counts.callout + ' 條提示');
+    trayDetail.textContent = parts.join('  ·  ');
+  }
+
+  blocks.forEach(el => {
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.className = 'print-check';
+    cb.title = '加入列印選取';
+    cb.addEventListener('change', () => {
+      if(cb.checked) selected.add(el);
+      else selected.delete(el);
+      updateTray();
+    });
+    cb.addEventListener('click', e => e.stopPropagation());
+    el.insertBefore(cb, el.firstChild);
+  });
+
+  tray.querySelector('.print-btn').addEventListener('click', () => {
+    if(!selected.size) return;
+    printSelected(Array.from(selected));
+  });
+  tray.querySelector('.clear-btn').addEventListener('click', () => {
+    selected.forEach(el => {
+      const cb = el.querySelector(':scope > .print-check');
+      if(cb) cb.checked = false;
+    });
+    selected.clear();
+    updateTray();
+  });
+
+  function printSelected(items){
+    const cs = getComputedStyle(document.documentElement);
+    const vars = ['--ink','--paper','--accent','--accent-deep','--accent-soft','--gold','--sub','--mute','--red','--green'];
+    const rootDecls = vars.map(v => { const val = cs.getPropertyValue(v).trim(); return val ? (v + ':' + val) : ''; }).filter(Boolean).join(';');
+
+    const blocksHtml = items.map(el => {
+      const clone = el.cloneNode(true);
+      clone.querySelectorAll('.print-check').forEach(n => n.remove());
+      if(clone.classList.contains('matrix-wrap')) return clone.innerHTML;
+      return clone.outerHTML;
+    }).join('\n<div class="page-break"></div>\n');
+
+    const win = window.open('', '_blank', 'width=900,height=720');
+    if(!win){ alert('請允許彈出視窗以列印選取項'); return; }
+
+    win.document.write(
+      '<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8">' +
+      '<title>列印選取 · ' + items.length + ' 項</title>' +
+      '<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">' +
+      '<style>' +
+      ':root{' + rootDecls + '}' +
+      '*{box-sizing:border-box}' +
+      'body{font-family:"Noto Sans TC",sans-serif;margin:24px 32px;color:#1a1a1a;background:#fff;font-size:14px;line-height:1.75}' +
+      'h1.print-head{font-family:"Noto Serif TC",serif;font-size:15px;font-weight:700;color:var(--accent);border-bottom:2px solid var(--ink);padding-bottom:10px;margin:0 0 22px;text-align:center;letter-spacing:1px}' +
+      '.page-break{page-break-after:always;break-after:page;height:0;margin:22px 0}' +
+      '.foot{margin-top:40px;padding-top:10px;border-top:1px dashed #ccc;font-family:"JetBrains Mono",monospace;font-size:10px;color:#999;text-align:center;letter-spacing:1px}' +
+      'b,strong{color:var(--ink)}' +
+      '.callout{background:#fffbe6;border-left:5px solid var(--gold);padding:18px 22px;margin:18px 0;font-size:14.5px;line-height:1.75;position:relative;page-break-inside:avoid}' +
+      '.callout strong{font-family:"Noto Serif TC",serif;color:var(--accent);display:block;margin-bottom:6px;font-size:16px}' +
+      '.callout.key{background:#f3e7fa;border-left-color:var(--accent)}' +
+      '.callout.warn{background:#ffeae0;border-left-color:var(--red)}' +
+      '.callout.warn strong{color:var(--red)}' +
+      '.callout.tip{background:#e0f4ed;border-left-color:var(--green)}' +
+      '.callout.tip strong{color:var(--green)}' +
+      '.callout.exam{background:#f3e7fa;border-left-color:var(--accent)}' +
+      '.callout.exam strong{color:var(--accent)}' +
+      '.callout.note{background:#f4f4f0;border-left-color:var(--mute);border:1px solid #d6d2c5}' +
+      '.callout.note strong{color:var(--mute)}' +
+      'table.matrix{width:100%;border-collapse:collapse;margin:18px 0;font-size:13px;background:#fff;border:2px solid var(--ink);page-break-inside:avoid}' +
+      'table.matrix th{background:var(--ink);color:var(--paper);font-family:"Noto Serif TC",serif;font-weight:700;padding:9px 11px;text-align:left;font-size:12.5px;letter-spacing:0.5px}' +
+      'table.matrix td{padding:9px 11px;border-bottom:1px solid #ddd;vertical-align:top}' +
+      'table.matrix tr:last-child td{border-bottom:none}' +
+      'table.matrix tr:nth-child(even){background:#faf7ee}' +
+      'table.matrix td:first-child{font-weight:700;color:var(--accent);font-family:"Noto Serif TC",serif;white-space:nowrap}' +
+      'table.matrix td .en{display:block;font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--mute);font-weight:400;letter-spacing:0.5px}' +
+      '.tcard{background:#fff;border:2px solid var(--tc-c,var(--ink));margin:20px 0;page-break-inside:avoid}' +
+      '.tcard-head{display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--tc-bg,#f4f4f0);border-bottom:2px solid var(--tc-c,var(--ink))}' +
+      '.tcard-badge{display:flex;flex-direction:column;align-items:center;justify-content:center;width:48px;height:48px;background:var(--tc-c,#1a1a1a);color:#fff;border-radius:50%;flex-shrink:0}' +
+      '.tcard-badge-num{font-family:"JetBrains Mono",monospace;font-size:8.5px;line-height:1;letter-spacing:0.3px;opacity:0.85}' +
+      '.tcard-badge-verb{font-family:"Noto Serif TC",serif;font-weight:900;font-size:20px;line-height:1.1;margin-top:1px}' +
+      '.tcard-title{flex:1;font-family:"Noto Serif TC",serif;font-weight:900;font-size:17px;color:var(--ink);line-height:1.3;min-width:0}' +
+      '.tcard-title small{display:block;font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--mute);font-weight:400;letter-spacing:0.5px;margin-top:3px}' +
+      '.tcard-tag{font-family:"JetBrains Mono",monospace;font-size:10px;background:#fff;padding:4px 9px;border:1.5px solid var(--tc-c,#1a1a1a);color:var(--tc-c,#1a1a1a);letter-spacing:1px;font-weight:700;white-space:nowrap}' +
+      '.tcard-body{padding:16px 20px}' +
+      '.tcard-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:12px}' +
+      '.tcard-grid:last-child{margin-bottom:0}' +
+      '.tcard-col{display:flex;flex-direction:column;gap:12px}' +
+      '.tcard-sec h6{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:1.5px;color:var(--tc-c,var(--ink));font-weight:700;margin:0 0 5px;padding-bottom:4px;border-bottom:1px dashed var(--tc-c,var(--ink))}' +
+      '.tcard-sec p{font-size:12.5px;line-height:1.7;color:var(--sub);margin:0 0 6px}' +
+      '.tcard-sec p:last-child{margin-bottom:0}' +
+      '.tcard-sec ul{font-size:12.5px;line-height:1.7;color:var(--sub);margin:0 0 0 20px;padding:0}' +
+      '.tcard-sec ul li{margin-bottom:4px}' +
+      '.tcard-foot{padding:9px 16px;background:#f8f6f0;border-top:1px solid #ddd;font-size:12px;color:var(--mute);font-style:italic;text-align:center}' +
+      '.tcard-foot b{color:var(--tc-c,var(--ink));font-style:normal}' +
+      '.tcard-sub{margin:14px 0 0;padding:11px 14px;background:#fafaf6;border-left:4px solid var(--tc-c,var(--ink));border-top:1px solid #eee;border-right:1px solid #eee;border-bottom:1px solid #eee}' +
+      '.tcard-sub-head{font-family:"Noto Serif TC",serif;font-weight:700;font-size:14px;color:var(--tc-c,var(--ink));margin-bottom:2px;display:flex;align-items:baseline;gap:8px}' +
+      '.tcard-sub-head .yr{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--mute);font-weight:400}' +
+      '.tcard-sub p{font-size:12px;line-height:1.7;color:var(--sub);margin:4px 0 0}' +
+      '.tcard-sub-example{background:#fff;padding:8px 11px;margin-top:8px;font-size:11.5px;color:var(--sub);border:1px dashed #ccc}' +
+      '.tcard-sub-example b{color:var(--ink)}' +
+      '.formula{font-family:"JetBrains Mono",monospace;background:#fff;border:1.5px solid var(--ink);padding:9px 13px;margin:10px 0;font-size:12.5px;text-align:center;letter-spacing:0.5px}' +
+      'code.k{background:#faf7ee;color:#1a1a1a;font-family:"JetBrains Mono",monospace;font-size:11px;padding:1px 5px;border-radius:2px}' +
+      'svg{display:block;max-width:100%;height:auto;margin:6px auto}' +
+      'ul,ol{margin:6px 0 6px 22px;padding:0}' +
+      '@page{margin:1.3cm}' +
+      '@media print{.page-break{margin:0}.foot{position:fixed;bottom:0;left:0;right:0}}' +
+      '</style></head><body>' +
+      '<h1 class="print-head">iPAS 互動式教材 · 列印選取 ' + items.length + ' 項</h1>' +
+      blocksHtml +
+      '<div class="foot">iPAS AI 應用規劃師 · 互動式教材</div>' +
+      '<script>window.addEventListener("load",function(){setTimeout(function(){window.focus();window.print();},700);});<\/script>' +
+      '</body></html>'
+    );
+    win.document.close();
+  }
 })();
 </script>
 
