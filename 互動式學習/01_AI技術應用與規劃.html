@@ -8001,12 +8001,28 @@ PDF 把生成式 AI 的主要架構聚焦在 <b>VAE / GAN / Diffusion</b> 三大
 <div class="def-card">
 <div class="def-card-head"><h4>② ROUGE · 摘要任務的標配</h4><span class="en">Recall-Oriented Understudy for Gisting Evaluation · Lin 2004</span></div>
 <div class="def-card-body">
-<p><b>核心：</b>強調<b>召回率（Recall）</b> — 生成摘要是否涵蓋參考摘要的關鍵內容（比 BLEU 的精確率更適合摘要場景，因為摘要可長可短，重點是「沒漏掉」）。</p>
-<p><b>三大變體：</b><br>
-• <b>ROUGE-N</b>：n-gram 重疊（最常用 ROUGE-1、ROUGE-2）<br>
-• <b>ROUGE-L</b>：最長公共子序列（Longest Common Subsequence, LCS）<br>
-• <b>ROUGE-S</b>：跳躍 n-gram 對（Skip-bigram）</p>
-<p><b>使用情境：</b>新聞摘要、文件摘要、問答系統。CNN/DailyMail 等公開資料集都用 ROUGE 評估。</p>
+<p><b>核心：</b>強調<b>召回率（Recall）</b> — 生成摘要是否涵蓋參考摘要的關鍵內容（比 BLEU 的精確率更適合摘要場景，因為摘要可長可短，重點是「沒漏掉」）。三種變體差別在「重疊」怎麼定義 — N 看連續、L 看順序、S 看跳躍對。</p>
+
+<p><b>三大變體 · 細節說明：</b></p>
+
+<table class="matrix" style="font-size:12.5px;margin:8px 0">
+<tr><th style="width:13%">變體</th><th style="width:32%">重疊定義</th><th style="width:22%">寬鬆程度</th><th>看什麼</th></tr>
+<tr><td><b>ROUGE-1</b></td><td>單字（unigram）重疊</td><td>最寬鬆</td><td>關鍵詞抓對了沒</td></tr>
+<tr><td><b>ROUGE-2</b></td><td>連續雙字組（bigram）重疊</td><td>嚴格 · 需連續</td><td>短語通順度</td></tr>
+<tr><td><b>ROUGE-L</b></td><td>最長同序列（LCS），中間可跳字</td><td>中等 · 順序對齊</td><td><b>業界最常用</b> · 句意骨架</td></tr>
+<tr><td><b>ROUGE-S</b></td><td>所有「保序但可跳字」的詞對（Skip-bigram）</td><td>介於 1 與 2 之間</td><td>詞與詞關聯</td></tr>
+</table>
+
+<p><b>具體例子 · 同一句話四種算法</b><br>
+參考：<code class="k">貓 坐 在 墊子 上</code> · 系統：<code class="k">貓 在 墊子 上</code><br>
+• <b>ROUGE-1</b>：貓/在/墊子/上 共 4 字命中 → <b>4/5 = 80%</b><br>
+• <b>ROUGE-2</b>：連續雙字組「在墊子」「墊子上」命中 → <b>2/4 = 50%</b>（系統少了「坐」，「貓在」不在參考中）<br>
+• <b>ROUGE-L</b>：LCS = "貓 在 墊子 上"（順序對齊，跳掉「坐」）→ 長度 4 → <b>F-score 高</b><br>
+• <b>ROUGE-S</b>：拆出 (貓,在)(貓,墊子)(貓,上)(在,墊子)(在,上)(墊子,上) 等保序詞對逐一比對</p>
+
+<p><b>業界三件套：</b>摘要評估論文通常<b>同時報告 ROUGE-1 + ROUGE-2 + ROUGE-L</b> — 一個看關鍵詞、一個看通順度、一個看句意骨架，互補解讀。CNN/DailyMail、XSum 等公開資料集都遵循此慣例。</p>
+
+<p><b>使用情境：</b>新聞摘要、文件摘要、問答系統。<b>ROUGE-S 較少單獨使用</b>，多搭配 ROUGE-2 看細節。</p>
 </div>
 </div>
 
@@ -8029,8 +8045,20 @@ PDF 把生成式 AI 的主要架構聚焦在 <b>VAE / GAN / Diffusion</b> 三大
 <strong>常考點 · BLEU vs ROUGE 的記憶口訣</strong>
 <b>BLEU</b> 強調「<b>精確率（Precision）</b>」 — 生成的詞有多少出現在參考答案；常用於<b>機器翻譯</b>。<br>
 <b>ROUGE</b> 強調「<b>召回率（Recall）</b>」 — 參考答案的詞有多少被生成涵蓋；常用於<b>摘要</b>。<br>
-<b>口訣：翻譯怕亂講 → BLEU；摘要怕遺漏 → ROUGE</b>。<br>
-<b>陷阱題</b>：「下列哪個是評估對話生成的最佳指標」— 答案常是「<b>人工評估</b>」（不是 BLEU/ROUGE），因為對話沒有「標準答案」可以比對。
+<b>主口訣：翻譯怕亂講 → BLEU；摘要怕遺漏 → ROUGE</b>。<br><br>
+
+<b>ROUGE 變體口訣（一句記四個）：</b><br>
+<b>N 數連續、L 找最長順序、S 拆跳躍對</b><br>
+• ROUGE-<b>N</b>umber：數連續 n 個字（最常見 N=1 看關鍵詞、N=2 看通順度）<br>
+• ROUGE-<b>L</b>ongest：找最長同序列（可跳字、看句意骨架）<br>
+• ROUGE-<b>S</b>kip：拆所有保序跳躍詞對<br><br>
+
+<b>業界三件套：</b>摘要任務同時報告 <b>ROUGE-1 + ROUGE-2 + ROUGE-L</b>（關鍵詞 / 通順度 / 骨架，三角度互補）。<br><br>
+
+<b>陷阱題型：</b><br>
+① 「下列哪個是評估<b>對話生成</b>的最佳指標」→ 答案是「<b>人工評估</b>」（不是 BLEU/ROUGE），因為對話沒有「標準答案」可比對。<br>
+② 「ROUGE-2 與 ROUGE-L 差異」→ ROUGE-2 要求<b>連續</b>雙字組；ROUGE-L 允許<b>跳字但保序</b>。<br>
+③ 「BLEU 為何不適合摘要」→ BLEU 是精確率導向，會獎勵「短而精確」的輸出，但摘要重點是「覆蓋全面」，需要召回率。
 </div>
 
 <h4 class="h-3" id="s1-3-3-f">F · 圖像生成 — 模型、工具、商業應用</h4>
