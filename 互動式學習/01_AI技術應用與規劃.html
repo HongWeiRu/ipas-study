@@ -14145,7 +14145,7 @@ AI 模型部署比一般軟體部署<b>更需要 Canary</b>，原因：<br>
       const crumb = (crumbStr && crumbStr !== lastCrumbStr) ? '<div class="print-crumb">' + escHtml(crumbStr) + '</div>' : '';
       lastCrumbStr = crumbStr;
       return crumb + html;
-    }).join('\n<div class="page-break"></div>\n');
+    }).join('\n');
 
     // Snapshot the document's own <style> blocks so the print window uses identical visual rules
     const docStyles = Array.from(document.querySelectorAll('style')).map(s => s.textContent).join('\n');
@@ -14173,10 +14173,10 @@ AI 模型部署比一般軟體部署<b>更需要 Canary</b>，原因：<br>
       'h1.print-head{font-family:"Noto Serif TC",serif;font-size:15px;font-weight:700;color:var(--accent);border-bottom:2px solid var(--ink);padding-bottom:10px;margin:0 0 22px;text-align:center;letter-spacing:1px}' +
       '.print-crumb{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:1.5px;color:var(--accent);margin:22px 0 8px;padding-bottom:5px;border-bottom:1px dashed #ddd;font-weight:700;text-transform:uppercase}' +
       '.print-crumb:first-child{margin-top:0}' +
-      '.page-break{page-break-after:always;break-after:page;height:0;margin:22px 0}' +
+      '.callout,.matrix-wrap,table.matrix,.tcard,.phase-timeline,.diagram,.def-card,.tile-grid{page-break-inside:avoid;break-inside:avoid}' +
       '.foot{margin-top:40px;padding-top:10px;border-top:1px dashed #ccc;font-family:"JetBrains Mono",monospace;font-size:10px;color:#999;text-align:center;letter-spacing:1px}' +
       '@page{margin:1.3cm}' +
-      '@media print{.page-break{margin:0}.foot{position:fixed;bottom:0;left:0;right:0}}' +
+      '@media print{.foot{position:fixed;bottom:0;left:0;right:0}}' +
       '</style></head><body>' +
       '<h1 class="print-head">' + escHtml(subjectLabel) + ' · 列印選取 ' + items.length + ' 項</h1>' +
       blocksHtml +
